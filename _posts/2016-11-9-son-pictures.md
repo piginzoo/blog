@@ -1,15 +1,15 @@
 ---
 layout: post
-title: 浩越的环保照片	
+title: 浩越的各种杂货铺	
 category: 家庭
 ---
 <h2>
-	这个页面是用来拜访（刘浩越）的环保照片的：
+	这个页面是用来拜访（刘浩越）的杂货铺的：
 </h2>
 <div style="margin: 0 auto;">
 
 	<div>
-		<a href="opera.pptx">刘皓月的京剧PPT</a>
+		<a href="/assets/opera.pptx">刘皓月的京剧PPT</a>
 	</div>
 	
 	<div>
