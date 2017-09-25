@@ -7,6 +7,11 @@ category: 家庭
 	这个页面是用来拜访（刘浩越）的环保照片的：
 </h2>
 <div style="margin: 0 auto;">
+
+	<div>
+		<a href="opera.pptx">刘皓月的京剧PPT</a>
+	</div>
+	
 	<div>
 		<img style="width:500px;" src="http://pic.qiantucdn.com/58pic/13/20/62/82Q58PIC6NU_1024.jpg" alt="">
 	</div>
