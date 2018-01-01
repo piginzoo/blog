@@ -34,7 +34,7 @@ category: 技术
 
 先说隐层到输出层之间的参数，我只是大自然的搬运工，只码公式不说话，参考西瓜书P$_{103}$页：
 
-![](images/nn-bp1.jpg)
+![](/images/nn-bp1.jpg)
 
 - $E_k=\frac{1}{2}\sum_{j=1}^l(\hat{y_j^k}-y_j^k)^2$
 - $W_{hj}= W_{hj} + \Delta{W_{hj}}$
@@ -55,7 +55,7 @@ Sigmod函数有个性质：$f'(x)=f(x)(1-f(x))$，所以
 
 好，输出层和隐层之间的权重$W_{hj}$我们得到了，下面该去算隐层和输入层之间的权重$v_{ih}$了，咋算呢，还是从根出发，根？就是最外头的损失函数，也就是$E_k$。
 这个可就复杂多喽，慢慢来，还是老规矩，一步步推：
-![](images/nn-bp2.jpg)
+![](/images/nn-bp2.jpg)
 
 $v_{ih}= v_{ih} + \Delta{v_{ih}}$
 $\Delta{v_{ih}}=-\eta \frac{\partial E_k}{v_{ih}}$
