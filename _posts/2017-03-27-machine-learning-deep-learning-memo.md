@@ -8,7 +8,7 @@ categories:
 ---
 把自己的一些学习笔记都写到这上面，记录下来方便复习和查找
 
-===
+
 EM
 ===
 EM知道分类数量么?
@@ -18,7 +18,7 @@ http://blog.csdn.net/u012990623/article/details/42323661
 
 
 
-======
+
 贝叶斯
 ======
 灵活掌握贝叶斯公式,
@@ -33,12 +33,8 @@ HMM,
 共线
 I(A,B)互信息 = 
 最小生成树,kruskal算法
-ffmpeg -i "http://localhost:8080/a.m3u8" -bsf:a aac_adtstoasc -acodec copy -vcodec copy -f mp4 out.mp4
-ffmpeg -i "http://localhost:8080/a.m3u8"  -analyzeduration 2148M -probesize 2148M -acodec copy -vcodec copy -f mp4 out.mp4
-ffmpeg -i "http://localhost:8080/a.m3u8"  -analyzeduration 2148M -probesize 2148M -acodec copy -vcodec copy -f mp4 out.mp4
 这篇是GAN必看的论文之一
 
-======
 贝叶斯实践
 ======
 GaussianNB, 二项分布的NB,...的NB,各种分布都有NB的,他们之间是可以组合的.
@@ -54,7 +50,6 @@ NB--->朴素贝叶斯 Naive Beyes?
 word2vec
 K近邻 knightbour?
 
-======
 LDA
 ======
 beta分布, theta的值是(0,1),
@@ -72,7 +67,6 @@ http://mp.weixin.qq.com/s/0DkookBoiM4Db0VcbVRZhg
 变分实现的Gensim开源的LDA,
 LDA实现起来有点复杂,
 
-======
 HMM
 ======
 用HMM做分词,甚至不需要词库,神奇...
@@ -86,14 +80,14 @@ pi是开始时候的状态.
 邹博的两个例子很赞:一个是中文分词,一个是红黑球,不会了就回去听听
 HMM有3种玩法,就
 
-====
+
 SVM
 ====
 Kernel函数, 正定矩阵相乘,
 各个点的点乘函数,
 
 
-====
+
 提升
 ====
 提到了梯度下降的时候,步长值是可以通过回溯线性搜索试探出来的,
@@ -101,7 +95,7 @@ Kernel函数, 正定矩阵相乘,
 
  
 
-=============
+
 决策树+随机森林
 =============
 DecisionTreeRegression可以做回归么?就是预测连续值
