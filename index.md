@@ -4,7 +4,7 @@ title: 我的动物园
 tagline: 
 ---
 {% include JB/setup %}
-##终于，我的动物园又开张了:)
+终于，我的动物园又开张了:)
     
 ## 我的帖子
 <ul class="posts">
