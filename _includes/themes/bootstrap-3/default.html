@@ -42,7 +42,7 @@
 
   </head>
 
-  <body>
+  <body class="">
     <div id="wrap">
       <nav class="navbar navbar-default" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -66,6 +66,7 @@
             {% assign pages_list = site.pages %}
             {% assign group = 'navigation' %}
             {% include JB/pages_list %}
+            {% assign group = 'navigation' %}
           </ul>
           <form class="navbar-form navbar-right" role="search">
             <div class="form-group">

@@ -77,3 +77,20 @@ h1, h2, h3, h4 {
   background: #57A957;
   border: 1px solid #4c964d;
   color: #FFF; }
+
+.copyright {
+  margin: 10px 0;
+  padding: 10px 20px;
+  line-height: 1;
+  border-radius: 5px;
+  background: #f5f5f5;}
+
+
+.bodystyle{
+  color:white;
+  background-size: cover;
+  width:100%;
+  position:absolute;
+  background: url(/images/zoo.jpg) 
+    repeat center center scroll rgba(225,225,225,0.5);    
+}  
