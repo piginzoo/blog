@@ -4,12 +4,6 @@ title: 反向传播算法的理解
 category: 机器学习
 ---
 
-```
-转载说明：
-文章版权归本网站所有，所有的转载请告知作者(piginzoo@qq.com)，并在转载文章中，注明“此文章转自（www.piginzoo.com）动物园的猪”的字样，并标明本网网址www.piginzoo.com，对不遵守本声明，违法、恶意使用本网内容者，本网保留追究其法律责任的权利。
-```
-
-
 关于BP的讲解，网上文章漫天遍野，我也不想贴那么多图，一步步说了，就说一下我的一些细节困惑和理解，详细的感兴趣的可以去读那些文章。
 
 先说说我看到的几篇讲BP的不错的帖子：
@@ -18,9 +12,8 @@ category: 机器学习
 还有就是周志华老师的西瓜书$P_{101}$页的关于BP的讲解。
 对，还推荐下《Make Your Own Neural Network》这本电子书，e文的，但是可以看懂，作者就跟你肚子的蛔虫一样，你一不明白，丫立刻就感知到，跳出来给你讲。
 
-最最开始之前，有必要先回忆一下梯度下降：
-<http://blog.csdn.net/xiazdong/article/details/7950084>
-这篇讲的不错，为什么要梯度下降，因为，可以通过一种迭代的方式去“探测”极小值点，怎么探测呢？就是沿着负梯度方向，往前拱一小点(就是说的步长)，只要是负梯度方向，就一定是Y值下降最快的方向。至于为什么梯度方向是下降最快的方向，参考这篇（<https://zhuanlan.zhihu.com/p/24913912>）， 这里用二维的来想象，一维的导数体会不出来，容易被蛊惑晕掉，提醒一下。
+最最开始之前，有必要先回忆一下[梯度下降](http://blog.csdn.net/xiazdong/article/details/7950084)
+这篇讲的不错，为什么要梯度下降，因为，可以通过一种迭代的方式去“探测”极小值点，怎么探测呢？就是沿着负梯度方向，往前拱一小点(就是说的步长)，只要是负梯度方向，就一定是Y值下降最快的方向。至于为什么梯度方向是下降最快的方向，[参考这篇](https://zhuanlan.zhihu.com/p/24913912)， 这里用二维的来想象，一维的导数体会不出来，容易被蛊惑晕掉，提醒一下。
 
 那么，对于多维，就变成了，每个维度都通过“此维度的偏导”乘以一个“步长值”，得到这个维度的分量，这些分量组合起来，就是梯度方向，那么朝着这个方向走一步，就是下降最快的。也就说，别的文章里提到的$W_{i,j}=W_{i,j}+\Delta\frac{\partial f(W_{i,j})}{\partial W_{i,j}}$, 
 
@@ -28,7 +21,7 @@ category: 机器学习
 
 这样来更新了$W_i,_j^*$,也就是这个维度上的新值。
 
-对了，时刻牢记，我们是在梯度下降损失函数$E_k=\frac{1}{2}*\sum_{j=1}^l(\hat(y_j^k)-y_j^k)$，那些文章反复提到了，这个函数的变量是谁呢？是那些漫天遍野的权重$W_i,_j$，每个$W_i,_j$都要对丫进行梯度下降的更新，然后再往里头灌打标签的数据，再得到一轮的$W_i,_j$更新，周而复始，直到梯度下降的**收敛条件**成立（参考这篇：<http://blog.csdn.net/hyg1985/article/details/42556847> ）：也就是到达一定迭代次数，或者，梯度的模达到一个值以下，
+对了，时刻牢记，我们是在梯度下降损失函数$E_k=\frac{1}{2}*\sum_{j=1}^l(\hat(y_j^k)-y_j^k)$，那些文章反复提到了，这个函数的变量是谁呢？是那些漫天遍野的权重$W_i,_j$，每个$W_i,_j$都要对丫进行梯度下降的更新，然后再往里头灌打标签的数据，再得到一轮的$W_i,_j$更新，周而复始，直到梯度下降的**收敛条件**成立[参考这篇](http://blog.csdn.net/hyg1985/article/details/42556847)）：也就是到达一定迭代次数，或者，梯度的模达到一个值以下，
 >计算梯度$g_k=g(x^{(k)})$当$\|g_k\|<\varepsilon$时，停止迭代"
 ----- 引自李航教授的《统计学习方法》附录A 梯度下降法"。
 
@@ -39,7 +32,7 @@ category: 机器学习
 
 先说隐层到输出层之间的参数，我只是大自然的搬运工，只码公式不说话，参考西瓜书P$_{103}$页：
 
-![](/images/nn-bp1.jpg)
+![](/images/nn-bp1.jpg){:class="myimg"}
 
 - $E_k=\frac{1}{2}\sum_{j=1}^l(\hat{y_j^k}-y_j^k)^2$
 - $W_{hj}= W_{hj} + \Delta{W_{hj}}$
@@ -51,7 +44,7 @@ Sigmod函数有个性质：$f'(x)=f(x)(1-f(x))$，所以
 - $\frac{\partial \hat{y^k_j}}{\partial \beta_j}=\hat{y^k_j}(1- \hat{y^k_j})$
 
 最后，都组合到一起，得到：
-> ${\Delta}W_{hj}=-\eta* (\hat{y^k_j}-y^k_j)* \hat{y^k_j}* (1- \hat{y^k_j})* b_h$
+${\Delta}W_{hj}=-\eta* (\hat{y^k_j}-y^k_j)* \hat{y^k_j}* (1- \hat{y^k_j})* b_h$
 
 
 
@@ -60,7 +53,7 @@ Sigmod函数有个性质：$f'(x)=f(x)(1-f(x))$，所以
 
 好，输出层和隐层之间的权重$W_{hj}$我们得到了，下面该去算隐层和输入层之间的权重$v_{ih}$了，咋算呢，还是从根出发，根？就是最外头的损失函数，也就是$E_k$。
 这个可就复杂多喽，慢慢来，还是老规矩，一步步推：
-![](/images/nn-bp2.jpg)
+![](/images/nn-bp2.jpg){:class="myimg"}
 
 $v_{ih}= v_{ih} + \Delta{v_{ih}}$
 $\Delta{v_{ih}}=-\eta \frac{\partial E_k}{v_{ih}}$
@@ -79,15 +72,17 @@ $\frac{\partial E_k}{\partial \hat{y^k_j}}实际上就是\sum^l_{j=1}\frac{\part
 - $\frac{\partial \alpha_h}{\partial v_{ih}}=x_i$
 
 好吧，我们最后放到一起：
->$\Delta{v_{ih}}=-\eta \frac{\partial E_k}{v_{ih}}=-\eta * \frac{\partial E_k}{\partial \hat{y^k_j}} * \frac{\partial {\hat{y^k_j}}}{\partial \beta_j}* \frac{\partial \beta_j}{\partial b_h} * \frac{\partial b_h}{\partial \alpha_h} * \frac{\partial \alpha_h}{\partial v_{ih}} $
->$=-\eta *   b_h * (1-b_h) * x_i * \sum^l_{j=1}[(\hat{y^k_j}- y^k_j) * \hat{y^k_j} * (1- \hat{y^k_j}) * (W_{hj}) ]$
+
+$\Delta{v_{ih}}=-\eta \frac{\partial E_k}{v_{ih}}=-\eta * \frac{\partial E_k}{\partial \hat{y^k_j}} * \frac{\partial {\hat{y^k_j}}}{\partial \beta_j}* \frac{\partial \beta_j}{\partial b_h} * \frac{\partial b_h}{\partial \alpha_h} * \frac{\partial \alpha_h}{\partial v_{ih}} $
+
+$=-\eta *   b_h * (1-b_h) * x_i *\sum^l_{j=1}[(\hat{y^k_j}- y^k_j) * \hat{y^k_j} * (1- \hat{y^k_j}) * (W_{hj}) ]$
 
 我靠，太复杂了！你晕了么？我自己推的，所以我还没有。
 
 这个时候，需要静下来，思考思考了搞定了${\Delta}W_{hj}$，也搞定了$\Delta{v_{ih}}$，西瓜书里就一个隐层，那如果不是1个隐层，2个隐层，3个呢，....，N个呢？所以，我们在回过头来看$\Delta{v_{ih}}$，这个最重要。除了最后一层的权值${\Delta}W_{hj}$是特殊处理，其他的隐层应该是和$\Delta{v_{ih}}$类似的。
 
 我们再来观察一下$\Delta{v_{ih}}$的核心部分，
->$b_h * (1-b_h) * x_i * \sum^l_{j=1}[(\hat{y^k_j}- y^k_j) * \hat{y^k_j} * (1- \hat{y^k_j}) * (W_{hj}) ]$
+$b_h * (1-b_h) * x_i * \sum^l_{j=1}[(\hat{y^k_j}- y^k_j) * \hat{y^k_j} * (1- \hat{y^k_j}) * (W_{hj}) ]$
 
 - $(\hat{y^k_j}- y^k_j) * \hat{y^k_j} * (1- \hat{y^k_j})$ 是固定的，每次灌完数据就定下来了，每个隐层都可以用。西瓜书里把这玩意叫做$g_i$（还得加了个负号），其实他就是$\frac{\partial E_k}{\partial \hat{y^k_j}} * \frac{\partial {\hat{y^k_j}}}{\partial \beta_j}$部分，没转过来脑子吧，没事，多想一会儿。
 - 那$b_n$是啥，$x_i$是啥，不就是这个隐层的节点的输入和输出么？啊！“我靠，还真是！”你感叹道。
@@ -95,7 +90,7 @@ $\frac{\partial E_k}{\partial \hat{y^k_j}}实际上就是\sum^l_{j=1}\frac{\part
 
 好！你再细想想，明白了吧，这个式子是通用的，通用的，通用的，有了这个式子，任何一个隐层和隐层之间、隐层和输入层之间的每个权值，通过求丫的偏导，然后进行梯度下降，这样一来，每个权值都按照步长减少一下，形成一个梯度，往最低点又进一步。
 
-上面是之前写的，其实，再看一遍，自己心虚的狠，怎么就说“其他隐层是类似的、通用的...”，看这篇，<http://blog.csdn.net/qq_32611933/article/details/51612102> ，里面提到：
+上面是之前写的，其实，再看一遍，自己心虚的狠，怎么就说“其他隐层是类似的、通用的...”，[看这篇](http://blog.csdn.net/qq_32611933/article/details/51612102) ，里面提到：
 >隐藏层神经元的反向传播公式：$\Delta w^l_{ji} = \eta \delta_k \cdot x_i \qquad \delta_j = \phi'(v^l_j)\sum ^m _{k=1}(\delta_k) w_kj$ 
 >
 >其中δk为后一层的第k个神经元的局域梯度。
