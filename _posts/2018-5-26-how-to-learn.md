@@ -47,6 +47,8 @@ category: 学习
 
 [如何建立自己的知识体系？](https://www.zhihu.com/question/19591121)
 
+[学习是一场惊心动魄的游戏](https://mp.weixin.qq.com/s/qiu_K3j6DqwVh69hmlX6mg)
+
 ## 优质知乎话题
 [高效学习](https://www.zhihu.com/topic/19580586/top-answers)
 

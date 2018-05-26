@@ -3,20 +3,17 @@ layout: post
 title: 浩越的各种杂货铺	
 category: 家庭
 ---
-<h2>
-	这个页面是用来拜访（刘浩越）的杂货铺的：
-</h2>
-<div style="margin: 0 auto;">
 
-	<div>
-		<a href="/assets/opera.pptx">刘皓月的京剧PPT</a>
-	</div>
-	
-	<div>
-		<img style="width:500px;" src="http://pic.qiantucdn.com/58pic/13/20/62/82Q58PIC6NU_1024.jpg" alt="">
-	</div>
-	<hr>
-	
+这个小车库里对着浩越的各种杂货~
+
+
+#### 浩越的京剧PPT
+
+[刘皓月的京剧PPT](/assets/opera.pptx)
+
+#### 环保视频
+![350x0](http://pic.qiantucdn.com/58pic/13/20/62/82Q58PIC6NU_1024.jpg)
+
+<div>
 	<embed src='http://player.youku.com/player.php/sid/XMTMxMjkxMDc1Ng==/v.swf' allowFullScreen='true' quality='high' width='480' height='400' align='middle' allowScriptAccess='always' type='application/x-shockwave-flash'>
-
 </div>
