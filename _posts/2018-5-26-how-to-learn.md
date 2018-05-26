@@ -14,11 +14,17 @@ category: 学习
 
 ## 图书资源
 [《如何学习》](https://www.zhihu.com/pub/book/119556686)
+
 [《精进》](https://book.douban.com/subject/26761696/)
+
 [《把时间当作朋友》](https://book.douban.com/subject/25749845/)
+
 [《深度学习的艺术》](https://book.douban.com/subject/26649850/)
+
 [《刻意联系》](https://book.douban.com/subject/26895993/)
+
 [《如何阅读一本书》](https://book.douban.com/subject/1013208/)
+
 [《如何高效学习》](https://book.douban.com/subject/25783654/)
 
 ## 视频课程
@@ -26,15 +32,24 @@ category: 学习
 
 ## 好的网络资源
 [Learning How to Learn](http://vancexu.github.io/2015/01/08/learning-how-to-learn-part-one.html)
+
 [有没有一种让人很爽的学习方法?](https://www.zhihu.com/question/58772932/answer/162494781)
+
 [如何长时间高效学习？](https://www.zhihu.com/question/28358499/answer/43002343)
+
 [有哪些让人欲罢不能的学习方法？](https://www.zhihu.com/question/30178891/answer/100118940)
+
 [超强的学习能力是怎样练就的？](https://www.zhihu.com/question/35103080/answer/397870811)
+
 [刘未鹏学习方法专栏](http://mindhacks.cn/topics/learning-method/)
+
 [怎么理解和训练元认知能力？](https://www.zhihu.com/question/25696371)
+
 [如何建立自己的知识体系？](https://www.zhihu.com/question/19591121)
 
 ## 优质知乎话题
 [高效学习](https://www.zhihu.com/topic/19580586/top-answers)
+
 [学习方法](https://www.zhihu.com/topic/19566266/top-answers)
+
 [初中数学](https://www.zhihu.com/topic/19674923/top-answers)
