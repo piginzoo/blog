@@ -4,9 +4,9 @@ title: 我的动物园
 tagline: 
 ---
 {% include JB/setup %}
-终于，我的动物园又开张了:)
+
     
-## 我的帖子
+
 <div class="bodystyle1">
 
 	<ul class="posts">

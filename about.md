@@ -13,7 +13,13 @@ group: navigation
 
 ![动物园de猪](/images/site.jpg)
 
-[我的微博](http://weibo.com/piginzoo)
+[我的微博](http://weibo.com/pigzoo)
+
+[我的Twitter](https://twitter.com/piginzoo)
+
+[我的脸书](https://www.facebook.com/piginzoo)
+
+[我的linkin](https://www.linkedin.com/in/%E5%88%9B-%E5%88%98-0490928a/)
 
 [我的知乎账号](https://www.zhihu.com/people/piginzoo/)
 
