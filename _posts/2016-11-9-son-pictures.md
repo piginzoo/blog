@@ -10,8 +10,7 @@ category: 家庭
 #### 浩越的京剧PPT
 
 [儿子的京剧PPT](/assets/opera.pptx)
-
-
+[品社PPT](/assets/pinshe.pdf)
 
 #### 环保视频
 ![350x0](http://pic.qiantucdn.com/58pic/13/20/62/82Q58PIC6NU_1024.jpg){:width="50%"}

@@ -48,6 +48,8 @@ category: 学习
 
 [学习是一场惊心动魄的游戏](https://mp.weixin.qq.com/s/qiu_K3j6DqwVh69hmlX6mg)
 
+[小升初过渡期你必须注意的事](https://tieba.baidu.com/p/5336031998)
+
 ## 优质知乎话题
 [高效学习](https://www.zhihu.com/topic/19580586/top-answers)
 
