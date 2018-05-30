@@ -7,10 +7,11 @@ category: 家庭
 这个小车库里堆放着宝贝的各种杂货~
 
 
-#### 浩越的京剧PPT
+#### PPT
 
-[儿子的京剧PPT](/assets/opera.pptx)
-[品社PPT](/assets/pinshe.pdf)
+[京剧](/assets/opera.pptx)
+
+[品社](/assets/pinshe.pdf)
 
 #### 环保视频
 ![350x0](http://pic.qiantucdn.com/58pic/13/20/62/82Q58PIC6NU_1024.jpg){:width="50%"}
