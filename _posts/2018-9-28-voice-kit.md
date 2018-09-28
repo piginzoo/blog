@@ -39,9 +39,13 @@ category: 好玩
 
 ## 参考
 https://blog.csdn.net/qq_35379989/article/details/79050932
+
 https://aiyprojects.withgoogle.com/voice-v1/#users-guide-turn-on-the-google-assistant-api
+
 http://www.wuliaole.com/post/raspberry_pi_and_shadowsocks/
+
 https://blog.lyz810.com/article/2016/09/shadowsocks-with-openssl-greater-than-110/
+
 https://harttle.land/2018/01/29/aiy-voice-kit.html
 
 ## 其他
