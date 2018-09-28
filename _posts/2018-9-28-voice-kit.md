@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 谷歌Vocikit
-category: 好玩
+category: fun
 ---
 # 玩转Voice Kit
 
@@ -12,15 +12,21 @@ category: 好玩
 [VoiceKit主页](https://aiyprojects.withgoogle.com/voice/)在此，很详细，照着弄就可以了。
 
 ## 步骤
-1. 安装，硬件安装起来很简单，照着手册弄就可以了，把两个板子扣在一起，不用焊接，全都是直接插上。
+
+1.安装，硬件安装起来很简单，照着手册弄就可以了，把两个板子扣在一起，不用焊接，全都是直接插上。
 
 2.刷固件！需要从voicekit主页上下载固件，然后用一个叫Etcher的软件将固件烧制到tf卡上。
+
 3.开机，然后测试声音，麦克风啥的，顺利的话，都ok
-4.然后就是去[谷歌云](https://console.cloud.google.com) 去创建一个应用，这步也是主页教程的一部分，教程很赞，照着弄就可以，主要是为了生成appid啥的几个从你树莓派链接谷歌云应用所需要的那几个appkey,screte啥的
-5.然后，教程就没有，中国特色的，需要翻墙，安装shadowsocks+privoxy，把树莓派设置成可以翻墙连接到谷歌云上去
-6.都完事后，运行固件中带的demo程序，绿灯亮起，齐活
+
+4.然后就是去[谷歌云](https://console.cloud.google.com) 去创建一个应用，这步也是主页教程的一部分，教程很赞，照着弄就可以，主要是为了生成appid啥的几个从你树莓派链接谷歌云应用所需要的那几个appkey,screte啥的.
+
+5.然后，教程就没有，中国特色的，需要翻墙，安装shadowsocks+privoxy，把树莓派设置成可以翻墙连接到谷歌云上去.
+
+6.都完事后，运行固件中带的demo程序，绿灯亮起，齐活.
 
 ## 硬件准备
+
 需要买一个树莓派，一个voicekit，淘宝上都有，如果犯懒，在一家买就可以。不过，tf卡卖的比较贵，建议在京东上购买，可以便宜很多。另外，树莓派配套的电源别忘了买一个。
 
 ## 各种坑
@@ -38,15 +44,16 @@ category: 好玩
 12.最后为了让其自启动，把sslocal，privoxy，proxy甚至都放到自启动里
 
 ## 参考
-https://blog.csdn.net/qq_35379989/article/details/79050932
 
-https://aiyprojects.withgoogle.com/voice-v1/#users-guide-turn-on-the-google-assistant-api
+[Etcher主页](https://etcher.io/)
 
-http://www.wuliaole.com/post/raspberry_pi_and_shadowsocks/
+[VoiceKit v1.0](https://aiyprojects.withgoogle.com/voice-v1/#users-guide-turn-on-the-google-assistant-api)
 
-https://blog.lyz810.com/article/2016/09/shadowsocks-with-openssl-greater-than-110/
+[树莓派折腾之：树莓派和ShadowSocks](http://www.wuliaole.com/post/raspberry_pi_and_shadowsocks/)
 
-https://harttle.land/2018/01/29/aiy-voice-kit.html
+[解决openssl升级到1.1.0后shadowsocks服务报错问题](https://blog.lyz810.com/article/2016/09/shadowsocks-with-openssl-greater-than-110/)
+
+[AIY Voice Kit 初体验](https://harttle.land/2018/01/29/aiy-voice-kit.html)
 
 ## 其他
 之前遇到个ssl版本的问题，undefined symbol: EVP_CIPHER_CTX_cleanup，得给源码成cleanup->reset，具体看帖子
