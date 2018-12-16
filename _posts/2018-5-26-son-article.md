@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 宝贝的作文帖
-category: 学习
+category: home
 ---
 ## 宝贝的作文
 一篇篇，都是跟着诸葛学堂的陈思老师混出来的，必须崇拜，陈思老师，噢服了you~

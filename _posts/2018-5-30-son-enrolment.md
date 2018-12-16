@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 升学帖
-category: 学习
+category: home
 ---
 ## 情报帖、记录帖、整理贴
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 我儿的杂货铺	
-category: 家庭
+category: home
 ---
 
 这个小车库里堆放着宝贝的各种杂货~

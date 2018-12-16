@@ -56,3 +56,5 @@ category: 学习
 [学习方法](https://www.zhihu.com/topic/19566266/top-answers)
 
 [初中数学](https://www.zhihu.com/topic/19674923/top-answers)
+
+[超强的学习能力是怎样练就的？](https://www.zhihu.com/question/35103080/answer/450023561)
