@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 凸优化
-category: 机器学习
+category: machine-learning
 ---
 
 # 凸优化
