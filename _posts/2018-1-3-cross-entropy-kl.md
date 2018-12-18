@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 熵、联合熵、条件熵、互信息、KL散度（相对熵）、交叉熵
-category: 机器学习
+category: machine-learning
 ---
 
 为什么写这篇文章？

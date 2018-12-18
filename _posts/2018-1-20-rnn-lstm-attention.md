@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 从RNN到LSTM，到Attention
-category: 机器学习
+category: machine-learning
 ---
 
 

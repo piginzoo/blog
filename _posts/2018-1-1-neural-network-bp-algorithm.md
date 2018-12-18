@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 反向传播算法的理解
-category: 机器学习
+category: machine-learning
 ---
 
 关于BP的讲解，网上文章漫天遍野，我也不想贴那么多图，一步步说了，就说一下我的一些细节困惑和理解，详细的感兴趣的可以去读那些文章。

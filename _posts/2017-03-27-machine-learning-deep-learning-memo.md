@@ -3,8 +3,7 @@ title: 机器学习 & 深度学习 [笔记]
 date: 2017-3-27T04:07:56+00:00
 author: 动物园的猪
 layout: post
-categories:
-  - 机器学习
+categories: machine-learning
 ---
 把自己的一些学习笔记都写到这上面，记录下来方便复习和查找
 
