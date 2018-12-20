@@ -8,8 +8,7 @@ guid: http://www.piginzoo.com/?p=41
 permalink: /index.php/2012/12/08/notes-from-reading-dingdelaotou-about-seo/
 dsq_thread_id:
   - 963970503
-categories:
-  - SEO
+category: tech
 ---
 This blog just record the notes and understanding after reading [dingdelaotou](http://www.dingdelaotou.com "dinglaotou") &#8216;s blog:
 

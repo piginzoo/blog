@@ -8,8 +8,7 @@ guid: http://www.piginzoo.com/?p=31
 permalink: /index.php/2012/12/07/put-everything-to-cloud/
 dsq_thread_id:
   - 962930345
-categories:
-  - Software
+category: tech
 ---
 &nbsp;
 

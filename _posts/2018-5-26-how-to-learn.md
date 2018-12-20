@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 如何高效学习
-category: 学习
+category: education
 ---
 
 # 学习学习再学习

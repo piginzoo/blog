@@ -8,8 +8,7 @@ guid: http://www.piginzoo.com/?p=37
 permalink: /index.php/2012/12/08/setup-your-wordpress/
 dsq_thread_id:
   - 963687160
-categories:
-  - Software
+category: tech
 ---
 We use WordPress as the scaffold for our website. It makes website setup to become so easy, just 10-20 minutes, a wonderful website comes out.
 

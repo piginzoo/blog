@@ -8,8 +8,7 @@ guid: http://www.piginzoo.com/?p=20
 permalink: /index.php/2012/12/07/how-do-i-select-cheap-virtual-host/
 dsq_thread_id:
   - 962465331
-categories:
-  - 'Linux &amp; Server'
+category: tech
 ---
 recently, I am using virtual host for SEO, but choosing virtual host is really a boring thing, I have tried many venders, but until now I cannot find a satisfied one.
 

@@ -8,8 +8,7 @@ guid: http://www.piginzoo.com/?p=50
 permalink: /index.php/2012/12/10/the-past-time/
 dsq_thread_id:
   - 966811270
-categories:
-  - Life
+category: life
 ---
 I collected old blogs from [blogbus](http://www.blogbus.com), and sina blog, just for memory of old past time.
 

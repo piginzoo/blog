@@ -6,9 +6,7 @@ author: admin
 layout: post
 guid: http://www.piginzoo.com/?p=70
 permalink: /index.php/2013/01/08/the-best-free-seo-tools-list/
-categories:
-  - SEO
-  - Software
+categories: tech
 ---
 <div class="ennote" style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
   <div>

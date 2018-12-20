@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 谷歌Vocikit
-category: fun
+category: tech
 ---
 # 玩转Voice Kit
 

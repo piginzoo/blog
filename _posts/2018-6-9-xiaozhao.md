@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 小赵
-category: 生活
+category: life
 ---
 
 小赵是我的理发师，就在爸妈楼下的这个小理发馆，已经认识好几年了。

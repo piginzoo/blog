@@ -2,8 +2,7 @@
 title: 第一次创业时该做好哪些心理准备的live笔记
 author: 动物园的猪
 layout: post
-categories:
-  - 创业
+categories: life
 ---
 
 哈哈哈哈哈

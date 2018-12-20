@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 给弟弟们的话
-category: 感受
+category: life
 ---
 
 **引子**

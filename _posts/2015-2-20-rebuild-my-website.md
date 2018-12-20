@@ -1,11 +1,9 @@
 ---
 layout: post
 title: 重建博客
-category: 技术
+category: tech
 ---
 自从我的**piginzoo.com**域名和在国外的虚拟主机相继过期后，我就等着国际域名管理组织回收它，经过了长大九九八十一天+的等待，终于被回收了。我终于回到了被*阉割*的祖国，没办法，要备案！备案结束后，就迫不及待的重建它，终于这几天有时间了，赶紧摆弄起来。研究了一番后，决定还是用github的pages系统，使用jeklly方式，回头试试简书吧也，anyway，先折腾一番再说！  
-
-
 
 搭建自己的blog，[参考](http://www.cnblogs.com/purediy/archive/2013/03/07/2948892.html) 明白了jekyll只是github上用的后台编译blog的模板系统，可以下载到本地用ruby去跑，但是只是用来预览，要按照他的格式提交到github上用他的pages系统才能真正生成，也就是说生成过程实在服务器端完成的。网上的文章上来就讲jekyll，生怕别人不明白这个高大上的东西，但是实际上在笔记本上不装jekyll就完全可以直接提及到github上靠github pages来在服务器生成。而在笔记本上装jekyll也只是为了预览或者本地生成html用。  
 
