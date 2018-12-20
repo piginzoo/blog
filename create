@@ -1,0 +1,24 @@
+TODAY=`date +%Y-%m-%d`
+TITLE=$1
+
+if [ "$1" == "" ]; then
+	echo "格式错误！"
+	echo "\t必须要有一个以中划线分割的主题（英文）"
+	echo "\t 如： create map-reduce"
+	exit
+fi
+
+
+BLOG_FILE_NAME="_posts/$TODAY-$1.md"
+touch $BLOG_FILE_NAME
+
+echo "已经创建新帖子：$BLOG_FILE_NAME"
+
+cat >> $BLOG_FILE_NAME <<EOF
+---
+layout: post
+title: <修改这里的标题>
+category: <修改这里的分类，用英文>
+---
+EOF
+
