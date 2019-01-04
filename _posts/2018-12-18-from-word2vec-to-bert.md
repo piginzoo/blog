@@ -75,7 +75,7 @@ Attention机制最早是应用于图像领域的，九几年就被提出来的�
 - <https://www.jianshu.com/p/3f2d4bc126e6>
 - <https://jalammar.github.io/illustrated-transformer/> 陈楠推荐的一篇e文的
 - <http://xiaosheng.me/2018/01/13/article121/>
-
+- <https://zhuanlan.zhihu.com/p/47812375> 知乎小文，带代码实现
 都不如这篇讲的最好：
 
 <https://kexue.fm/archives/4765>
@@ -205,6 +205,7 @@ ELMo、ULMFiT、GPT，三个过度模型，虽然是过度模型，但也都是S
 # BERT
 
 参考
+- [原始论文](https://arxiv.org/abs/1810.04805v1)
 - [谷歌BERT模型深度解析](http://www.zhuanzhi.ai/document/e723926b9bc236ee6e636600eae5982a)
 - [最强NLP论文到底强在哪里？](https://zhuanlan.zhihu.com/p/46880276)
 - [如何评价 BERT 模型？](https://www.zhihu.com/question/298203515)
@@ -213,6 +214,7 @@ ELMo、ULMFiT、GPT，三个过度模型，虽然是过度模型，但也都是S
 - [如何应用 BERT](https://www.imooc.com/article/263988)
 - [谷歌BERT模型fine-tune终极实践教程](https://t.cj.sina.com.cn/articles/view/6080368657/16a6b101101900dge2)
 - [两行代码玩转 Google BERT 句向量词向量](https://mp.weixin.qq.com/s?__biz=MzIwMTc4ODE0Mw==&mid=2247493033&idx=1&sn=1ae1cd347126b10d6a857cd9bba7b601&chksm=96ea3a29a19db33f3c07723ed6e5ecbb8d2ff1b1617f1cf0d39cb3cc1e6e9c325cc29147d58d&scene=21#wechat_redirect)
+- [一些基于BERT的实践](http://www.52nlp.cn/bert-paper-%E8%AE%BA%E6%96%87-%E6%96%87%E7%AB%A0-%E4%BB%A3%E7%A0%81%E8%B5%84%E6%BA%90%E6%B1%87%E6%80%BB)
 
 #### 问题：
 - 在BERT使用attention来预测被扣掉的词，这个过程中的QKV是啥？
