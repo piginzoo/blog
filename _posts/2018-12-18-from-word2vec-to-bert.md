@@ -102,6 +102,42 @@ Attention机制最早是应用于图像领域的，九几年就被提出来的�
 * 我理解，输入就不变了，就是开始整句英文的输入。而输出是每次输入（好别扭，就是右侧的输入），每次是变得，即每次都是翻译出来的中文的所有的词的向量。
 * 细品一下，和上面的attention的不同处。每次decoder产生新的词的时候，输入的encoder的$c_i$，是一个固定的东西了；之前的attention，每次还是变的。我理解，原因是，encoder通过positonal encoding和multi-head来充分压榨出这个句子的表示了。positional不用说了，是位置，而multi-head，则是用多个向量来表达一句话，比如8维，就相当于以8个视角来看待这句话，每个视角是不一样的，充分的挖掘这个句子的含义。
 
+#### 变量说明
+
+Attention公式：$Attention(q_t,K,V) = \sum_{s=1}^m \frac{1}{Z}\exp\left(\frac{\langle q_t, k_s\rangle}{\sqrt{d_k}}\right)v_s$
+
+
+每个句子都对应的是一个矩阵$X=(x1,x2,…,xt)$，$x_i$都代表着第$i$个词的词向量（行向量），维度为$d$维，故 $X\in\mathbb{R}^{n×d}$
+
+$\boldsymbol{Q}\in\mathbb{R}^{n\times d_k}, \boldsymbol{K}\in\mathbb{R}^{m\times d_k}, \boldsymbol{V}\in\mathbb{R}^{m\times d_v}$
+$d_k$都是词向量的维度，而Q中的$n$和K、V中的$m$则是对应的词的数量，比如一句话的长度。而在self-attention的话，就是输入句子的词的数量。
+
+所以，所以，Attention输出的是，Attention层，将$n×d_k$的序列Q编码成了一个新的$n×d_v$的序列。
+
+K/V是一样长度（$m$）的，而Q是另外一个长度（$n$）的，K/V你可以理解为文章，Q你可以理解为问题（阅读理解场景），然后得到了和Q长度一样长$n$的一个$d_v$维度的向量数组，就是结果($nxd_v$)。
+
+这里面丝毫没提及参数矩阵的事情，令人费解，看了原始论文，也没提。
+
+不过，看多头（multi-head）的时候，倒是说到了参数：
+
+多头Head公式：$head_i = Attention(\boldsymbol{Q}W_i^Q,\boldsymbol{K}W_i^K,\boldsymbol{V}W_i^V)$
+
+你看，参数来了：$W_i^Q\in\mathbb{R}^{d_k\times \tilde{d_k}}, W_i^K\in\mathbb{R}^{d_k\times \tilde{d_k}}, W_i^V\in\mathbb{R}^{d_v\times \tilde{d_v}}$
+
+然后，多头把每一个(h个)attention concat到一起：
+
+$MultiHead(\boldsymbol{Q},\boldsymbol{K},\boldsymbol{V}) = Concat(head_1,...,head_h)$
+
+
+然后contact后的这个$n ×(h×d_v)$的矩阵，还要乘以一个 $(h×d_v) x d_v$的$W$，最终得到一个$n x d_v$的向量。
+
+所有，多头出来的结果是，最后得到一个$n ×(h×d_v)$的一个矩阵，n是Query的长度，$d_v$是Value的维度，h是多头的个数。
+所以，这个时候，一个多头的参数个数是，$h \times d_k \times d_k + h \times d_k \times d_k + h \times d_v \times d_v + (h×d_v) x d_v$个参数。
+
+
+加入$d_k=d_v=128,h=8$，一个attention的参数个数就是524288个参数。
+
+
 #### __看这篇__
 
 这里，attention变成了这个样子：
