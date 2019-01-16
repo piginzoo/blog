@@ -1,0 +1,18 @@
+
+
+银行流水从库地址：
+            mysql-db02-ws1.db.corp:3307/bas
+所需表(合计10张)：
+	主要的银行流水表：（2017.12之前的在主表内，太大了，暂时不抽取）
+            sub_trade_201801,
+			sub_trade_201802,
+			sub_trade_201803,
+            sub_trade_201807,
+            sub_trade_201808,
+            sub_trade_201809,
+            sub_trade_201810,
+            sub_trade_201811,
+            sub_trade_201712,
+    爬虫认证的设备信息表：（爬取请求的设备提交的信息，主要是从中抽取个人的手机、卡号信息）
+            device_relevance_info
+
