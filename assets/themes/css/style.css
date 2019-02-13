@@ -79,6 +79,7 @@ h1, h2, h3, h4 {
   color: #FFF; }
 
 .copyright {
+  width: 100%;
   margin: 10px 0;
   padding: 10px 20px;
   line-height: 1;
@@ -94,11 +95,24 @@ h1, h2, h3, h4 {
   background: url(/images/zoo.jpg) 
     repeat center center scroll rgba(225,225,225,0.5);    
 } 
+
+
 .myimg{
   width:50%;
 }
-@media screen and (max-width: 768px) {  
+@media screen and (min-width: 320px) and (max-width: 1156px){
   .myimg{
     width:100%;
+  }
+}
+
+.myvideo{
+  width:480px;
+  height:320px;
+}
+@media screen and (min-width: 320px) and (max-width: 1156px){
+  .myvideo{
+    width:100%;
+    height:100%;
   }
 }
