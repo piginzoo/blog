@@ -12,7 +12,9 @@ category: tech
 两篇小文很赞，一定耐心读一遍。
 
 #### 一览图
-![](https://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOzT8aaHBQicEmzickibhbdCupUQf63DEhpuI6eqn9icStmAzlnMctPgq3cIM8KxYZWJick872NvMzpYBoQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+![](/images/20190213/1550063275752.png){:class="myimg"}
+
 - 首先是mapper把一个文件从这台机器上load起来，mapper中就会产生这个MR中最核心的“key”，比如按照字符统计的例子里，那些字符就是核心的key
 - mapper那台机器上，可能会运行个“合并函数”，用于把a的结果合并一下，没啥，就是为了提高效率
 - 然后才是最重要的“分区函数”，这个分区函数运行在哪里？作者没提，我觉得应该还是在mapper的那台机器上，为什呢这么推测呢？因为，MR本质是要计算跟着数据走，能不传就不传输，那么，在没给这个计算结果找到对应的reducer之前，不能盲目的就把数据发出去，对吧？否则，发给谁，发往哪里，这个依据都没有。
@@ -24,7 +26,8 @@ category: tech
 - 会开始在资源池中就初始化一堆的mapper和reducer，应该是有策略的，比如那些机器跑起来mapper，一台机器上跑几个mappers，reducer亦然
 - 这尼玛就是一个资源池，既然是个资源池，就需要有人调度他们，那调度这事，肯定是MR系统实现的了，比如mapper应该总是问他“哥们，我这里有很多key和对应聚合出来的结果，我该发给谁啊？”，那么调度者就会跳出来，“哦！你这个这个发给这台机器的reducer，那个那个发给那台机器的reducer”。
 
-![](https://mmbiz.qpic.cn/mmbiz_png/YrezxckhYOzxHvcSSJ15NK4FUUMAeOGciaC1GrCS7C0H8y8GOaHRRmRVYtTriaMBK0jOwogXQrhGeRicic44k003bg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![](/images/20190213/1550063555521.png){:class="myimg"}
+
 - 这图，我理解，就是发生在一台机器上的
 - 开始在这个node上load起来文件，分给worker去mapper
 - mapper把中间结果存到磁盘上（落盘）
