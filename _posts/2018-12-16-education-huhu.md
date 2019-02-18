@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 孩子教育隨想[转]
+title: （转）孩子教育隨想
 category: education
 ---
 
