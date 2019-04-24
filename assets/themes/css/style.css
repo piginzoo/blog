@@ -129,6 +129,16 @@ h4{
   }
 }
 
+.myimg40{
+  width:40%;
+}
+@media screen and (min-width: 320px) and (max-width: 1156px){
+  .myimg40{
+    width:80%;
+  }
+}
+
+
 .myimg30{
   width:30%;
 }
