@@ -91,6 +91,12 @@ vgg_fc7 = tf.squeeze(vgg_fc7,axis=[1,2])
 这个squeeze，可以帮助我们把多余的1维的去掉，就是把[1,1,4096,4096]=>[4096,4096]了，赞！
 可是为何是axis=[1,2]，而没有[0]呢？恩，0位置是batch。
 
+# 必须是224x224
+
+是的，VGG的输入必须是224x224，为何呢？
+
+因为上面说的最后模拟成全链接的那个[batch,1,1,4096]的时候，然后你才可以squeeze中间的两个1。如果输入不是224，做完6层的池化后，成不了[1,1]的，这样就会报错。其实，你去看slim的实现中，也是默认最后一定要宽W和高H变成1的。
+
 # keras来fine-turning vgg
 
 一不做，二不休，我顺道看了一下，我搜到的关于keras如何fine-tuning vgg的[文章](https://www.learnopencv.com/keras-tutorial-fine-tuning-using-pre-trained-models/)：
@@ -102,3 +108,8 @@ vgg_conv = VGG16(weights='imagenet', include_top=False, input_shape=(image_size,
 
 - 靠的是include_top来去掉fc层。
 - 通过trainable来frozen一些层
+
+# 一些VGG的资源
+- [VGG16学习笔记](http://deanhan.com/2018/07/26/vgg16/)
+- [VGG19模型训练+读取](https://www.jianshu.com/p/e96b7a9b4229)
+- [VGG论文](https://arxiv.org/abs/1409.1556)
