@@ -1,7 +1,10 @@
 ---
 layout: page
-title: 我的动物园
+title: 首页
+header: 首页
 tagline: 
+group: navigation
+order: 1
 ---
 {% include JB/setup %}
 

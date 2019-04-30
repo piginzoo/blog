@@ -3,6 +3,7 @@ layout: page
 title: 关于
 permalink: about.html
 group: navigation
+order: 2
 ---
 
 我是动物园的猪:-)
