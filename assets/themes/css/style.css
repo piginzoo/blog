@@ -168,6 +168,13 @@ h4{
   }
 }
 
+.red{
+  color:#f00;
+}
+
+.blue{
+  color:#00f;
+}
 
 #toc{
   margin-bottom: 1em;
