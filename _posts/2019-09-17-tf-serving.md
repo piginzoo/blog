@@ -26,7 +26,7 @@ category: machine-learning
 
 `docker pull tensorflow/serving:1.12.3-gpu`
 
-目前tensorflow serving的docker最新的版本是1.14，但是1.14/1.13是需要CUDA10和cuDNN7.4的支持，我们的环境是CUDA9和cuDNN7.0，所以我们只能选择1.12.3（支持CUDA9里最新的）
+目前[tensorflow serving](https://github.com/tensorflow/serving/releases)的docker最新的版本是1.14，但是1.14/1.13是需要CUDA10和cuDNN7.4的支持，我们的环境是CUDA9和cuDNN7.0，所以我们只能选择1.12.3（支持CUDA9里最新的）
 
 关于tensorflow和CUDA和cuDNN的关系，请参考：[tensorflow CUDA cudnn 版本对应关系](https://blog.csdn.net/yuejisuo1948/article/details/81043962)
 
@@ -199,7 +199,7 @@ batch=128，sequence=64  BeamSearch耗时：33秒
 
 ![](/images/20190919/1568873360763.jpg)
 
-如图，考虑beam_width=1，你不是从红色里面挑一个最大的就成，而是要算$p(a)\*p(\epslon)+p(a)\*p(a)$和$p(a)\*p(b)$，要比一下谁大，所以，然后保留谁，所以不是简单的就算。
+如图，考虑beam_width=1，你不是从红色里面挑一个最大的就成，而是要算$p(a)\*p(\epsilon)+p(a)\*p(a)$和$p(a)\*p(b)$，要比一下谁大，所以，然后保留谁，所以不是简单的就算。
 
 想明白这事后，我本来想自己实现各beam_width=1的beam_search_decoder来着，不过一搜，有开源的，[CTCDecoder](https://github.com/githubharald/CTCDecoder.git)，于是我下来一个，一测，效果其实比tensorflow的ctc要差很多（我就测的是beam_width=1,sequence=128,batch=128,classes=3862），所以，虽然tensorflow1.14的慢很多，也只有忍了。
 
