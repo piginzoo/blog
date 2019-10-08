@@ -138,6 +138,14 @@ h4{
   }
 }
 
+.myimg33{
+  width:33%;
+}
+@media screen and (min-width: 320px) and (max-width: 1156px){
+  .myimg33{
+    width:66%;
+  }
+}
 
 .myimg30{
   width:30%;
@@ -156,6 +164,16 @@ h4{
     width:50%;
   }
 }
+
+.myimg20{
+  width:20%;
+}
+@media screen and (min-width: 320px) and (max-width: 1156px){
+  .myimg20{
+    width:40%;
+  }
+}
+
 
 .myvideo{
   width:480px;
