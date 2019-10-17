@@ -267,3 +267,18 @@ $a_k=\frac{1}{\pi}\int_{-\pi}^{\pi}f(t)coskt dt$
 同理，我们可得：
 
 $b_k=\frac{1}{\pi}\int_{-\pi}^{\pi}f(t)sinkt dt$
+
+这样，我们就得到2个通项：$a_k,b_k$
+
+
+
+
+
+# 参考
+
+- [妈咪说的泰勒展开的解释](https://www.bilibili.com/video/av27158514?t=815)
+- [妈咪说的欧拉公式的解释](https://www.bilibili.com/video/av27088046?t=582)
+- [李永乐对欧拉公式的解释](https://www.bilibili.com/video/av26713674)
+- [知乎三角函数推导](https://zhuanlan.zhihu.com/p/20102140)
+- [知乎三角函数正交性证明](https://zhuanlan.zhihu.com/p/80683289)
+- [傅里叶变换的推导](https://zhuanlan.zhihu.com/p/41455378)
