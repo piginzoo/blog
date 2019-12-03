@@ -84,6 +84,6 @@ ELF头部 	|
 - [程序员的自我修养](https://book.douban.com/subject/3652388/)
 - [深入理解计算机系统](https://book.douban.com/subject/1230413/)
 
-![](https://img3.doubanio.com/view/subject/l/public/s1470003.jpg){:class="myimg20"}
-![](https://img3.doubanio.com/view/subject/l/public/s28047380.jpg){:class="myimg20"}
-![](https://img1.doubanio.com/view/subject/l/public/s25136218.jpg){:class="myimg20"}
+![](/images/20191203/1575355245154.jpg){:class="myimg"}{:class="myimg20"}
+![](/images/20191203/1575355308075.jpg){:class="myimg"}{:class="myimg20"}
+![](/images/20191203/1575355334411.jpg){:class="myimg"}{:class="myimg20"}
