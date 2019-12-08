@@ -69,7 +69,9 @@ ELF头部 	|
 
 ![](/images/20191203/1575370638734.jpg){:class="myimg30"}
 
-合并没啥，读每个目标文件的文件头，就可以获得各个段的信息，但是，更重要是下一步，“**重定位**和符号解析”，具体做什么呢？  
+合并没啥，读每个目标文件的文件头，就可以获得各个段的信息：
+- 读每个目标文件，收集各个段的信息，然后合并到一起，其实我理解就是压缩到一起，你的代码段挨着我的代码段，我们合并成一个新的，因为每个ELF目标文件都是有文件头的，这些信息都有，所以，是可以很严格合并到一起的
+- 符号重定位，说白了，就是把之前调用某个函数的地址，给重新调整一下，或者某个变量的在data段中的地址重新调整一下，为毛？因为合并的时候变了啊。这步是链接最核心的东东！
 
 ```
 a.o的段属性
@@ -92,9 +94,148 @@ Idx Name          Size      Address          Type
   2 __data        00000008 0000000000002000 DATA
 ```
 
-### 代码段.text合并
 
-### 符号地址确定
+## 符号重定位
+
+“**重定位**和符号解析”非常重要，是链接核心，都干了啥？
+
+最开始啊，编译完的目标文件，其实里面的变量地址、函数地址，基准地址，都是0，也就是啥都是0地址开始的。
+
+可是，一旦你链接，你就不能从0开始了，你要从操作系统规定的应用进程的规定虚拟起始地址开始作为基准地址了，这个规定是多少？`0x08048094`。别问我为何是这么个怪地址，真心不知。
+
+另外，你还合并了好几个目标文件的各个段，这样的话，里面最开始基于0地址的变量啊、函数啊，都要开始调整一通了吧。对吧？这个可以理解吧。
+
+好，那么问题来了，怎么搞？
+
+看个例子：
+**a.c**
+```
+extern int shared;
+
+int main()
+{
+    int a = 0;
+    swap(&a, &shared);
+}
+```
+**b.c**
+```
+int shared = 1;
+int test = 3;
+
+void swap(int* a, int* b) {
+    *a ^= *b ^= *a ^= *b;
+}
+```
+
+`gcc -c -m32 a.o b.o`得到目标文件，然后，
+
+`objdump -d a.o`可以看到目标文件a.o的汇编：
+
+```
+00000000 <main>:
+   0: 8d 4c 24 04           lea    0x4(%esp),%ecx
+   4: 83 e4 f0              and    $0xfffffff0,%esp
+   7: ff 71 fc              pushl  -0x4(%ecx)
+   a: 55                    push   %ebp
+   b: 89 e5                 mov    %esp,%ebp
+   d: 51                    push   %ecx
+   e: 83 ec 14              sub    $0x14,%esp
+  11: 65 a1 14 00 00 00     mov    %gs:0x14,%eax
+  17: 89 45 f4              mov    %eax,-0xc(%ebp)
+  1a: 31 c0                 xor    %eax,%eax
+  1c: c7 45 f0 00 00 00 00  movl   $0x0,-0x10(%ebp) <---- 这就是把share变量的值放到ESP(栈指针寄存器)
+  23: 83 ec 08              sub    $0x8,%esp
+  26: 68 00 00 00 00        push   $0x0
+  2b: 8d 45 f0              lea    -0x10(%ebp),%eax
+  2e: 50                    push   %eax
+  2f: e8 fc ff ff ff        call   30 <main+0x30> <---- 恩，这句就是调用函数，
+  34: 83 c4 10              add    $0x10,%esp
+  37: b8 00 00 00 00        mov    $0x0,%eax
+  3c: 8b 55 f4              mov    -0xc(%ebp),%edx
+  3f: 65 33 15 14 00 00 00  xor    %gs:0x14,%edx
+  46: 74 05                 je     4d <main+0x4d>
+  48: e8 fc ff ff ff        call   49 <main+0x49>
+  4d: 8b 4d fc              mov    -0x4(%ebp),%ecx
+  50: c9                    leave
+  51: 8d 61 fc              lea    -0x4(%ecx),%esp
+  54: c3                    ret
+```
+
+
+`readelf -s a.o` , 来，看看目标文件的符号表长啥样：
+
+```
+Symbol table '.symtab' contains 12 entries:
+   Num:    Value  Size Type    Bind   Vis      Ndx Name
+     0: 00000000     0 NOTYPE  LOCAL  DEFAULT  UND
+     1: 00000000     0 FILE    LOCAL  DEFAULT  ABS a.c
+     2: 00000000     0 SECTION LOCAL  DEFAULT    1
+     3: 00000000     0 SECTION LOCAL  DEFAULT    3
+     4: 00000000     0 SECTION LOCAL  DEFAULT    4
+     5: 00000000     0 SECTION LOCAL  DEFAULT    6
+     6: 00000000     0 SECTION LOCAL  DEFAULT    7
+     7: 00000000     0 SECTION LOCAL  DEFAULT    5
+     8: 00000000    85 FUNC    GLOBAL DEFAULT    1 main
+     9: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND shared
+    10: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND swap
+    11: 00000000     0 NOTYPE  GLOBAL DEFAULT  UND __stack_chk_fail
+```
+
+链接ba
+
+`ld -static -m elf_i386 -e main b.o a.o -o ab`
+
+```
+08048094 <swap>:
+ 8048094: 55                    push   %ebp
+ 8048095: 89 e5                 mov    %esp,%ebp
+ 8048097: 8b 45 08              mov    0x8(%ebp),%eax
+ 804809a: 8b 10                 mov    (%eax),%edx
+ 804809c: 8b 45 0c              mov    0xc(%ebp),%eax
+ 804809f: 8b 00                 mov    (%eax),%eax
+ 80480a1: 31 c2                 xor    %eax,%edx
+ 80480a3: 8b 45 08              mov    0x8(%ebp),%eax
+ 80480a6: 89 10                 mov    %edx,(%eax)
+ 80480a8: 8b 45 08              mov    0x8(%ebp),%eax
+ 80480ab: 8b 10                 mov    (%eax),%edx
+ 80480ad: 8b 45 0c              mov    0xc(%ebp),%eax
+ 80480b0: 8b 00                 mov    (%eax),%eax
+ 80480b2: 31 c2                 xor    %eax,%edx
+ 80480b4: 8b 45 0c              mov    0xc(%ebp),%eax
+ 80480b7: 89 10                 mov    %edx,(%eax)
+ 80480b9: 8b 45 0c              mov    0xc(%ebp),%eax
+ 80480bc: 8b 10                 mov    (%eax),%edx
+ 80480be: 8b 45 08              mov    0x8(%ebp),%eax
+ 80480c1: 8b 00                 mov    (%eax),%eax
+ 80480c3: 31 c2                 xor    %eax,%edx
+ 80480c5: 8b 45 08              mov    0x8(%ebp),%eax
+ 80480c8: 89 10                 mov    %edx,(%eax)
+ 80480ca: 90                    nop
+ 80480cb: 5d                    pop    %ebp
+ 80480cc: c3                    ret
+
+080480cd <main>:
+ 80480cd: 8d 4c 24 04           lea    0x4(%esp),%ecx
+ 80480d1: 83 e4 f0              and    $0xfffffff0,%esp
+ 80480d4: ff 71 fc              pushl  -0x4(%ecx)
+ 80480d7: 55                    push   %ebp
+ 80480d8: 89 e5                 mov    %esp,%ebp
+ 80480da: 51                    push   %ecx
+ 80480db: 83 ec 14              sub    $0x14,%esp
+ 80480de: c7 45 f4 00 00 00 00  movl   $0x0,-0xc(%ebp)
+ 80480e5: 83 ec 08              sub    $0x8,%esp
+ 80480e8: 68 6c 91 04 08        push   $0x804916c
+ 80480ed: 8d 45 f4              lea    -0xc(%ebp),%eax
+ 80480f0: 50                    push   %eax
+ 80480f1: e8 9e ff ff ff        call   8048094 <swap>
+ 80480f6: 83 c4 10              add    $0x10,%esp
+ 80480f9: b8 00 00 00 00        mov    $0x0,%eax
+ 80480fe: 8b 4d fc              mov    -0x4(%ebp),%ecx
+ 8048101: c9                    leave
+ 8048102: 8d 61 fc              lea    -0x4(%ecx),%esp
+ 8048105: c3                    ret
+```
 
 # 装载
 

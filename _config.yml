@@ -5,6 +5,16 @@ permalink: /:categories/:year/:month/:day/:title
 exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
 highlighter: pygments
 
+# add customized markdown to html converter, to support TOC with number
+# Markdown settings
+# replace redcarpet to kramdown,
+# although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
+# document: http://jekyllrb.com/docs/configuration/#kramdown
+kramdown:
+  markdown: kramdown
+  highlighter: rouge
+  auto_ids: true
+  input: GFM    
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
