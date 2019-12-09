@@ -186,6 +186,8 @@ Symbol table '.symtab' contains 12 entries:
 
 `ld -static -m elf_i386 -e main b.o a.o -o ab`
 
+`objdump -d ab`:显示一下ab的代码
+
 ```
 08048094 <swap>:
  8048094: 55                    push   %ebp
@@ -223,12 +225,12 @@ Symbol table '.symtab' contains 12 entries:
  80480d8: 89 e5                 mov    %esp,%ebp
  80480da: 51                    push   %ecx
  80480db: 83 ec 14              sub    $0x14,%esp
- 80480de: c7 45 f4 00 00 00 00  movl   $0x0,-0xc(%ebp)
+ 80480de: c7 45 f4 00 00 00 00  movl   $0x0,-0xc(%ebp) <---- c7(movl),45 f4(ebp)，给ebp赋值为0
  80480e5: 83 ec 08              sub    $0x8,%esp
  80480e8: 68 6c 91 04 08        push   $0x804916c
  80480ed: 8d 45 f4              lea    -0xc(%ebp),%eax
  80480f0: 50                    push   %eax
- 80480f1: e8 9e ff ff ff        call   8048094 <swap>
+ 80480f1: e8 9e ff ff ff        call   8048094 <swap> <---- 调用函数swap: e8(call) 9e ff ff ff()
  80480f6: 83 c4 10              add    $0x10,%esp
  80480f9: b8 00 00 00 00        mov    $0x0,%eax
  80480fe: 8b 4d fc              mov    -0x4(%ebp),%ecx
@@ -236,6 +238,14 @@ Symbol table '.symtab' contains 12 entries:
  8048102: 8d 61 fc              lea    -0x4(%ecx),%esp
  8048105: c3                    ret
 ```
+
+操作码 | 操作数 | 功能
+movl  | A,B   | 把A赋给B
+and   | A,B   | A=A+B
+push  | A     | 把A压栈
+pop   | A     | 出栈结果赋值给A
+call  | A     | 调用函数A
+ret   | 无    | 将处理结果返回函数的调用源
 
 # 装载
 
