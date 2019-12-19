@@ -567,6 +567,54 @@ pop   | A     | 出栈结果赋值给A
 call  | A     | 调用函数A
 ret   | 无    | 将处理结果返回函数的调用源
 
+### 静态链接库
+
+我们自己写的程序，可以编译成目标代码，然后等着链接，但是，我们可能会用到别的库，他们也是一个个的xxx.o文件么？然后，我们链接的时候，需要挨个都把他们指定链接进来么？
+
+我们可能会用到c语言的核心库、操作系统提供的各种api的库、以及很多第三方的库。比如c的核心库，比较有名的是glibc，原始的glibc源代码很多，可以完成各种功能，如输入输出、日期、文件等等，他们其实就是一个个的xxx.o，如fread.o，time.o，printf.o，恩，就是你想象的样子的。
+
+可是，他们被压缩到来一个大的zip文件里，叫libc.a:`./usr/lib/x86_64-linux-gnu/libc.a`，就是个大zip包，把各种\*.o都压缩进去了，据说libc.a包含了1400多个目标文件呢:
+
+```
+      objdump -t ./usr/lib/x86_64-linux-gnu/libc.a|more
+      In archive ./usr/lib/x86_64-linux-gnu/libc.a:
+
+      init-first.o:     file format elf64-x86-64
+
+      SYMBOL TABLE:
+      0000000000000000 l    d  .text  0000000000000000 .text
+      0000000000000000 l    d  .data  0000000000000000 .data
+      0000000000000000 l    d  .bss 0000000000000000 .bss
+      .......
+```
+
+我好奇的统计了一下，其实，不止1400，我的这台ubuntu18.04上，有1690个呢：
+
+```
+      objdump -t ./usr/lib/x86_64-linux-gnu/libc.a|grep 'file format'|wc -l
+      1690
+```
+
+如果你以--verbose方式运行编译命令，你能看到整个细节过程：
+
+`gcc -static --verbose -fno-builtin a.c b.c -o ab`
+
+```
+       ....
+        /usr/lib/gcc/x86_64-linux-gnu/7/cc1 -quiet -v -imultiarch x86_64-linux-gnu b.c -quiet -dumpbase b.c -mtune=generic -march=x86-64 -auxbase b -version -fno-builtin -fstack-protector-strong -Wformat -Wformat-security -o /tmp/cciXoNcB.s
+       ....
+       as -v --64 -o /tmp/ccMLSHnt.o /tmp/cciXoNcB.s
+       .....
+        /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -o ab /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginT.o ...
+```
+
+可以看到整个过程就是3步：
+- cc1做编译：编译成临时的汇编程序`/tmp/cciXoNcB.s`
+- as汇编器：生成目标二进制代码
+- collect2：实际上是一个ld的包装器，完成最后的链接
+
+还可以看到，会链接各类的静态库，其实他们都在libc.a这类静态库中。
+
 ## 装载
 
 ### 虚拟地址空间
@@ -588,7 +636,7 @@ ret   | 无    | 将处理结果返回函数的调用源
 
 ### 进程视角
 
-我们切换到进程的视角，进程也是要有一个虚拟空间的，注意，我们又提到了虚拟空间，前面提是在说，链接器需要，好给每段代码呀、数据呀，编个地址。现在，进程，也需要地址啊，这个地址又是一个虚拟地址，我的学习认知，觉得，她们俩不是一回事，但是差不多了多少，都应该是总线位数的编码出来的空间大小，各个内容存放的位置也不会有太大变换。
+我们切换到进程的视角，进程也是要有一个虚拟空间的，叫做“进程虚拟空间（**Process Virtual Space**）”注意，我们又提到了虚拟空间，前面提是在说，链接器需要，好给每段代码呀、数据呀，编个地址。现在，进程，也需要地址啊，这个地址又是一个虚拟地址，我的学习认知，觉得，她们俩不是一回事，但是差不多了多少，都应该是总线位数的编码出来的空间大小，各个内容存放的位置也不会有太大变换。
 
 但是，毕竟是不一样的呀，所以啊，她们俩之间，也需要映射。有了这个映射，进程发现自己所需要的可执行代码缺了，才能知道到可执行文件中的第几行到第几行加载啊。对！这个映射关系叫VMA（虚拟内存区域），就是个映射表。
 
@@ -644,7 +692,9 @@ ret   | 无    | 将处理结果返回函数的调用源
 
 ![](/images/20191219/1576726917641.jpg){:class="myimg"}
 
-### 对和栈
+看，一个物理页（4k）上，不再是放一个segment，而是还放着别的，然后物理页和进程中的页，是1：2的映射关系，浪费就浪费了，没事，反正也是虚拟的。物理上就被“压缩”到了一起，过去需要5个才能放下的内容，现在只需要3个物理页了。
+
+### 堆和栈
 
 
 ## 动态链接
