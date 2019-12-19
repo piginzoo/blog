@@ -582,7 +582,7 @@ ret   | 无    | 将处理结果返回函数的调用源
 
 答案是映射。
 
-TODO：此处配p156也的图
+![](/images/20191219/1576724995161.jpg){:class="myimg50"}
 
 这样，你就把可执行文件中的一块一块的装进内存里面了，前提是进程需要的块，比如正在或者马上要执行的代码，数据啥的，但是剩下的怎么办？还有如果内存满了怎么办？这些不用担心，操作系统负责调度，会判断你是否用到了，就给他加载；如果满了，就按照LRU算法替换旧的，诸如此类的做法。
 
@@ -603,12 +603,48 @@ TODO：此处配p156也的图
 `readelf -l ab` 可以查看，
 
 ```
+      Elf file type is EXEC (Executable file)
+      Entry point 0x80480db
+      There are 3 program headers, starting at offset 52
+
+      Program Headers:
+        Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
+        LOAD           0x000000 0x08048000 0x08048000 0x001a8 0x001a8 R E 0x1000
+        LOAD           0x001000 0x0804a000 0x0804a000 0x00014 0x00014 RW  0x1000
+        GNU_STACK      0x000000 0x00000000 0x00000000 0x00000 0x00000 RW  0x10
+
+       Section to Segment mapping:
+        Segment Sections...
+         00     .text .eh_frame
+         01     .got.plt .data
 ```
 你看，Segment Sections，就告诉你了，如何合并的。
 
 注意哈！有个词出来了：**segement**，上面我们说的VMA的段，就说的是他了，而之前，目标文件里面，可执行文件里面也有段，那个段是“sections”，我去，晕啊。
 
 可执行文件里有俩段了哈：section和segment。
+
+你看上面的例子，他有3个段（Segment），其中2个type是LOAD的Segment，一个是可执行的Segment，一个是只读的Segment；那第一个Segment，可执行那个，到底合并哪些Section呢? 答案是：`00     .text .eh_frame`。
+
+这个信息，是存在可执行文件的一个叫“程序头表（Program Header Table - PHT）”里面的，就是你用readelf -f看到的内容。告诉你sections如何合并成segments。
+
+好吧，再总结一下！
+
+- 目标文件是有自己的sections的，so，可执行文件也一样
+- 只不过，可执行文件又创造了一个概念，segment，就是把sections做了一个合并
+- 但是，这事没完，真正装载的时候，放到内存里面的时候，还要
+
+### 段（Segment）地址对齐
+
+内存啊，都是一个一个4k的小页，便于分配，这个就不多说了，涉及到内存管理。
+
+所以呢，操作系统一个给你，就给你一摞4k小页，那问题了了，即使你压缩了sections们成了segment，你也不正好就4k大小啊，又多又少，就算你多一丢丢4k的整数倍，操作系统都得额外再给你分配一页，多浪费啊。
+
+办法来了，就是段地址对齐。
+
+![](/images/20191219/1576726917641.jpg){:class="myimg"}
+
+### 对和栈
 
 
 ## 动态链接
