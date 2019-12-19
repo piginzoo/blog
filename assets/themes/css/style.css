@@ -208,6 +208,20 @@ h4{
   width:-moz-fit-content;
 }
 
+/*支持表格显示边界*/
+table{
+    border-collapse: collapse;
+    border-spacing: 0;
+    border:2px solid #000000;
+}
+
+th{
+    border:2px solid #000000;
+}
+
+td{
+    border:1px solid #000000;
+}
 
 /* 为了支持header(h2,h3,h4,h5,h6)自动编号 */
 body {counter-reset: h2}
