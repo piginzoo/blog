@@ -696,15 +696,101 @@ ret   | 无    | 将处理结果返回函数的调用源
 
 ### 堆和栈
 
+可执行文件加载到进程空间里面之后，进程空间还有两个特殊的VMA区域，分别是堆和栈。
+
+![](/images/20191219/1576734365469.jpg){:class="myimg30"}
+
+你通过查看linux中的进程内存映射，也可以看到这个信息：`cat /proc/555/maps`
+
+```   ...
+      55bddb42d000-55bddb4f5000 rw-p 00000000 00:00 0                          [heap]
+      ...
+      7ffeb1c1a000-7ffeb1c3b000 rw-p 00000000 00:00 0                          [stack]
+```
 
 ## 动态链接
 
+静态链接我们大致搞清楚，接下来，我们说说动态链接。动态链接的好处很多：
+- 代码段可以不用重复静态连接到需要他的可执行文件里面去了，省了磁盘空间。
+- 运行期，还可以共享动态链接库的代码段啊，运行期也省内存了
+
+### 一个栗子
+lib.c
+```
+#include "lib.h"
+#include <stdio.h>
+
+void foobar(int i) {
+    printf("Printing from lib.so --> %d\n", i);
+    sleep(-1);
+}
+```
+lib.h
+```
+  #ifndef LIB_H_
+  #define LIB_H_
+
+  void foobar(int i);
+
+  #endif // LIB_H_
+```
+
+编译这个动态链接库：`gcc -fPIC -shared -o lib.so lib.c`
+
+然后，编译引用他的程序的program1.c: `gcc -o program1 program1.c ./lib.so`
+
+这样就可以顺利的引用这个动态链接库了。
+
+![](/images/20191219/1576735881582.jpg)
+
+这背后，到底发生了什么？
+
+编译program1.c的时候，他引用了函数foobar，可是这个函数在哪里呢？所以，要在编译的时候，也就是链接的时候，告诉这个program1程序，你需要的那个foobar在lib.so里面，也就是在编译参数中，需要加入./lib.so这个文件的路径。据说，链接器要拷贝so的符号表信息到可执行文件中。
+
+可是，在过去静态链接的时候，我们要对program1中对函数foobar的引用进行重定位，也就是修改program1中对函数foobar引用的地址，可是，现在是动态链接了，就不需要做这件事了，因为链接的时候，根本就没有foobar这个函数的代码在代码段中。
+
+那什么时候，再告诉program1，foobar的调用地址到底是多少呢？答案是运行的时候，也就是运行期，加载lib.so的时候，再告诉program1，你该去调用哪个地址上的lib.so中的函数。
+
+我们可以通过查看/proc/$id/maps，可以查看运行期的program1的样子：
+
+`cat /proc/690/maps`
+
+```
+      55d35c6f0000-55d35c6f1000 r-xp 00000000 08:01 3539248                    /root/link/chapter7/program1
+      55d35c8f0000-55d35c8f1000 r--p 00000000 08:01 3539248                    /root/link/chapter7/program1
+      55d35c8f1000-55d35c8f2000 rw-p 00001000 08:01 3539248                    /root/link/chapter7/program1
+      55d35dc53000-55d35dc74000 rw-p 00000000 00:00 0                          [heap]
+      7ff68e48e000-7ff68e675000 r-xp 00000000 08:01 3671326                    /lib/x86_64-linux-gnu/libc-2.27.so
+      7ff68e675000-7ff68e875000 ---p 001e7000 08:01 3671326                    /lib/x86_64-linux-gnu/libc-2.27.so
+      7ff68e875000-7ff68e879000 r--p 001e7000 08:01 3671326                    /lib/x86_64-linux-gnu/libc-2.27.so
+      7ff68e879000-7ff68e87b000 rw-p 001eb000 08:01 3671326                    /lib/x86_64-linux-gnu/libc-2.27.so
+      7ff68e87f000-7ff68e880000 r-xp 00000000 08:01 3539246                    /root/link/chapter7/lib.so
+      7ff68ea81000-7ff68eaa8000 r-xp 00000000 08:01 3671308                    /lib/x86_64-linux-gnu/ld-2.27.so
+      7ffc2a646000-7ffc2a667000 rw-p 00000000 00:00 0                          [stack]
+      7ffc2a66c000-7ffc2a66e000 r--p 00000000 00:00 0                          [vvar]
+      7ffc2a66e000-7ffc2a670000 r-xp 00000000 00:00 0                          [vdso]
+      ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+```
+
+可以看到一个叫ld-2.27.so，这个玩意，其实就是**动态连接器**，系统开始的时候，他先接管控制权，加载完lib.so后，再把控制权返还给program1。凡是有动态链接库的程序，都会把他动态链接到程序的进程中的，由他首先加载动态链接库的。
+
+https://blog.csdn.net/linyt/article/details/51635768 1 、 2
 
 ### Linux的共享库组织
 
 Linux为了管理动态链接库的各种版本管理，定义了一个so的版本共享方案：
 
 `libname.so.x.y.z`
+
+- x是主版本号：重大升级才会变，不向前兼容，之前的引用的程序都要重新编译
+- y是次版本号：原有的东东不变，增加了一些东西而已，向前兼容
+- z是发布版本号：任何接口都没变，只是修复了bug，改进了性能而已
+
+**SO-NAME**
+
+Linux有个命名机制，用来管理so们之间的关系，这个机制叫SO-NAME。
+
+任何一个so，都对应一个SO-NAME，其实就是`libname.so.x`，对，去掉了y和z。
 
 
 
