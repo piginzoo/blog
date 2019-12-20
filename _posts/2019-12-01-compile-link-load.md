@@ -708,6 +708,10 @@ ret   | 无    | 将处理结果返回函数的调用源
       7ffeb1c1a000-7ffeb1c3b000 rw-p 00000000 00:00 0                          [stack]
 ```
 
+### 参考
+
+[Anatomy of a Program in Memory](https://manybutfinite.com/post/anatomy-of-a-program-in-memory/)
+
 ## 动态链接
 
 静态链接我们大致搞清楚，接下来，我们说说动态链接。动态链接的好处很多：
@@ -774,7 +778,26 @@ lib.h
 
 可以看到一个叫ld-2.27.so，这个玩意，其实就是**动态连接器**，系统开始的时候，他先接管控制权，加载完lib.so后，再把控制权返还给program1。凡是有动态链接库的程序，都会把他动态链接到程序的进程中的，由他首先加载动态链接库的。
 
-https://blog.csdn.net/linyt/article/details/51635768 1 、 2
+### GOT和PLT
+
+![](/images/20191219/got_plt.gif){:class="myimg"}
+
+>对动态链接库中的函数动态解析过程如下：
+1. 从调用该函数的指令跳转到该函数对应的PLT处；
+2. 该函数对应的PLT第一条指令执行它对应的.GOT.PLT里的指令。第一次调用时，该函数的.GOT.PLT里保存的是它对应的PLT里第二条指令的地址；
+3. 继续执行PLT第二条、第三条指令，其中第三条指令作用是跳转到公共的PLT（.PLT[0]）;
+4. 公共的PLT（.PLT[0]）执行.GOT.PLT[2]指向的代码，也就是执行动态链接器的代码；
+5. 动态链接器里的_dl_runtime_resolve_avx函数修改被调函数对应的.GOT.PLT里保存的地址，使之指向链接后的动态链接库里该函数的实际地址；
+6. 再次调用该函数对应的PLT第一条指令，跳转到它对应的.GOT.PLT里的指令（此时已经是该函数在动态链接库中的真正地址），从而实现该函数的调用。
+
+### 参考
+
+- [Linux动态链接库之GOT,PLT](http://www.landq.cn/2019/08/11/Linux%E5%8A%A8%E6%80%81%E9%93%BE%E6%8E%A5%E5%BA%93%E4%B9%8BGOT-PLT/)
+- [深入了解GOT,PLT和动态链接
+](https://www.cnblogs.com/pannengzhi/p/2018-04-09-about-got-plt.html)
+- [可执行文件的PLT和GOT](https://luomuxiaoxiao.com/?p=578)
+- [Linux中的GOT和PLT到底是个啥？](https://www.freebuf.com/articles/system/135685.html)
+- [聊聊Linux动态链接中的PLT和GOT](https://blog.csdn.net/linyt/article/details/51635768)
 
 ### Linux的共享库组织
 
