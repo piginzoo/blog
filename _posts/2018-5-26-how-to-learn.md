@@ -58,3 +58,26 @@ category: education
 [初中数学](https://www.zhihu.com/topic/19674923/top-answers)
 
 [超强的学习能力是怎样练就的？](https://www.zhihu.com/question/35103080/answer/450023561)
+
+## B站视频
+
+B站是个大宝库，是00后的聚集地，里面不乏对学习有兴趣和思考和反思的人，也充满了大神，摘录一些他们的分享，提神醒脑。
+特别是其中的各种方法和技巧，都不是奇淫技巧，而是经过科学研究、无数人证明过的方法，值得深入学习。
+但是，还是要强调，学习还是一个需要努力的事情，是对抗懒惰和欲望的一个反人性的活动，但是收获是无尽的满足和充实。
+
+这些只是B站的一些摘录，可以自己去搜索更多的视频，和这些B站大神们学习“学习”。
+
+- [如何提高学习效率？【论学习方法】](https://www.bilibili.com/video/av37126621)
+
+<iframe src="//player.bilibili.com/player.html?aid=37126621&cid=65243383&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+
+- [费曼学习法](https://www.bilibili.com/video/av88910392):学完，去讲给别人。
+
+<iframe src="//player.bilibili.com/player.html?aid=88910392&cid=152545671&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+- [费曼的超级阅读法](https://www.bilibili.com/video/av77295377):从开始读直到能读下去
+
+<iframe src="//player.bilibili.com/player.html?aid=77295377&cid=132218141&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+
+- [为什么费曼学习法被称为终极学习法](https://www.bilibili.com/video/av70998909):一个搞神经网络的大神，他的学习观系列超赞

@@ -62,7 +62,13 @@ category: home
  - 陈思老师 - 诸葛学堂的
 
 
-#### 关于教育
+## 关于教育
+
+### 优质视频
+
+- [素质教育为何十年都没改革成？这才是高考制度的“内幕”](https://www.bilibili.com/video/av78766364)
+
+### 樊登读书会
 
 [樊登读书会-育儿书](http://www.szdushu.com/Article/jiating/)
 
