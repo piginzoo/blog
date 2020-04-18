@@ -61,12 +61,6 @@
             {% assign pages_list = site.pages  | sort:"order" %}
             {% include JB/pages_list %}
           </ul>
-          <form class="navbar-form navbar-right" role="search">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="关键字...">
-            </div>
-            <button type="submit" class="btn btn-default">搜索</button>
-          </form>
         </div><!-- /.navbar-collapse -->
       </nav>
 
@@ -88,25 +82,22 @@
 
     <!-- Latest compiled and minified JavaScript, requires jQuery 1.x (2.x not supported in IE8) -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script href="{{ ASSET_PATH }}/bootstrap/js/bootstrap.min.js"></script>
+    <!-- script href="{{ ASSET_PATH }}/bootstrap/js/bootstrap.min.js"></script-->
     <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="{{ ASSET_PATH }}/js/toc.js"></script>
+    <script src='https://cdn.staticfile.org/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML'></script>
     <script type="text/javascript">
       $(document).ready(function() {
         $('#toc').toc({ listType: 'ul' });
       });
     </script>
-
-
     <!-- for support Latex format, use MathJax -->
-    <script src='https://cdn.staticfile.org/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML'></script>
     <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
           tex2jax: {inlineMath: [['$','$'], ['\(','\)']]}
         });
     </script>
     <!-- for support Latex format, use MathJax -->
-
-
   </body>
 </html>

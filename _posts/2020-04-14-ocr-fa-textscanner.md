@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 文字识别的一些研究
+title: 【OCR实践系列】Aster、FA和TextScanner的一些研究
 category: machine-learning
 ---
 
@@ -8,9 +8,13 @@ category: machine-learning
 
 最近，苦于要解决文字中生僻字、低频词的识别，以及识别正确率的问题，做了一些研究。
 
-主要看了看aster总的TRN网络，注意力聚焦，以及最近的text scanner，把一些理解和体会记录下来。 
+之前用的crnn，3770的一级字库，使用我们自己标注的图片，正确率跑到84%，不是特别满意，曾经看过[阿里读光OCR团队](https://juejin.im/entry/5b3081386fb9a00e8945909b)分享过，他们通过注意力方式，切出单字来，大大正确率：
+>生僻字的解决方法如上图所示，首先使用行识别，再进行了Attention单字识别方案解决了生僻字语料偏少的问题，Attention可以解决单字切字问题。通过上述方法，我们对2万多生僻字测试集进行了测试，精确度从21%提高到了99%，基本上解决了生僻字问题。
 
-## 先说说Aster的SRN
+所以我就尝试实现[Attention OCR](https://github.com/piginzoo/attention_ocr)，但是，总是不收敛，于是开始尝试各类方法，包括回顾了我实现过程中主要参考的Aster的TRN网络、Focus Attention以及最近比较火的TextScanner模型，把自己的一些心得体会记录下来，形成此文。
+
+
+## 先说说Aster的TRN
 
 先贴论文:[Aster:An Attentional Scene Text Recognition with Flexible Rectification](https://www.researchgate.net/publication/325993414_ASTER_An_Attentional_Scene_Text_Recognizer_with_Flexible_Rectification)
 
@@ -58,6 +62,7 @@ category: machine-learning
 
 ### FA网络
 
+（...未完成）
 
 ### 参考
 
@@ -67,16 +72,23 @@ category: machine-learning
 
 ## TextScanner
 
-核心就是三个图：
+TextScanner是旷视的姚神、华中科技大的白神坐阵的最新的一个识别力作，第一作者是旷视的[万昭祎](https://www.wanzy.me/)，第二作者是华中科技大的[何明航](https://www.profillic.com/search?query=Minghang)。我就阅读论文中遇到的一些问题，向何明航进行了请教，得到了他很大帮助，这里特别感谢一下。
 
-- Character Segmentation：W，H，Class（Class是字符集个数），这个用来分辨是哪个字符
-- Order Segmentation：W，H，N（N是序列长度），这个是来分辨字符的从左往右的顺序
-- Localization Map：W，H，1，这个是用来告诉那些像素是字符像素
-	
+这篇是目前效果SOTA的一个识别框架，所以，我也花了最多的时间去学习和理解。它也开启了不同于CTC和Attention之外的第三条识别道路，就是尽量采用卷积，少量的RNN，速度可以做到更快。
+
+其核心思路，在我看来就是三个图：
+
+- G:Character Segmentation：W，H，Class（Class是字符集个数），这个用来分辨是哪个字符
+- H:Order Segmentation：W，H，N（N是序列长度），这个是来分辨字符的从左往右的顺序
+- Q:Localization Map：W，H，1，这个是用来告诉那些像素是字符像素
+
+“**每个字符在什么中心位置上，是哪一个字符，排在第几个顺序上**”，一言以蔽之，就是这句话。
+
+接下来，看下网络结构，
 
 ### 网络结构
 
-主要参考第3也的第3节:**3.Methodology**
+这里主要参考第3页的第3节:**3.Methodology**
 
 ![](/images/20200416/1587021816112.jpg){:class="myimg"}
 
@@ -87,7 +99,6 @@ category: machine-learning
 - Order Segmentation：W，H，N（N是序列长度）
 - Localization Map：W，H，1
 - Order Maps：W，H，N
-- Word Formation：？？？？？
 
 #### Class Branch - Charachtor Segmenation（$G(w,h,class)$）
 
@@ -99,7 +110,9 @@ category: machine-learning
 所以，我看了论文里提到了，是用了CA-FCN的结构来抽取feature，只不过是把VGG替成了Resnet50：
 >Our model is built on top of the backbone from CA-FCN, in which the character attentions are removed and VGG blocks are replaced with a ResNet-50(He et al. 2016) base model.
 
-这样理解的话，这个就是FCN后的结果，那和原图一样，是64x256。不过是这样的么？这个细节存在疑问？？？
+![](/images/20200418/1587184093352.jpg){:class="myimg"}
+
+这样理解的话，就应该如上图，去掉了attention，取最后的FCN网络的结果，那和原图一样，是64x256的输出，通道数应该是FCN最后隐层神经元个数。
 >During training and inference, the input im- ages are resized to 64 × 256.
 
 然后过2个卷积，然后过一个全连接，最后输出（w,h,c），比如（32，256，3370），c是字符分类个数，比如3770的一级字库数。
@@ -193,10 +206,191 @@ $$L=\lambda_l * L_l + \lambda_o * L_o + \lambda_m * L_m + L_s$$
 
 第四个：$L_s$，对应的是Sgementation Map（G）的损失，segmentation map是啥来着？回忆一下，是每个像素，是某个汉字的概率。
 
-好了，我们看到，这些都是概率，那典型的就是
+好了，我们看到，这些都是概率，还是有的是多分类，所以，损失函数就大多用了交叉熵，如$L_s$和$L_o$，不过$L_l$换成了L1 smooth，这个细节需要注意，不过我觉得其实用交叉熵也没啥问题。
 
 ### 关于训练样本
 
+好，上面说了损失函数，那么就要对应的提供样本GT了。
+
+我们看到，我们有$L_l$、$L_o$、$L_s$要计算，就意味着我们有3种GT样本需要制作，怎么制作呢？我们一个个的说。
+
+![](/images/20200418/1587176164416.jpg){:class="myimg"}
+
+- 先说说$L_s$需要的GT，即Character Sgementation（G）的GT：
+	> Inside P'area,the class of the corresponding character is rendered as ground truth of the character segmentation. 
+
+	其实就把标注的单字的标注框，shrink一下，然后得到的多边形里面，都填充成对应的字符，就得到了Character Segmentation的GT。当然，真正计算的损失的时候，还需要把这个字符转成one-hot向量。
+
+	实际得到的GT是一个（H,W,C+1），C是字库字符数，+1是要算上背景，且第三个C维度是一个one-hot编码的张量。
+
+- 然后说说$L_o$所需要的GT，也就是Order Map（H），准确的是说，是每一个$H_k$的GT。
+
+	*吐槽一下，这块论文里写的确实太晦涩了，真心看不懂，想了半天也没想清楚，情不得已，不得不向何明航同学请教，在他的帮助下，终于搞清楚了。*
+
+	先看原文：
+	>To generate the ground truth of order maps with character-level annotations, the center of Gaussian maps is firstly detected by computing the central points of characters bound- ing boxes. As Fig. 4 shown,2D Gaussian maps $\hat{Y}\_k \in R^{h×w}$ with σ and expectation at central points are generated for each character. Then the order of characters is rendered for pixels inside $\hat{Y}\_k$ area. Finally $\hat{Z}\_k$ is normalized to [0, 1], to produce the ground truth $Z_k$ of $H_k$.
+
+	![](/images/20200418/1587181174549.jpg){:class="myimg"}
+
+	有几处让人糊涂的地方：高斯分布，是用高斯方式采样一些样本点么？如果是一堆点的集合，那文中提到的$\hat{Y}\_k$是点集么？那$\hat{Y}\_k$的值又指的是什么？像素值么？$\max\hat{Y}\_k$是像素值最大的值么？后面还提到要把$\hat{Z}\_k$归一化，可是$\hat{Z}\_k$的值都是k，怎么归一化？难道变成均匀分布的概率值？
+
+	带着这些问题，请教了何明航，终于得到了合理的解释：
+
+	最核心的是$\hat{Y}\_k$的理解，它其实是一个高斯过滤图：
+
+	![](/images/20200418/1587182593359.jpg){:class="myimg30"}
+
+	他的值，其实就是概率密度函数的值，是一个概率值，凡是值比最大值小于0.5的点，值都被强制归0（就是上述公式里的处理）。
+	因为这些概率值都非常小，所以要做一个归一化（上面提到的）的动作，把值变到[0\~1]之间，这个归一化动作也是有意为之的，因为，在Order Maps中的某个$H_k$，对应的区域就应该是文字区域，且这个区域表达的是“是前景文字的概率”，所以，归一化正好是为了满足这点。
+
+	这里我们需要思考一下，为何要这样做？也就是这个GT的insight。
+
+	前面提过，每个$H_k$对应是第几个字符的中心位置，按理说，应该是一个像素的位置值作为GT。但是，这里的设计是，用一个均值在这个字符的中心位置（方差是超参），来表达这个中心位置，这样做，我觉得，可能是因为文字块是一个区域，用一个正态分布来表示这个区域，越靠近中心区域给的权重越高。在网络预测时候，尽量让这个中心点预测为前景（文字）的概率最大，然后越往周边，预测为前景（文字）的概率逐渐decay，这样个设计，来帮助“确定”字符的中心区域。
+
+- 有了每个Order Map的每个$H_k$的GT，就可以制作Localization Map（Q）的GT了
+
+	其实就是把各个$H_k$合成到一起，不过细节上还是有些不太一样。
+
+	实现上，是把$\hat{Y}\_k$归一化后（注意噢！要归一化），合并到一起，而不是直接$Z_k$合并到了一起。还记得$\hat{Y}\_k$和\hat{Z}\_k$的区别么？\hat{Z}\_k$是去掉了一些概率值比较小点而已。
+
+### 互训练（Mutual Train）
+
+不是所有的标注都是有字符级别的bounding box的，成本太高，大部分的样本是只有一个字符串。
+这种情况下，就可以考虑论文里说的互训练方式。
+
+字符串样本，**至少**提供了两个信息：字符的顺序，以及字符是什么。能不能利用这些信息来训练网络呢？
+
+答案是可以的。
+
+#### 预测后的点（是某个字的点，是第几个位置的点）
+
+Character Segmentation网络预测出一个$\hat{G}$，这个预测是每个像素是啥字符。如果我的这个字符串里的每个字符都是唯一的话，
+
+而Order Map，吐出来的$\hat{H}$（这里直接略过Localization Map:Q，和Order Segmenation:S）,直接把两者结合（就是element-wise乘）的结果H拿出来了，这个预测是每个顺序上都有那些点是文字前景。
+
+好，这个时候，结合这两个$\hat{G}$和$\hat{H}$信息，我们可以通过下面这个式子，得到了一些点：
+
+$\Psi_h^k={(i,j)\|\hat{H}(i,j)=k,Q(i,j)>\epsilon}$
+
+$\Psi_g^k={(i,j)\|\hat{H}(i,j)=k,G(i,j)>\epsilon}$
+
+*$\epsilon$=0.2*
+
+这里，用到了Q，Q是啥来着，是图片上的点是前景的概率，只有是前景概率>0.2的点，我才采用。
+
+再通俗一点解释，
+
+$\Psi_h^k$，就是拿着某个**位置**的汉字，去找这个对应位置的$H_k$图，然后根据Q的阈值，找出来是文字的点。
+
+$\Psi_g^k$，就是拿着某个位置的**汉字**，去G中去找那些是这个汉字的点，然后再依据Q的阈值，找出这些点。
+
+好，拿到这些点了，我们就可以算出两个损失：
+
+#### 用这些点，相互校验，算损失
+
+我们会算用预测位置的$H_k$点（它可以确定是哪个字），去$G$中找到对应的点，来算这些点的损失。
+
+我们会算用每个字，去找出$G$中这个字对应点，这些点是可以确定顺序的（因为标签字符串中这个字在第几个可以确定），来去找到对应位置为k的$H_K$中的点的损失。
+
+$L_g^k=\frac{1}{\|  \Psi_h^k \|} \sum\limits_{(i,j)\in \Psi_g^k}  L_{CE}\Big\lgroup G(i,j),onehot(T(k))\Big\rgroup$
+
+$L_h^k=\frac{1}{\|  \Psi_g^k \|} \sum\limits_{(i,j)\in \Psi_h^k}  L_{CE}\Big\lgroup G(i,j),onehot(T(k))\Big\rgroup$
+
+![](/images/20200418/1587218126632.jpg){:class="myimg30"}
+
+为了更理解清楚讲清楚这事，我手工撸了图，可以更清晰的理解这事。
+
+T是字符序列。
+
+上面的图，是我预测出来G的每个像素点是哪个汉字的softmax概率（是个3370字库概述的巨大的多维概率分布噢）。
+
+下面的图，是我预测出来每个$H_k$，一共有30个，代表最多30个字符，但是每个$H_k$上只有零星的一些点，表示这些像素组成了第k个字符，而且这些点是呈一个正态分布的，其均值位置就是汉字的中心。
+
+**看这上图，我们来详细说一下第一个算$L_g^k$式子：**
+
+$L_g^k=\frac{1}{\| \Psi_h^k\|} \sum\limits_{(i,j)\in \Psi_g^k}  L_{CE}\Big\lgroup G(i,j),onehot(T(k))\Big\rgroup$
+
+求$L_g^k$，可是，他居然出了一个下标是h的$ \|  \Psi_h^k \| $，为何是拧着的呢？
+这个细节很重要。$L_g^k$是啥损失，是识别是哪个字符的损失计算。
+
+他用的是哪些点？他用的是$H_k$，即那些第k位置，是前景的点。
+
+把这些$H_k$上的点，找到其对应的$G$上的点，G上的点是啥来？是哪个字符的softmax概率。
+所以，用$T(K)$，即字符的one-hot表示，做一个交叉熵，算出损失。
+
+最后除以$\| \Psi_h^k\|$做一个均一化，算是平均损失。
+
+我们回顾一下，我们用在$H_k$中点，算了G中的损失，所以这种交叉玩法，就是论文里管他叫“相互训练 - mutual supervision training”的缘故。
+
+再说**第二个算$L_h^k$式子：**
+
+
+$L_h^k=\frac{1}{\| \Psi_g^k\|} \sum\limits_{(i,j)\in \Psi_h^k}  L_{CE}\Big\lgroup G(i,j),onehot(T(k))\Big\rgroup$
+
+同上，这个是从G图中，找出样本中是第k位置的汉字，然后用这个汉字，去反向筛出来G中的那些是这个字的点。
+
+然后拿着这些点，回到$H_k$中，与那些对应的点，算交叉熵。这些点的GT值是一个维度为N（30）的one-hot向量。
+
+#### 提高置信度
+
+无论是$\Psi_h^k$，还是$\Psi_g^k$，都是需要被Q（是不是文字前景，而且不会太多，只会是以文字中心为均值的正态分布）的阈值给筛选掉很多。所以，如果剩下的就没几个点了，你的预测估计也不太靠谱了。
+
+所以，要衡量你的置信度，可以用这个筛选下来的点的数量来当做置信度，来调节损失函数中的“贡献”，置信度低，计算损失的时候，权重就给小点。
+
+**我们来算算G图上，某个字的置信度$\Phi_g$：**
+
+$$
+n_g^k=
+\left\{  
+	\begin{array}{l}
+		1 , \quad if  \quad  \Psi_g^k \ne \emptyset, \\
+		0 , \quad otherwise
+	\end{array}  
+\right.
+$$
+
+$$
+\Phi_g = \frac{\sum_{k=1}^{\|T\|} n_g^k}{\|T\|}   
+$$
+
+**我们来算算$H_k$图上，是这个位置的点的置信度$\Phi_g$：**
+
+$$
+n_h^k=
+\left\{  
+	\begin{array}{l}
+		1 , \quad if  \quad  \Psi_h^k \ne \emptyset, \\
+		0 , \quad otherwise
+	\end{array}  
+\right.
+$$
+
+$$
+\Phi_h = \frac{\sum_{k=1}^{\|T\|} n_h^k}{\|T\|}   
+$$
+
+#### 最后，终于可以计算$L_m$了
+
+
+算一下G的损失：
+
+$L_g=\frac{(\Phi_h)^\gamma}{\|T\|} \sum\limits_{k=1}^{\|T\|} L_g^k$
+
+$\gamma=2$，$\gamma$是次方，不是简单的相乘啊，别看错了。
+
+算一个H的损失：
+
+$L_h=\frac{(\Phi_g)^\gamma}{\|T\|} \sum\limits_{k=1}^{\|T\|} L_h^k$
+
+最后合到一起：
+
+$L_m=L_h + \lambda * L_g$
+
+$\lambda=0.2$
+
+### 参考
+- [TextScanner阅读笔记](https://zhuanlan.zhihu.com/p/102493641)
+- [旷视研究院提出TextScanner：确保字符阅读顺序，实现文字识别新突破](https://zhuanlan.zhihu.com/p/100683420)
 
 
 ## 附录：优秀的OCR分享
