@@ -154,7 +154,7 @@ RNN这块，需要把[h,w,c]=>[w,h\*c]，主要是为了让他成一个保持左
 接下来，要计算Order Map（H）了：
 
 就是把Localitation Map（S - w,h,N）和 Order Segmentation（Q - w，h），两个东西做element-wise乘法，就是对应位置相乘，
-成完后，你就得到了N个 w,h的 feature map。也就是H。其中每个w,h形状的图，就是上图中说的$H_k k\in(1,N)$。
+成完后，你就得到了N个 w,h的 feature map。也就是H。其中每个w,h形状的图，就是上图中说的$H_k \in (1,N)$。
 
 这里有个细节， Order Segmentation（Q - w，h）是经过sigmoid计算的，Localitation Map（S - w,h,N）是经过softmax计算的，
 他们相乘了，得到了的数应该会非常小，比如在某个点上，sigmoid计算的Q的值，softmax计算的S值，相乘，会变成更小的一个数。
@@ -202,7 +202,7 @@ $$L=\lambda_l * L_l + \lambda_o * L_o + \lambda_m * L_m + L_s$$
 
 第二个：$L_o$，对应的是Order Map（H）的损失，order map是啥来着？回忆一下，是每个位置上，对应的每个点是文本的概率。
 
-第三个：$L_m$，是互训练的时候的损失，没研究呢，回头补上。
+第三个：$L_m$，是互训练的时候的损失，[后面](#L_m)会详细研究
 
 第四个：$L_s$，对应的是Sgementation Map（G）的损失，segmentation map是啥来着？回忆一下，是每个像素，是某个汉字的概率。
 
@@ -369,7 +369,7 @@ $$
 \Phi_h = \frac{\sum_{k=1}^{\|T\|} n_h^k}{\|T\|}   
 $$
 
-#### 最后，终于可以计算$L_m$了
+#### 最后，终于可以计算$L_m$了<a name="L_m"></a>
 
 
 算一下G的损失：
@@ -397,11 +397,11 @@ $\lambda=0.2$
 
 跟文章主题无关，不过，顺道揉到此贴中吧，都是网上优秀的OCR的分享。
 
-- 一个不错的视频：[https://www.bilibili.com/video/av73805100?p=7](https://www.bilibili.com/video/av73805100?p=7) 腾讯云培训上一个女的讲的。
-- 我买的july的ocr识别的课程：[http://www.julyedu.com/video/play/136](http://www.julyedu.com/video/play/136)，
-- [阿里读光OCR那个女的分享](https://yunqi.aliyun.com/2018/shanghai/review?spm=a2c4e.11153940.blogcont603444.8.5e612cfblAaE9b)，剔除了低频字识别的方法
-- 旷视的姚聪的视频：[http://www.mooc.ai/open/course/605](http://www.mooc.ai/open/course/605)
-- 旷视最近的一个分享：[https://www.bilibili.com/video/av83837791?t=1889](https://www.bilibili.com/video/av83837791?t=1889)
+- [腾讯云上的一个OCR培训](https://www.bilibili.com/video/av73805100?p=7) ，一位女工程师讲的。
+- [July七月的OCR识别课程](http://www.julyedu.com/video/play/136)，
+- [阿里读光OCR负责人的分享](https://yunqi.aliyun.com/2018/shanghai/review?spm=a2c4e.11153940.blogcont603444.8.5e612cfblAaE9b)，剔除了低频字识别的方法
+- [旷视的姚聪的视频的分享](http://www.mooc.ai/open/course/605)
+- [旷视最近的一个分享](https://www.bilibili.com/video/av83837791?t=1889)
 - [百度小哥的一个分享](https://mp.weixin.qq.com/s/z5hRafxepA4Zj5pbbK8HzA)
 - [Valse的学术视频](https://www.iqiyi.com/v_19rvi9r9mo.html#vfrm=8-8-0-1)，[对应的ppt](http://valser.org/webinar/slide/index.php/Home/Index/index/dir/20191017.html)
 - 白翔老师的的一系列文章分享：
@@ -409,7 +409,7 @@ $\lambda=0.2$
 	- [白翔：复杂开放场景中的文本理解](https://mp.weixin.qq.com/s/4Tj92Mmj2-zOHfk1Tk167w)
     - [图像OCR年度进展 VALSE2018之十一](https://mp.weixin.qq.com/s/0ysaJGNslckesv21o752FA)
     - [白翔：趣谈“捕文捉字”-- 场景文字检测 VALSE2017之十](https://mp.weixin.qq.com/s/Y7Xpe1DlhGR9XRB7GunGnA)
-- 更早的一起：[https://www.iqiyi.com/w_19rsxii7cp.html](https://www.iqiyi.com/w_19rsxii7cp.html)，不过有点老2014的，参考用。
+- [更早的一个OCR分享](https://www.iqiyi.com/w_19rsxii7cp.html)，不过有点老2014的，参考用。
 - CSIG文档图像分析与识别专委会，这个公众号非常赞
 - [SFFAI58-文本识别专场，讲了TextScanner，白翔的学生讲的](https://www.bilibili.com/video/BV1Gt4y127S6?t=3319)
 - [金连文-基于深度学习的文字识别](https://www.bilibili.com/video/BV1SE411Y7d2)
