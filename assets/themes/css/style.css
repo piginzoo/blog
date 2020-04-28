@@ -119,6 +119,9 @@ h4{
     repeat center center scroll rgba(225,225,225,0.5);    
 } 
 
+.myimg100{
+  width:100%;
+}
 
 .myimg{
   width:50%;

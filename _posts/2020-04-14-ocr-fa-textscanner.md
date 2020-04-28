@@ -90,7 +90,7 @@ TextScanner是旷视的姚神、华中科技大的白神坐阵的最新的一个
 
 这里主要参考第3页的第3节:**3.Methodology**
 
-![](/images/20200416/1587021816112.jpg){:class="myimg"}
+![](http://www.piginzoo.com/images/20200416/1587021816112.jpg){:class="myimg"}
 
 开始是3个子网络的输出（Character Segmentation，Order Segmentation，Localization Map），后2个子网络输出（Order Segmentation，Localization Map）的结果还要合体（element-wise相乘）成一个新的结果（Order Maps），然后在来一次合体，即Character Segmentation和Order Maps合体，得到最后的Word Formation。
 
@@ -110,7 +110,7 @@ TextScanner是旷视的姚神、华中科技大的白神坐阵的最新的一个
 所以，我看了论文里提到了，是用了CA-FCN的结构来抽取feature，只不过是把VGG替成了Resnet50：
 >Our model is built on top of the backbone from CA-FCN, in which the character attentions are removed and VGG blocks are replaced with a ResNet-50(He et al. 2016) base model.
 
-![](/images/20200418/1587184093352.jpg){:class="myimg"}
+![](http://www.piginzoo.com/images/20200418/1587184093352.jpg){:class="myimg"}
 
 这样理解的话，就应该如上图，去掉了attention，取最后的FCN网络的结果，那和原图一样，是64x256的输出，通道数应该是FCN最后隐层神经元个数。
 >During training and inference, the input im- ages are resized to 64 × 256.
@@ -134,7 +134,7 @@ TODO:这个细节不知道推测的对不对，需要去问一下原论文作者
 
 #### Geometry Branch - Order Segmentation（$S(w,h,N)$）
 
-![](/images/20200415/1586943957097.jpg){:class="myimg"}
+![](http://www.piginzoo.com/images/20200415/1586943957097.jpg){:class="myimg"}
 
 这个是最复杂的一个了。
 
@@ -214,7 +214,7 @@ $$L=\lambda_l * L_l + \lambda_o * L_o + \lambda_m * L_m + L_s$$
 
 我们看到，我们有$L_l$、$L_o$、$L_s$要计算，就意味着我们有3种GT样本需要制作，怎么制作呢？我们一个个的说。
 
-![](/images/20200418/1587176164416.jpg){:class="myimg"}
+![](http://www.piginzoo.com/images/20200418/1587176164416.jpg){:class="myimg"}
 
 - 先说说$L_s$需要的GT，即Character Sgementation（G）的GT：
 	> Inside P'area,the class of the corresponding character is rendered as ground truth of the character segmentation. 
@@ -230,7 +230,7 @@ $$L=\lambda_l * L_l + \lambda_o * L_o + \lambda_m * L_m + L_s$$
 	先看原文：
 	>To generate the ground truth of order maps with character-level annotations, the center of Gaussian maps is firstly detected by computing the central points of characters bound- ing boxes. As Fig. 4 shown,2D Gaussian maps $\hat{Y}\_k \in R^{h×w}$ with σ and expectation at central points are generated for each character. Then the order of characters is rendered for pixels inside $\hat{Y}\_k$ area. Finally $\hat{Z}\_k$ is normalized to [0, 1], to produce the ground truth $Z_k$ of $H_k$.
 
-	![](/images/20200418/1587181174549.jpg){:class="myimg"}
+	![](http://www.piginzoo.com/images/20200418/1587181174549.jpg){:class="myimg"}
 
 	有几处让人糊涂的地方：高斯分布，是用高斯方式采样一些样本点么？如果是一堆点的集合，那文中提到的$\hat{Y}\_k$是点集么？那$\hat{Y}\_k$的值又指的是什么？像素值么？$\max\hat{Y}\_k$是像素值最大的值么？后面还提到要把$\hat{Z}\_k$归一化，可是$\hat{Z}\_k$的值都是k，怎么归一化？难道变成均匀分布的概率值？
 
@@ -238,7 +238,7 @@ $$L=\lambda_l * L_l + \lambda_o * L_o + \lambda_m * L_m + L_s$$
 
 	最核心的是$\hat{Y}\_k$的理解，它其实是一个高斯过滤图：
 
-	![](/images/20200418/1587182593359.jpg){:class="myimg30"}
+	![](http://www.piginzoo.com/images/20200418/1587182593359.jpg){:class="myimg30"}
 
 	他的值，其实就是概率密度函数的值，是一个概率值，凡是值比最大值小于0.5的点，值都被强制归0（就是上述公式里的处理）。
 	因为这些概率值都非常小，所以要做一个归一化（上面提到的）的动作，把值变到[0\~1]之间，这个归一化动作也是有意为之的，因为，在Order Maps中的某个$H_k$，对应的区域就应该是文字区域，且这个区域表达的是“是前景文字的概率”，所以，归一化正好是为了满足这点。
@@ -296,7 +296,7 @@ $L_g^k=\frac{1}{\|  \Psi_h^k \|} \sum\limits_{(i,j)\in \Psi_g^k}  L_{CE}\Big\lgr
 
 $L_h^k=\frac{1}{\|  \Psi_g^k \|} \sum\limits_{(i,j)\in \Psi_h^k}  L_{CE}\Big\lgroup G(i,j),onehot(T(k))\Big\rgroup$
 
-![](/images/20200418/1587218126632.jpg){:class="myimg30"}
+![](http://www.piginzoo.com/images/20200418/1587218126632.jpg){:class="myimg30"}
 
 为了更理解清楚讲清楚这事，我手工撸了图，可以更清晰的理解这事。
 
