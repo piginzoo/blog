@@ -56,6 +56,46 @@ category: home
 >2018年北京中考人数达到了历史最低值6.5万,非京籍考生占中考总人数的20%左右,朝阳2018年是7841(京籍4959,非京籍2882,借考2469)
 >借考:借考考生为外地户口的学生，最终需要回原籍升学上高中。
 
+
+### 2020年更新
+
+2021年中考：
+
+- 多少孩子需要毕业，北京户口的有多少
+- 朝阳有多少孩子，北京户籍的有多少
+- 朝阳4小强情况（本校直升、校额到校、考试录取、最低分数线）
+	目前仅有2018年数据：
+	- [陈经纶](http://bj.zhongkao.com/e/20180517/5afd385fd02a5.shtml)，普通72，科技班20，总157，[分数](http://bj.zhongkao.com/e/20180328/5abb09e08b272.shtml)，547（语90数87英98）
+	- [八十](http://bj.zhongkao.com/e/20180517/5afd389857f0a.shtml)，普42，科技班30，总150，[分数](http://bj.zhongkao.com/e/20180328/5abb09da37f9f.shtml)，555（语93数91英98）
+	- [人朝](http://bj.zhongkao.com/e/20180517/5afd370a7079c.shtml)，普（107），无直升，[分数](http://bj.zhongkao.com/e/20180328/5abb0a239cf5f.shtml)，552（语94数88英97）
+	- [清朝](http://bj.zhongkao.com/e/20180517/5afd35f6703b0.shtml#)，普（50），无直升，[分数](http://bj.zhongkao.com/e/20180328/5abb0a453d5a3.shtml)，547（语90数86英96）
+	- [日坛](http://bj.zhongkao.com/e/20180517/5afd38136d4a2.shtml)，普（38），总87，[分数](http://bj.zhongkao.com/e/20180328/5abb09e77ada6.shtml)，555（语86数90英91）
+	- [工大附](http://bj.zhongkao.com/e/20180517/5afd373d9146a.shtml),普（39），总105，[分数](http://bj.zhongkao.com/e/20180328/5abb0a0369c3b.shtml)，541（语92数85英94）
+
+	其他外区:
+	- [十一中学](http://bj.zhongkao.com/e/20180328/5abb0998ea088.shtml)，535（语93数82英95）
+	- [五十五中](http://bj.zhongkao.com/e/20180328/5abb09a879292.shtml)，530（语86数91英94），0人
+	- [一七一](http://bj.zhongkao.com/e/20180328/5abb09aecfe12.shtml)，555（语88数95英100），10人
+	- [汇文中学](http://bj.zhongkao.com/e/20180328/5abb09b584f5b.shtml)，552（语93数89英98），22人
+	- [四中](http://bj.zhongkao.com/e/20180328/5abb09bbc5d36.shtml)，565（语97数95英98），14人
+	- [三十五](http://bj.zhongkao.com/e/20180328/5abb09ca48d23.shtml)，550（语92数96英94），4人
+	- [北师大附](http://bj.zhongkao.com/e/20180328/5abb09d197f4d.shtml)，561（语93数93英98），6人
+
+
+- 东北师范的情况
+
+2019年高考情况：
+
+- 北京高中多少孩子考大学
+- 北京有多少大学可以报考
+- 北京的985和211有哪些
+- 北京国际高中学生情况
+
+中国大学情况
+
+- 学费
+
+
 #### 好老师
 
 都是自己的体会，很主观的推荐
