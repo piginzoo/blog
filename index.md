@@ -12,10 +12,27 @@ order: 1
 
 <div class="bodystyle1">
 
+	<p>【置顶】</p>
+
 	<ul class="posts">
 
 	  {% for post in site.posts %}
-	  	{% if post.type!="private" %}
+	  	{% if post.type=="top" %}
+	    	<li>
+	    		<span>{{ post.date | date: "%Y/%m/%d" }}</span> &raquo; 
+	    		<a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
+	    	</li>
+	    {% endif %}
+	  {% endfor %}
+
+	</ul>
+
+	<p>【博客】</p>
+
+	<ul class="posts">
+
+	  {% for post in site.posts %}
+	  	{% if post.type!="private" and post.type!="top" %}
 	    	<li>
 	    		<span>{{ post.date | date: "%Y/%m/%d" }}</span> &raquo; 
 	    		<a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>
