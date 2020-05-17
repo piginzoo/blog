@@ -78,7 +78,7 @@ gem install jekyll
 
 这里暂停一下，先对Jekyll，以及我使用心得，做一个简单的介绍：
 
-### 用Jekyll写博客
+#### 用Jekyll写博客
 
 Jekyll网站生成工具，博客作者，可以使用Markdown语法书写博客，然后Jekyll会自动帮你讲Markdown页面转化成HTML页面，同时还会帮你构建了一个网站的基础框架，比如首页、分类。它还支持显示模板，使用CSS定制化你的显示样式，我使用的就是他默认提供的一套Bootstrap的模板，很朴素简洁。如果你觉得太素了，你可以下载其他热心网友制作的更酷的模板，切换过去后瞬间网站就高大上了，哈哈。
 
@@ -98,40 +98,6 @@ Jekyll网站生成工具，博客作者，可以使用Markdown语法书写博客
 - Valine还自动帮我完成了帖子的[计数器功能](https://valine.js.org/visitor.html)，每篇帖子标题下方的计数器就是用它实现的。
 - 安装了百度统计，帮助我了解网站和每篇帖子的访问和SEO情况。
 - 另外，还自己改了一些内容，如置顶、排序、日期格式化...，Jekyll就是一个给程序员准备的Toy，本身就是一套Ruby脚本，所以作为程序员的你，可以自己尽情发挥。
-
-
-### 创建帖子的脚本
-
-为了方便自己，创建了一个快速创建帖子的脚本，帮助我快速创建页面：
-
-```
-TODAY=`date +%Y-%m-%d`
-TITLE=$1
-
-if [ "$1" == "" ]; then
-	echo "格式错误！"
-	echo "\t必须要有一个以中划线分割的主题（英文）"
-	echo "\t 如： create map-reduce"
-	exit
-fi
-
-
-BLOG_FILE_NAME="_posts/$TODAY-$1.md"
-touch $BLOG_FILE_NAME
-
-echo "已经创建新帖子：$BLOG_FILE_NAME"
-
-cat >> $BLOG_FILE_NAME <<EOF
----
-layout: post
-title: <修改这里的标题>
-category: <修改这里的分类，用英文>
----
-EOF
-
-```
-
-只要你在命令行输入：`create test-123`，就会自动在_posts目录下创建一个新帖子，你打开编辑就好，很方便。
 
 
 ### 克隆的网站
@@ -221,13 +187,46 @@ nohup jekyll server -s /xxx-d /xxx/_site/>/dev/null 2>&1 &
 
 恩，完美了！
 
+### 创建帖子的脚本
+
+为了方便自己，创建了一个快速创建帖子的脚本，帮助我快速创建页面：
+
+```
+TODAY=`date +%Y-%m-%d`
+TITLE=$1
+
+if [ "$1" == "" ]; then
+	echo "格式错误！"
+	echo "\t必须要有一个以中划线分割的主题（英文）"
+	echo "\t 如： create map-reduce"
+	exit
+fi
+
+
+BLOG_FILE_NAME="_posts/$TODAY-$1.md"
+touch $BLOG_FILE_NAME
+
+echo "已经创建新帖子：$BLOG_FILE_NAME"
+
+cat >> $BLOG_FILE_NAME <<EOF
+---
+layout: post
+title: <修改这里的标题>
+category: <修改这里的分类，用英文>
+---
+EOF
+
+```
+
+只要你在命令行输入：`create test-123`，就会自动在_posts目录下创建一个新帖子，你打开编辑就好，很方便。
+
 ## 好啦，终于可以安静的写博客了
 
 好啦，终于都完事了，我可以安静的写博客了：
 
 1、打开iterm，使用我的`create`命令创建一个新帖子
 
-2、启动subl，编辑这个新帖子，使用我的MAC Automator脚本自动将我截屏的图片保存到目录中。
+2、启动Sublime，编辑这个新帖子，使用我的MAC Automator脚本自动将我截屏的图片保存到目录中。
 
 3、我会在本地启动一个`jekyll server`来预览我的网站。
 
@@ -235,5 +234,5 @@ nohup jekyll server -s /xxx-d /xxx/_site/>/dev/null 2>&1 &
 
 5、安静的等待一分钟，刷新我的www.piginzoo.com , 哇，新的网页出现了。
 
-写博客，变成了一件简单、开心的事情，我从此喜欢上了摆弄文字。
+写博客，变成了一件简单、开心的事情，从此喜欢上了摆弄文字。
 
