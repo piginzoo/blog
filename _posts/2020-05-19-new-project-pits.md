@@ -102,6 +102,11 @@ model.compile(Adam(),loss=losses,loss_weights=loss_weights,metrics=['accuracy'],
 
 不过，回顾这个问题，我有一个还是疑惑的地方，就是我的训练数据，是没有这个问题的，是识别出来各个图片的维度的（如Tensor\[None,64,256,3\]）；只有训练数据，才会出现\[None,None,None,None\]的情况。不过，打印出来的，也不是eger模式开始之后的numpy数据，而也是一个张量。
 
+另外，在启动程序的时候，我还会收到来自tensorflow的警告，让我肝颤：
+
+>WARNING:tensorflow:multiprocessing can interact badly with TensorFlow, causing nondeterministic deadlocks. For high performance data pipelines tf.data is recommended.
+
+呵呵，我不想在折腾了😭（换成tf.data）了，求放过吧
 
 ## 眼泪总结
 
