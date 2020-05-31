@@ -109,4 +109,46 @@
         s.parentNode.insertBefore(hm, s);
       })();
   </script>
+
+    <!-- UY BEGIN --
+    <div id="uyan_frame"></div>
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2154280"></script>
+    -- UY END -->
+
+    <!-- 评论系统 -->
+    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    
+    <script>
+        new Valine({
+            el: '#vcomments' ,
+            appId: 'SQVDOGcSe14oMqrxe1j55Pni-gzGzoHsz',
+            appKey: 'xkTqvFcRFWqKo7kPjJGhL9Cj',
+            notify:false, 
+            verify:false, 
+            avatar:'mp', 
+            visitor: true, // 阅读量统计
+            placeholder: '壮士! 请留言...' 
+        });
+    </script>
+
+    <!-- 留言：来必力City版安装代码,已废弃 -->
+    <!--
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjkxOS85NDgw">
+      <script type="text/javascript">
+       (function(d, s) {
+           var j, e = d.getElementsByTagName(s)[0];
+
+           if (typeof LivereTower === 'function') { return; }
+
+           j = d.createElement(s);
+           j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+           j.async = true;
+
+           e.parentNode.insertBefore(j, e);
+       })(document, 'script');
+      </script>
+    <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    -->
+    <!-- City版安装代码已完成 -->    
 </html>
