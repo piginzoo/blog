@@ -77,7 +77,7 @@
       </div>
     </div>
 
-    {% include JB/analytics %}
+    {% include JB/analytics %}--
 
 
     <!-- Latest compiled and minified JavaScript, requires jQuery 1.x (2.x not supported in IE8) -->
@@ -116,7 +116,8 @@
     -- UY END -->
 
     <!-- 评论系统 -->
-    <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+    <!-- script src='https://unpkg.com/valine/dist/Valine.min.js'></script-->
+    <script type="text/javascript" src="{{ ASSET_PATH }}/js/Valine.min.js"></script>
     
     <script>
         new Valine({
