@@ -64,6 +64,28 @@ category: machine-learning
 
 （...未完成）
 
+## 说说CA-FCN
+
+这个可以说是textscanner的前导算法，
+
+### 由来
+
+由于会存在弯曲的文字识别图片，导致ctc这种靠一个一维的序列来识别有些困难了，下面这图，很明显得考虑二维的信息啦。
+
+![](/images/20200709/1594260204031.jpg){:class="myimg"}
+
+随着语义分割网络，如[FCN](/machine-learning/2020/04/23/fcn-unet)，香酥鸡，不，是像素级的语义分割，可以对二维的汉字信息进行很好的辨析，这个就是这个算法的发心。
+
+###
+
+这个算法核心就3点：
+- 把FCN语义分割方法引入进来，避免ctc那样的一维序列方式，哈哈，升维了（二维了）
+- 引入了注意力机制，嫌语义分割还不够狠，再加上注意力，哈哈，想SOTA就要下猛剂啊
+- 啥imprecise localization的模糊初始啥的，没搞明白，//TODO???
+
+
+
+
 ### 参考
 
 - [图像文字识别初探(二)-FAN(Focusing Attention Network)](https://blog.csdn.net/weixin_42111770/article/details/84881558)
