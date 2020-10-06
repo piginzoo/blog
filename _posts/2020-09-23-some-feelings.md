@@ -1,7 +1,8 @@
 ---
 layout: post
 title:  无题
-category: private
+category: life
+type: private
 ---
 
 过去，还是有一些惶恐的，怕自己不会挣钱，怕自己
