@@ -19,7 +19,7 @@ category: life
 
 [乔托](https://www.zyzw.com/sjmh081.htm)，是桥梁式画家，承接着中世纪艺术和文艺复兴。被誉为“欧洲绘画之父”，现代绘画天才的奠基者。
 
-![](https://www.zyzw.com/sjmh/qt003.jpg)
+![](https://www.zyzw.com/sjmh/qt003.jpg){:class="myimg100"}
 
 《哀悼基督》是乔托为意大利帕多瓦的阿雷那礼拜堂所作的最负盛名的装饰壁画，有了透视的概念，摆脱了中世纪的平面感。
 
@@ -27,11 +27,11 @@ category: life
 
 [马萨乔](https://www.zyzw.com/sjmh082.htm),是第一位使用透视法的画家，在他的画中首次引入了[灭点](https://baike.baidu.com/item/%E7%81%AD%E7%82%B9/7454736)。马萨乔的透视法学习是源于佛罗伦萨的伟大建筑家[布鲁内莱斯基（1377—1446）](https://baike.baidu.com/item/%E5%B8%83%E9%B2%81%E5%86%85%E8%8E%B1%E6%96%AF%E5%9F%BA/10693974)，他设计建造的圣母百花大教堂，至今仍是佛罗伦萨的地标建筑。
 
-![](https://www.zyzw.com/sjmh/msq001.jpg)
+![](https://www.zyzw.com/sjmh/msq001.jpg){:class="myimg100"}
 
 圣三位一体 马萨乔 意大利 湿壁画 1425～1427年 意大利圣玛利亚·诺维拉教堂,
 
-![](https://www.zyzw.com/sjmh/msq003.jpg)
+![](https://www.zyzw.com/sjmh/msq003.jpg){:class="myimg100"}
 
 逐出伊甸园 马萨乔 意大利 湿壁画 1426～1427年 布兰卡奇礼拜堂藏
 
@@ -39,11 +39,11 @@ category: life
 
 [达芬奇](https://www.zyzw.com/sjmh001.htm),是与拉斐尔，米开朗基罗齐名的意大利文艺复兴三杰，是一位思想深邃，学识渊博、多才多艺的画家、寓言家、雕塑家、发明家、哲学家、音乐家、医学家、生物学家、地理学家、建筑工程师和军事工程师。
 
-![](https://www.zyzw.com/sjmh/dfq001.jpg)
+![](https://www.zyzw.com/sjmh/dfq001.jpg){:class="myimg100"}
 
 《蒙娜丽莎》（约1503-1506），现藏巴黎卢浮宫，是他极为珍爱的作品，始终带在身边，晚年移居法国也不离左右，最后遗存巴黎。
 
-![](https://www.zyzw.com/sjmh/dfq002.jpg)
+![](https://www.zyzw.com/sjmh/dfq002.jpg){:class="myimg100"}
 
 《最后的晚餐》（约1498）,现藏米兰圣玛丽亚德尔格契修道院餐厅。
 
@@ -51,19 +51,19 @@ category: life
 
 [米开朗基罗](https://www.zyzw.com/sjmh002.htm),文艺复兴巨匠，他和达芬奇一样多才多艺，兼雕刻家、画家、建筑家和诗人于一身，他得天独厚活到89岁。
 
-![](https://www.zyzw.com/sjmh/mkljl001.jpg)
+![](https://www.zyzw.com/sjmh/mkljl001.jpg){:class="myimg100"}
 
 大卫
 
-![](https://www.zyzw.com/sjmh/mkljl016.jpg)
+![](https://www.zyzw.com/sjmh/mkljl016.jpg){:class="myimg100"}
 
 哀基督
 
-![](https://www.zyzw.com/sjmh/mkljl002-2.jpg)
+![](https://www.zyzw.com/sjmh/mkljl002-2.jpg){:class="myimg100"}
 
 创造亚当 米开郎基罗 壁画 1510年 280×570厘米 藏意大利西斯廷教堂
 
-![](https://www.zyzw.com/sjmh/mkljl018.jpg)
+![](https://www.zyzw.com/sjmh/mkljl018.jpg){:class="myimg100"}
 
  创世纪 米开郎基罗 壁画 1510年 36.54×13.14米 藏意大利西斯廷教堂
 
@@ -71,15 +71,15 @@ category: life
 
 [拉斐尔](https://www.zyzw.com/sjmh019.htm)，他的一系列圣母画像，和中世纪画家所画的同类题材不同，都以母性的温情和青春健美而体现了人文主义思想， 美术史上尊称他为“画圣”。
 
-![](https://www.zyzw.com/sjmh/lfe003.jpg)
+![](https://www.zyzw.com/sjmh/lfe003.jpg){:class="myimg100"}
 
 雅典学院 意大利 拉斐尔 壁画 纵279.4×横617.2厘米 梵蒂冈塞纳图拉大厅
 
-![](https://www.zyzw.com/sjmh/lfe007.jpg)
+![](https://www.zyzw.com/sjmh/lfe007.jpg){:class="myimg100"}
 
 草地上的圣母 拉斐尔 意大利 木板油画 1506年 113x88cm 现藏奥地利维也纳美术馆
 
-![](https://www.zyzw.com/sjmh/lfe017.jpg)
+![](https://www.zyzw.com/sjmh/lfe017.jpg){:class="myimg100"}
 
 自画像 拉斐尔 1506年 木板油画 47.3x34.8cm 拉斐尔23岁时的作品
 
@@ -87,11 +87,11 @@ category: life
 
 [波提切利](https://www.zyzw.com/sjmh027.htm) ，是欧洲文艺复兴早期佛罗伦萨画派的最后一位画家，
 
-![](https://www.zyzw.com/sjmh/btql001.jpg)
+![](https://www.zyzw.com/sjmh/btql001.jpg){:class="myimg100"}
 
 维纳斯的诞生 波提切利 意大利 1487年 画布蛋彩 175x287.5cm 意大利佛罗伦萨乌菲齐美术馆
 
-![](https://www.zyzw.com/sjmh/btql002.jpg)
+![](https://www.zyzw.com/sjmh/btql002.jpg){:class="myimg100"}
 
 春 波提切利 意大利 1482年 蛋彩木版 203x314cm 意大利佛罗伦萨乌菲齐美术馆
 
@@ -99,19 +99,19 @@ category: life
 
 [丢勒](https://www.zyzw.com/sjmh029.htm)，德国最伟大的画家，德国文艺复兴的巨匠，是油画家、版画家、水彩画家及艺术理论家。
 
-![](https://www.zyzw.com/sjmh/dl010.jpg)
+![](https://www.zyzw.com/sjmh/dl010.jpg){:class="myimg100"}
 
 自画像 丢勒 1498年 板上油画 52x41cm 马德里普拉多美术馆
 
-![](https://www.zyzw.com/sjmh/dl015.jpg)
+![](https://www.zyzw.com/sjmh/dl015.jpg){:class="myimg100"}
 
 丢勒的母亲肖像 丢勒 德国 1514年 木炭素描 42x30cm 英国伦敦国立美术馆
 
-![](https://www.zyzw.com/sjmh/dl025.jpg)
+![](https://www.zyzw.com/sjmh/dl025.jpg){:class="myimg100"}
 
 野兔 丢勒 德国 1502年 纸上水彩画 25.1x22.6cm 奥地利维也纳阿尔贝蒂娜博物馆
 
-![](https://www.zyzw.com/sjmh/dl016.jpg)
+![](https://www.zyzw.com/sjmh/dl016.jpg){:class="myimg100"}
 
 十三岁时的自画像 丢勒 德国 1484年 素描 40x30cm 奥地利维也纳阿尔贝蒂娜博物馆
 
