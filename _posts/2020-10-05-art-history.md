@@ -109,10 +109,9 @@ category: life
 
 众神聚宴 贝利尼 意大利 1514年 布上油画 170x188cm 华盛顿国家美术馆藏
 
-
 #### 乔尔乔内 1477
 
-[乔尔乔内](http://zyzw.com/sjmh021.htm)，1477～1510，是第一个真正意义上的意大利威尼斯画派画家，架上画的先行者。1510年，正当他才华横溢，精力充沛，大展宏图之际，威尼斯发生了一次可怕的鼠疫。据说，当时画家正热恋一位漂亮的威尼斯姑娘，那姑娘染上鼠疫，画家不顾一切地去看望她，致使自己染鼠疫去世，只活了33岁。
+[乔尔乔内/吉奥乔尼](http://zyzw.com/sjmh021.htm)，1477～1510，是第一个真正意义上的意大利威尼斯画派画家，架上画的先行者。1510年，正当他才华横溢，精力充沛，大展宏图之际，威尼斯发生了一次可怕的鼠疫。据说，当时画家正热恋一位漂亮的威尼斯姑娘，那姑娘染上鼠疫，画家不顾一切地去看望她，致使自己染鼠疫去世，只活了33岁。
 
 ![](http://www.ashoucang.com/data/attachment/portal/201907/13/110154xnzr2nn2z1zrz6pe.jpg)
 
@@ -126,9 +125,13 @@ category: life
 
 卡斯泰尔弗兰科 乔尔乔内 意大利 1504年 37x46cm 祭坛油画
 
+![](http://zyzw.com/sjmh/qeqr009.jpg){:class="myimg100"}
+
+劳拉像 乔尔乔内 意大利 布面油画 1506年 40x60cm 
+
 #### 提香 1490
 
-[提香](https://www.zyzw.com/sjmh020.htm)，1490～1576，意大利文艺复兴后期的伟大画家,威尼斯画派的代表，青年时期一度与乔尔乔涅紧密合作，乔尔乔涅死后即成为威尼斯画派领袖，在文艺复兴画坛活动60余年，作品遍及西欧各国，以绚丽色彩和健美造型树立了新的艺术典型。
+[提香](https://www.zyzw.com/sjmh020.htm)，[作品集](http://www.ashoucang.com/tixiang/)，1490～1576，意大利文艺复兴后期的伟大画家,威尼斯画派的代表，青年时期一度与乔尔乔涅紧密合作，乔尔乔涅死后即成为威尼斯画派领袖，在文艺复兴画坛活动60余年，作品遍及西欧各国，以绚丽色彩和健美造型树立了新的艺术典型。
 
 ![](https://www.zyzw.com/sjmh/tx019.jpg){:class="myimg100"}
 
@@ -137,6 +140,14 @@ category: life
 ![](https://www.zyzw.com/sjmh/tx003.jpg){:class="myimg100"}
 
 酒神的狂欢 提香 1518～1520年间 油画 175×193厘米大 藏马德里普拉多美术馆
+
+![](http://www.ashoucang.com/data/attachment/portal/201905/22/100957yuy9cigydfyy4ncu.jpg){:class="myimg100"}
+
+达那厄
+
+![](http://www.woaihuahua.com/uploads/allimg/140702/1-140F222233N32.jpg){:class="myimg100"}
+
+《人间的爱与天上的爱》，约1515年，意大利，提香，画布油画，118cmx279cm，罗马波尔葛塞美术馆藏
 
 ### 丢勒 1471
 
@@ -178,6 +189,10 @@ category: life
 ![](https://www.zyzw.com/sjmh/dszhx025.jpg){:class="myimg100"}
 
 自画像素描
+
+![](https://www.zyzw.com/sjmh/blge002.jpg){:class="myimg100"}
+
+乡村婚宴 勃鲁盖尔 1568年 木板油画 114×164cm 维也纳艺术史博物馆
 
 
 ### 巴洛克风格
