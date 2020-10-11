@@ -213,8 +213,8 @@ h4{
   float:left;/*目录框的位置*/
   overflow-y:scroll;/*目录框添加滚动条*/
   padding-right: 10px;
-  position: fixed;/*目录框相对浏览器进行定位*/
-  width:13%;/*目录框的宽度*/
+  /*position: fixed;/*目录框相对浏览器进行定位*/
+  width:17%;/*目录框的宽度*/
 }
 .content,.page-comment{
     float:right;/*正文的位置*/
