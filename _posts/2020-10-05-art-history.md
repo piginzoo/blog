@@ -708,8 +708,6 @@ category: life
 - [简略中国美术史](https://www.bilibili.com/video/BV1gb411J7jj)，bookmark一下。
 - [葛饰北斋-为画痴狂](https://www.bilibili.com/video/BV1jE411d7XU/)，浮世绘的代表人物，葛饰北斋，一个影响深远的日本画家，据说梵高就深受其影响，可是，可是他居然是个色情画师！感兴趣的，还可以去看看描写他的动画片[“百日红 百日紅”](https://movie.douban.com/subject/25872959/)
 - [莫奈一生画的女人](https://www.bilibili.com/video/BV1KJ411G7Xq/)，一个凄美的故事，一个幸福的故事，莫奈的一生挚爱。看完这个，还是默默的被感动了。
-- [音乐何须懂](https://www.bilibili.com/video/BV18J411B7Rz/)，中国音乐学院的周海宏老师，把高雅音乐拉下神坛。
-
 - [透视法](https://baike.baidu.com/item/%E9%80%8F%E8%A7%86%E6%B3%95/5082388)和[灭点](https://baike.baidu.com/item/%E7%81%AD%E7%82%B9/7454736),马萨乔和乔托开启的西方绘画的开始。
 - [正一艺术](https://www.zyzw.com/)，感谢感谢，画作都来自此网站。
 - [名画油画网](http://www.ashoucang.com/)，可以方便检索画家和画作。
