@@ -211,7 +211,7 @@ h4{
   width:-moz-fit-content;
   height: 100%; /*目录框的高度*/
   float:left;/*目录框的位置*/
-  overflow-y:scroll;/*目录框添加滚动条*/
+  /*overflow-y:scroll;目录框添加滚动条*/
   padding-right: 10px;
   position: fixed;/*目录框相对浏览器进行定位*/
   width:20%;/*目录框的宽度*/
