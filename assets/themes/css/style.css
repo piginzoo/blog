@@ -199,22 +199,20 @@ h4{
 
 .toc{
   margin-bottom: 1em;
+  margin-top: 1em;
   color:#fff;
   cursor:pointer;
   border:0;
   outline:0;
-  box-shadow:0 12px 24px rgba(0,0,0,0.1);
+  box-shadow:0px 12px 24px rgba(0,0,0,0.1);
   border-radius: 25px;
-  padding:.5em 2em .5em 0em;
+  padding:2em 2em .5em 0em;
   width:fit-content;
   width:-webkit-fit-content;
   width:-moz-fit-content;
-  height: 100%; /*目录框的高度*/
-  float:left;/*目录框的位置*/
-  /*overflow-y:scroll;目录框添加滚动条*/
+  float:left;
   padding-right: 10px;
-  position: fixed;/*目录框相对浏览器进行定位*/
-  width:20%;/*目录框的宽度*/
+  width:23%;
 }
 .content,.page-comment{
     float:right;/*正文的位置*/
@@ -226,7 +224,7 @@ h4{
     width:100%;
   }  
   .toc{
-    width:0%;
+    display: none;
   }  
 }
 
