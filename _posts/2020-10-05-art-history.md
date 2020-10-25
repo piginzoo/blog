@@ -698,6 +698,11 @@ category: life
 - [湖北大学-西方美术史十六讲](https://www.bilibili.com/video/BV1n7411C7Q5?p=1)，一个慕课课程，很不错，短小精悍，很适合入门。
 - [CCTV世界名画·华丽的大师](https://www.bilibili.com/video/BV1xs411q7jZ?p=1),CCTV做的一个纪录片，相当不错。
 - [北京大学的朱青生教授《艺术史》](https://www.bilibili.com/video/BV1ps411e7CB?p=1)，朱青生老师讲的抽象，像在吟诵一首长诗，但是却不浮华，而是直奔本质。
+- [西洋美術史 (蔣勳) Western Art History](https://www.bilibili.com/video/BV137411H7Gy)，蒋勋讲的几个画家故事。
+- [张敢-盛期文艺复兴的艺术](https://www.bilibili.com/video/BV12x411p7SF)，清华张敢老师讲的文艺复兴三杰。
+- [张敢-文艺复兴美术史](https://www.bilibili.com/video/BV1yx411p7at)
+- [张敢-西方现代艺术史](https://www.bilibili.com/video/BV1hW411y7cx)
+- [孙乃树-西方美术欣赏](https://www.bilibili.com/video/BV1A4411j7g1)
 - [知名画作解析](https://www.bilibili.com/bangumi/play/ep158118/)，虽然是英文的，但是剖析了很多作品细节。
 
 - [古希腊神话故事](https://www.bilibili.com/video/BV1z4411w7so?t=278)，想理解西方绘画，就得理解古希腊神话，这个系列快速带你过一遍这些繁杂的关系和人物，我听完的感觉就是，“宙斯啊！贵圈真乱！”。不过，想了解艺术中的人物，光有古希腊神话人物还不够，还要了解基督的故事，不过这个我得再找时间刷了。
