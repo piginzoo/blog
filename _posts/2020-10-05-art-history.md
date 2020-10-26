@@ -129,7 +129,7 @@ category: life
 
 [乔尔乔内/吉奥乔尼](http://zyzw.com/sjmh021.htm)，1477～1510，是第一个真正意义上的意大利威尼斯画派画家，架上画的先行者。1510年，正当他才华横溢，精力充沛，大展宏图之际，威尼斯发生了一次可怕的鼠疫。据说，当时画家正热恋一位漂亮的威尼斯姑娘，那姑娘染上鼠疫，画家不顾一切地去看望她，致使自己染鼠疫去世，只活了33岁。
 
-![](http://www.ashoucang.com/data/attachment/portal/201907/13/110154xnzr2nn2z1zrz6pe.jpg)
+![](http://www.ashoucang.com/data/attachment/portal/201907/13/110154xnzr2nn2z1zrz6pe.jpg){:class="myimg100"}
 
 [入睡的维纳斯](http://www.ashoucang.com/article-5727-1.html) 约1510-1511年 乔尔乔内和提香 意大利 108.5cm×175cm 布面油彩 德累斯顿国家美术馆藏（乔尔乔内最成功的油画作品，最后由提香完成，维纳斯作为一个女性模特的做法，也影响了后世的许多画家，如提香、普桑、委拉斯贵兹、戈雅、马奈、毕加索等）
 
