@@ -155,6 +155,7 @@ h4{
   float:left;
   padding-right: 10px;
   width:23%;
+  width:inherit;
 }
 
 .content,.page-comment{
@@ -215,7 +216,7 @@ h2.nocount:before, h3.nocount:before, h4.nocount:before, h5.nocount:before, h6.n
     width:50%;
   }
 
-  .toc{
+  .toc {
     display: none; 
   }
 

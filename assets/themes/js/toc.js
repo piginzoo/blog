@@ -102,8 +102,8 @@
   $.event.add(window, "scroll", function() { 
       var p = $(window).scrollTop(); 
       if (p>startPos){
-          $(elm).css('position','fixed')
-          $(elm).css('width','14%')
+          $(elm).css('position','sticky')
+          $(elm).css('width','23%')
           $(elm).css('top','0px')
       }else{
           $(elm).css('position','static')
@@ -112,5 +112,3 @@
       }
   }); 
 })(jQuery);
-
-
