@@ -101,8 +101,15 @@
   var startPos = $(elm).offset().top; 
   $.event.add(window, "scroll", function() { 
       var p = $(window).scrollTop(); 
-      $(elm).css('position',((p) > startPos) ? 'fixed' : 'static'); 
-      $(elm).css('top',((p) > startPos) ? '0px' : ''); 
+      if (p>startPos){
+          $(elm).css('position','fixed')
+          $(elm).css('width','14%')
+          $(elm).css('top','0px')
+      }else{
+          $(elm).css('position','static')
+          $(elm).css('width','23%')
+          $(elm).css('top','')
+      }
   }); 
 })(jQuery);
 
