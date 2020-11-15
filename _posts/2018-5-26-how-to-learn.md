@@ -273,8 +273,9 @@ https://www.bilibili.com/video/BV1z4411L7rL?t=561
 
 
 
-### 好的文字资源
+### 文章资源
 
+[二牛爸关于成绩专题的分享](https://mp.weixin.qq.com/mp/appmsgalbum?action=getalbum&__biz=MzU1Nzc2ODkzMg==&scene=1&album_id=1509256450517286914&count=3&uin=&key=&devicetype=iMac+MacBookPro11%2C2+OSX+OSX+10.10.5+build(14F27)&version=12031f10&lang=zh_CN&nettype=WIFI&ascene=0&fontScale=100&winzoom=1.000000)，一个不错的关注孩子学习的公众号，这个是他讲述自己孩子学习成绩专题的系列文章。
 
 [有没有一种让人很爽的学习方法?](https://www.zhihu.com/question/58772932/answer/162494781)
 
@@ -294,7 +295,7 @@ https://www.bilibili.com/video/BV1z4411L7rL?t=561
 
 [小升初过渡期你必须注意的事](https://tieba.baidu.com/p/5336031998)
 
-###  优质知乎话题
+###  知乎话题
 [高效学习](https://www.zhihu.com/topic/19580586/top-answers)
 
 [学习方法](https://www.zhihu.com/topic/19566266/top-answers)
