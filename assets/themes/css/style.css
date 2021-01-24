@@ -184,8 +184,8 @@ td{
 从-1开始，是因为默认从0开始，但是上面因为标题也用了H1，导致编号从2开始，
 2021.1.9，增加了H1的序号
 */
-body {counter-reset: h1  -1}
-h1 {counter-reset: h2}
+body {counter-reset: h1 -1}
+h1 {counter-reset: h2 1}
 h2 {counter-reset: h3}
 h3 {counter-reset: h4}
 h4 {counter-reset: h5}

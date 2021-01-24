@@ -4,13 +4,13 @@ title: Batch Normalization
 category: machine-learning
 ---
 
-## Batch Normalization
+# Batch Normalization
 
 同事遇到一个奇怪的现象，她训练的模型看loss的表现挺好的，在验证的时候，如果同一批次的图片差异性比较大，预测出拉来的结果很好。但是，如果同一批次图片长的很像（比如就是同一图片略微变化的增强图片），预测结果就是非常不好。
 
 她怀疑是由于Batch Normalization的问题，于是，一起对Batch Normalization进行了研究和讨论。 我把讨论过程中的理解写下，便形成了这篇博客。
 
-## 为何要做Normailization
+# 为何要做Normailization
 
 首先，一个问题是，为什么要做Normalization，也就是中文所谓的“**正则化**”？
 
@@ -48,7 +48,7 @@ category: machine-learning
 - [谈谈 Bias-Variance Tradeoff](https://liam.page/2017/03/25/bias-variance-tradeoff/)
 - 花书的5.2节[《容量、过拟合和欠拟合》](https://cloud.tencent.com/developer/article/1164231)
 
-## L1、L2正则化
+# L1、L2正则化
 
 L1和L2的推导一直都是面试必考，大致沿着两条思路都可以推导出来：
 
@@ -66,13 +66,13 @@ L1和L2的推导一直都是面试必考，大致沿着两条思路都可以推�
 - [深度学习（五）正则化之L1和L2](https://www.shuzhiduo.com/A/B0zqlyXrdv/)
 - [L1正则化和L2正则化](https://www.cnblogs.com/nxf-rabbit75/p/9954394.html)
 
-## 深度学习中的Batch Normalization
+# 深度学习中的Batch Normalization
 
 Dropout也是一种正则化方法，你可以通俗地理解为bagging的朴素应用，因为这篇博客主要讲BatchNormailization，这里特不想展开了。
 
 好了，我们终于迎来了我们这篇博客的猪脚：【**Batch Normalization**】
 
-### 为什么Batch Normalization管用
+## 为什么Batch Normalization管用
 
 Batch Normalization的原理啥的，参考的文章们讲了一通，我还是愿意用我的大白话谈谈理解：
 
@@ -89,7 +89,7 @@ Batch Normalization的原理啥的，参考的文章们讲了一通，我还是�
 	直觉上理解，浅层模型中，只需要模型适应数据分布即可。对深度神经网络，每层的输入分布和权重要相互协调，强制把分布限制在zero mean unit variance并不见得是最好的选择，加入参数𝛾和𝛽，对输入进行scale and shift，有利于分布与权重的相互协调，特别地，令𝛾=1,𝛽=0等价于只用Standardization，令𝛾=𝜎,𝛽=𝜇等价于没有BN层，scale and shift涵盖了这2种特殊情况，在训练过程中决定什么样的分布是适合的，所以使用scale and shift增强了网络的表达能力。
 	表达能力更强，在实践中性能就会更好吗？并不见得，就像曾经参数越多不见得性能越好一样。在caffenet-benchmark-batchnorm中，作者实验发现没有scale and shift性能可能还更好一些。
 
-### 怎么做Batch Normailization
+## 怎么做Batch Normailization
 
 好吧，理论差不多了，我们实战一下：
 
@@ -111,7 +111,7 @@ $\hat{x} = \gamma \* \frac{x-\mu}{\sqrt{\sigma^2+\epsilon}} + \beta$
 
 当然$\gamma,\beta$是需要学习的。
 
-### 那CNN如何做Batch Normailization呢？
+## 那CNN如何做Batch Normailization呢？
 
 全连接网络我们谈完了如何做Batch Normailization，那CNN网络如何做呢？
 
@@ -128,7 +128,7 @@ $\hat{x} = \gamma \* \frac{x-\mu}{\sqrt{\sigma^2+\epsilon}} + \beta$
 
 接下来，我们用这个通道算出的两个标量$\mu,\sigma$，对这N个面包片里面的所有的值进行归一化，得到的结果，便是Batch Normalization的结果。
 
-### 训练时候和测试时候的Batch Normalization
+## 训练时候和测试时候的Batch Normalization
 
 **训练的时候**，需要每个批次的数据，计算$\mu,\sigma$，然后梯度下降学习$\gamma,\beta$。训练的时候，还需要记住这些均值。为什么呢？因为测试的时候需要用，这个后面会谈到。可是，这么多批次，如何都记住呢？答案是，使用移动平均法，不停的计算，每次计算后，都在网络中记录这个移动平均值。
 
@@ -146,7 +146,7 @@ $\hat{x} = \gamma \* \frac{x-\mu}{\sqrt{\sigma^2+\epsilon}} + \beta$
 - [深度学习中 Batch Normalization为什么效果好？](https://www.zhihu.com/question/38102762)
 - [关于batch_normalization和正则化的一些问题？](https://www.zhihu.com/question/288370837)
 
-## 写在最后
+# 写在最后
 
 好，我们已经捋了一遍了正则化、Batch Normalization了，我们来总结一下。
 
@@ -154,7 +154,7 @@ $\hat{x} = \gamma \* \frac{x-\mu}{\sqrt{\sigma^2+\epsilon}} + \beta$
 
 最后，让我们再回最初的同事提出的那个问题：“*训练的时候，同样类型图片的预测结果不好*”。对于这个问题，我们可以大胆的推测，是因为这批图片缺乏了多样性，导致他们和之前网络遇到的图片的平均值偏差太大，致使网络无法适应，导致了最终识别的效果不佳。在我看来，这其实是一个正常的现象，只要后续训练过程中，图片足够多样化，通过不断地训练，这个问题就可以被消除。当然，训练的时候，我们还是也应该避免，同一类相似图片作为一个批次，而应该让批次内的图片也尽量多样化才好。
 
-### 再补充
+## 再补充
 
 后来，同事再次反馈，她解决了这个问题。
 
