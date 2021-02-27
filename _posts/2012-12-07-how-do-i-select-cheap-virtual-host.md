@@ -4,10 +4,6 @@ title: How do I select cheap virtual host?
 date: 2012-12-07T08:43:15+00:00
 author: admin
 layout: post
-guid: http://www.piginzoo.com/?p=20
-permalink: /index.php/2012/12/07/how-do-i-select-cheap-virtual-host/
-dsq_thread_id:
-  - 962465331
 category: tech
 ---
 recently, I am using virtual host for SEO, but choosing virtual host is really a boring thing, I have tried many venders, but until now I cannot find a satisfied one.

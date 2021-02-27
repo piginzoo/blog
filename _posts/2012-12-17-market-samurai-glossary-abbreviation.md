@@ -4,10 +4,6 @@ title: Glossary Abbreviations about Market Samurai
 date: 2012-12-17T04:22:33+00:00
 author: admin
 layout: post
-guid: http://www.piginzoo.com/?p=64
-permalink: /index.php/2012/12/17/market-samurai-glossary-abbreviation/
-dsq_thread_id:
-  - 978330057
 categories: tech
 ---
 **This is a good article to talk about Abbreviation about Market Samurai, The copyright belongs to the original author, here just for reference.**

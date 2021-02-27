@@ -4,10 +4,6 @@ title: notes from reading dingdelaotou about SEO
 date: 2012-12-08T04:07:56+00:00
 author: admin
 layout: post
-guid: http://www.piginzoo.com/?p=41
-permalink: /index.php/2012/12/08/notes-from-reading-dingdelaotou-about-seo/
-dsq_thread_id:
-  - 963970503
 category: tech
 ---
 This blog just record the notes and understanding after reading [dingdelaotou](http://www.dingdelaotou.com "dinglaotou") &#8216;s blog:

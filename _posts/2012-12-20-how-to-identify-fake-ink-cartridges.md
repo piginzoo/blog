@@ -4,8 +4,6 @@ title: How to identify the fake ink cartridges
 date: 2012-12-20T01:27:11+00:00
 author: admin
 layout: post
-guid: http://www.piginzoo.com/?p=68
-permalink: /index.php/2012/12/20/how-to-identify-fake-ink-cartridges/
 categories: tech
 ---
 Recently, my printer already ran out its inks, So, I need to change my ink cartridges, when I visited the web-shop, I found the original ink cartridges is so expensive, So, I turn to compatible one. But, I found lot of negative comments about [compatible ink cartridges](http://www.britanniainks.co.uk), they said, &#8221; &#8216;compatible&#8217; is high cost-performance, but, you have to distinguish the real compatible ink cartridges, not fake one&#8221;.

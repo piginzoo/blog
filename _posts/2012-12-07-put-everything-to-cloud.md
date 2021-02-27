@@ -4,10 +4,6 @@ title: Put everything to cloud
 date: 2012-12-07T14:43:11+00:00
 author: admin
 layout: post
-guid: http://www.piginzoo.com/?p=31
-permalink: /index.php/2012/12/07/put-everything-to-cloud/
-dsq_thread_id:
-  - 962930345
 category: tech
 ---
 &nbsp;
