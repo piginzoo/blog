@@ -4,7 +4,7 @@ title: 迁移我的博客
 category: tech
 ---
 
-## 缘起
+# 缘起
 
 我的博客是基于[Jekyll](http://jekyllcn.com/)做的，支持Markdown和Latex，页面中的图像，是我通过我的Mac Automator脚本实现的自动截屏，然后Save到我的本地，再提交到Github去的（是的，我把Github当做了我的图床）。
 
@@ -16,7 +16,7 @@ category: tech
 
 所以，一直想把我的博客迁移到自己的服务器上来，我自己有台速度还可以的服务器，于是，终于决定不再犯懒了，搞起来！
 
-## 动手
+# 动手
 
 在我自己的服务器上部署的话，需要依次解决这些问题：
 
@@ -29,7 +29,7 @@ category: tech
 
 好，我们来安装RVM：
 
-### 安装RVM
+## 安装RVM
 
 安装Ruby参考了[这篇](https://blog.csdn.net/hooyying/article/details/83119948)。
 
@@ -44,7 +44,7 @@ curl -sSL [https://get.rvm.io](https://get.rvm.io/) | bash -s stable
 
 安装完RVM后，需要使用它来安装Ruby了，我选用的是Ruby 2.5.1。
 
-### 安装ruby2.5.1
+## 安装ruby2.5.1
 
 使用命令安装Ruby：
 
@@ -66,7 +66,7 @@ rvm use 2.5.1
 
 接下来，终于安装博客生成系统Jekyll了
 
-### 安装Jekyll
+## 安装Jekyll
 
 安装jekyll，需要使用Ruby自带的Gem工具，Gem是一个Ruby包安装工具，用于安装Ruby编写的各种应用。在命令行中输入命令：
 
@@ -78,7 +78,7 @@ gem install jekyll
 
 这里暂停一下，先对Jekyll，以及我使用心得，做一个简单的介绍：
 
-#### 用Jekyll写博客
+### 用Jekyll写博客
 
 Jekyll网站生成工具，博客作者，可以使用Markdown语法书写博客，然后Jekyll会自动帮你讲Markdown页面转化成HTML页面，同时还会帮你构建了一个网站的基础框架，比如首页、分类。它还支持显示模板，使用CSS定制化你的显示样式，我使用的就是他默认提供的一套Bootstrap的模板，很朴素简洁。如果你觉得太素了，你可以下载其他热心网友制作的更酷的模板，切换过去后瞬间网站就高大上了，哈哈。
 

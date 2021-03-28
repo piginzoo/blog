@@ -4,7 +4,7 @@ title: 【OCR实践系列】Aster、FA和TextScanner的一些研究
 category: machine-learning
 ---
 
-## 最近
+# 最近
 
 最近，苦于要解决文字中生僻字、低频词的识别，以及识别正确率的问题，做了一些研究。
 
@@ -14,7 +14,7 @@ category: machine-learning
 所以我就尝试实现[Attention OCR](https://github.com/piginzoo/attention_ocr)，但是，总是不收敛，于是开始尝试各类方法，包括回顾了我实现过程中主要参考的Aster的TRN网络、Focus Attention以及最近比较火的TextScanner模型，把自己的一些心得体会记录下来，形成此文。
 
 
-## 先说说Aster的TRN
+# 先说说Aster的TRN
 
 先贴论文:[Aster:An Attentional Scene Text Recognition with Flexible Rectification](https://www.researchgate.net/publication/325993414_ASTER_An_Attentional_Scene_Text_Recognizer_with_Flexible_Rectification)
 
@@ -28,7 +28,7 @@ category: machine-learning
 
 > As can be seen, the recogintion accuracy is farely even on words whose lengths are equal to or less than 11. Beyond this length, a drop in accuracy is observed.
 
-### 先说说网络结构
+# 先说说网络结构
 
 网络结构上，有个细节有些迷惑，第5页里面提到“Next, the feature map is converted into a feature sequence by being split along its row axis. The shape of the feature map is $(h_{conv},w_{conv},d_{conv})$,respectivly its height, with and depth.”，这句很含糊，因为前面提到了，高度已经被卷集成1了，第7也的Table1图中的Block5输出为1，也表明了这点，但是这里有提到了所谓的$h_{conv}$，很矛盾啊？！而且，Fig7中的这张图也没有把高度画成1。
 
@@ -36,19 +36,19 @@ category: machine-learning
 
 解码器上有点意思，他用了一个bi-RNN，注意啊，是decoder，encoder也用了，但是这里是decoder。然后他会前向解码一次，后向解码一次，然后各自$\sum$一下，谁大就用谁的答案，这个做法挺有意思。注意，他不是挨个字比较，挑概率高的字，而是整个解码结果sum后比较。所以，他的lost也是逼着前后解码都要好。这个玩法，很有意思。他的Table5，也比较了一下，bi-RNN确实比单向RNN效果要好一些。
 
-### 训练细节
+# 训练细节
 
 他说了，2天才收敛的，大概是用了100万batchx64张图片，6400万张。使用的数据集包括Synth90K和SynthText，Synth90K是专门为识别训练合成的数据集，大概有900万张；SynthText是为了检测用的，数量我也没查，他们把文档给切出来用的。基本上每个batch，这两种数据一样一半。我看了图，差不多2万个batch以内是明显变化的，差的情况，4万个batch之内，也是明显变化的，这个和我自己写的那个网络不收敛是不一样的，555555。
 
 他提到了个细节，他的图都是直接暴力resize成32x256的，像我那样，保持比例resize然后padding，他说效果反倒次，这个让我有点意外。不过他没又给出差多少的定量分析数据。
 
-### 其他
+# 其他
 
 他提到了，如果用aster的STN获得的变形矫正的点，可以帮助更精确地定位文字，也就是可以帮助提高检测的精度，这个思路也挺有意思的，不过我没有细看，回头有时间研究一下。
 
 我的[Attention OCR](https://github.com/piginzoo/attention_ocr)，也是借鉴了这个思路，不过我没有用backbone的conv，而是照着crnn弄了一个，另外，我也没有用它的bi-rnn的decoder，我训练的过程就是不收敛，我tensorboard观察梯度直方图，根本梯度变化就是0，唉，究竟哪里出了问题呢？至少从他的论文上看，人家训练上来是慢慢收敛的，而不是一开始就跟我那个似的，不停震荡。
 
-## 接下来说说FA（Focus Attention）
+# 接下来说说FA（Focus Attention）
 
 先贴论文：[Focusing Attention: Towards Accurate Text Recognition in Natural Images](https://arxiv.org/pdf/1709.02054)
 
@@ -60,15 +60,15 @@ category: machine-learning
 
 作者说，传统的AN（attention network）不好train那种海量的样本集，比如800百万（我估计是笔误，是800万）的合成样本集。这句话，让一直train不出来自己撸的网络的我，稍感宽慰。
 
-### FA网络
+# FA网络
 
 （...未完成）
 
-## 说说CA-FCN
+# 说说CA-FCN
 
 这个可以说是textscanner的前导算法，
 
-### 由来
+# 由来
 
 由于会存在弯曲的文字识别图片，导致ctc这种靠一个一维的序列来识别有些困难了，下面这图，很明显得考虑二维的信息啦。
 
@@ -76,7 +76,7 @@ category: machine-learning
 
 随着语义分割网络，如[FCN](/machine-learning/2020/04/23/fcn-unet)，香酥鸡，不，是像素级的语义分割，可以对二维的汉字信息进行很好的辨析，这个就是这个算法的发心。
 
-###
+##
 
 这个算法核心就3点：
 - 把FCN语义分割方法引入进来，避免ctc那样的一维序列方式，哈哈，升维了（二维了）
@@ -86,13 +86,13 @@ category: machine-learning
 
 
 
-### 参考
+# 参考
 
 - [图像文字识别初探(二)-FAN(Focusing Attention Network)](https://blog.csdn.net/weixin_42111770/article/details/84881558)
 
 - [Focusing Attention Network（FAN）自然图像文本识别 学习笔记](https://blog.csdn.net/loadqian/article/details/80940924)
 
-## TextScanner
+# TextScanner
 
 TextScanner是旷视的姚神、华中科技大的白神坐阵的最新的一个识别力作，第一作者是旷视的[万昭祎](https://www.wanzy.me/)，第二作者是华中科技大的[何明航](https://www.profillic.com/search?query=Minghang)。我就阅读论文中遇到的一些问题，向何明航进行了请教，得到了他很大帮助，这里特别感谢一下。
 
@@ -108,7 +108,7 @@ TextScanner是旷视的姚神、华中科技大的白神坐阵的最新的一个
 
 接下来，看下网络结构，
 
-### 网络结构
+# 网络结构
 
 这里主要参考第3页的第3节:**3.Methodology**
 
@@ -122,7 +122,7 @@ TextScanner是旷视的姚神、华中科技大的白神坐阵的最新的一个
 - Localization Map：W，H，1
 - Order Maps：W，H，N
 
-#### Class Branch - Charachtor Segmenation（$G(w,h,class)$）
+## Class Branch - Charachtor Segmenation（$G(w,h,class)$）
 
 输入是backbone之后的feature，我没细想，应该是resize之后，但肯定是固定size的。
 比如vgg，resenet输出都是224x224x3=>7x7x512，那这图会从32x256=>1x8。
@@ -140,7 +140,7 @@ TextScanner是旷视的姚神、华中科技大的白神坐阵的最新的一个
 然后过2个卷积，然后过一个全连接，最后输出（w,h,c），比如（32，256，3370），c是字符分类个数，比如3770的一级字库数。
 >The prediction module is composed of two stacked convolutional layers with kernel size 3×3 and 1×1. 
 
-#### Geometry Branch - Localization Map（$G(w,h,1)$）
+## Geometry Branch - Localization Map（$G(w,h,1)$）
 
 输入是backbone之后的feature，文中没有提，只是提到了过一个sigmod，所以我推测，是不需要再像Class Branch再过2个卷积的，而是直接Sigmod了。
 
@@ -154,7 +154,7 @@ TODO:这个细节不知道推测的对不对，需要去问一下原论文作者
 
 是在每个点上计算了概率，我理解是是不是文字的一个概率，这张图就能确定哪些点是文字，那些点是背景。
 
-#### Geometry Branch - Order Segmentation（$S(w,h,N)$）
+## Geometry Branch - Order Segmentation（$S(w,h,N)$）
 
 ![](http://www.piginzoo.com/images/20200415/1586943957097.jpg){:class="myimg"}
 
@@ -183,7 +183,7 @@ RNN这块，需要把[h,w,c]=>[w,h\*c]，主要是为了让他成一个保持左
 
 然后，就得到了Order Maps的热力图H（h,w,N）
 
-#### Order Map - H（h,w,N）
+## Order Map - H（h,w,N）
 
 这个图表示了啥含义？
 
@@ -191,7 +191,7 @@ RNN这块，需要把[h,w,c]=>[w,h\*c]，主要是为了让他成一个保持左
 
 每张热力图 Order Map $H_k$就对应一个位置，这张$H_k$里面的像素，就表示这个像素上，是不是一个文字点。
 
-### 最后大合体 Word Formation了
+## 最后大合体 Word Formation了
 
 最后，我们还差是哪个字符的信息，他在 Charactor Segmentation（G）中，所以，要在再做一次element-wise（就是对应像素）的乘，这次相乘的是G和$H_k$，挨个乘，得到N张图。
 
@@ -212,7 +212,7 @@ G是每个点可能是某个字符的概率呀，你$H_k$虽然给我规定了�
 
 然后你挑一个最大的，就是这个位置上，的字符。
 
-#### 2020.6 补充
+## 2020.6 补充
 
 在我看来，Word Formation，才是这个算法的灵魂。
 
@@ -227,7 +227,7 @@ Word Formation确定的顺序就是字符的顺序。
 $G维度是[H,W,C], H_k维度是[H,W,1]$，他们相乘后，得到的是维度是$[H,W,C]$，C就是字符集的个数，然后通过积分，也就是$\sum$，最终消掉了H和W，最终剩下的只有C。
 所以，你最终得到的是一个维度为C的概率向量。
 
-### 关于损失函数
+## 关于损失函数
 
 第四页的公式（4）给出了损失函数：
 
@@ -245,7 +245,7 @@ $$L=\lambda_l * L_l + \lambda_o * L_o + \lambda_m * L_m + L_s$$
 
 好了，我们看到，这些都是概率，还是有的是多分类，所以，损失函数就大多用了交叉熵，如$L_s$和$L_o$，不过$L_l$换成了L1 smooth，这个细节需要注意，不过我觉得其实用交叉熵也没啥问题。
 
-### 关于训练样本
+## 关于训练样本
 
 好，上面说了损失函数，那么就要对应的提供样本GT了。
 
@@ -298,14 +298,14 @@ $$L=\lambda_l * L_l + \lambda_o * L_o + \lambda_m * L_m + L_s$$
 
 	实现上，是把$\hat{Y}\_k$归一化后（注意噢！要归一化），合并到一起，而不是直接$Z_k$合并到了一起。还记得$\hat{Y}\_k$和$\hat{Z}\_k$的区别么？$\hat{Z}\_k$是去掉了一些概率值比较小点而已。
 
-#### 2020.7.3更新
+### 2020.7.3更新
 
 实现过程中，还是有一些问题，必须要再捋一捋：
 
 
 
 
-### 互训练（Mutual Train）
+## 互训练（Mutual Train）
 
 不是所有的标注都是有字符级别的bounding box的，成本太高，大部分的样本是只有一个字符串。
 这种情况下，就可以考虑论文里说的互训练方式。
@@ -314,7 +314,7 @@ $$L=\lambda_l * L_l + \lambda_o * L_o + \lambda_m * L_m + L_s$$
 
 答案是可以的。
 
-#### 预测后的点（是某个字的点，是第几个位置的点）
+## 预测后的点（是某个字的点，是第几个位置的点）
 
 Character Segmentation网络预测出一个$\hat{G}$，这个预测是每个像素是啥字符。如果我的这个字符串里的每个字符都是唯一的话，
 
@@ -338,7 +338,7 @@ $\Psi_g^k$，就是拿着某个位置的**汉字**，去G中去找那些是这�
 
 好，拿到这些点了，我们就可以算出两个损失：
 
-#### 用这些点，相互校验，算损失
+## 用这些点，相互校验，算损失
 
 我们会算用预测位置的$H_k$点（它可以确定是哪个字），去$G$中找到对应的点，来算这些点的损失。
 
@@ -383,7 +383,7 @@ $L_h^k=\frac{1}{\| \Psi_g^k\|} \sum\limits_{(i,j)\in \Psi_h^k}  L_{CE}\Big\lgrou
 
 然后拿着这些点，回到$H_k$中，与那些对应的点，算交叉熵。这些点的GT值是一个维度为N（30）的one-hot向量。
 
-#### 提高置信度
+## 提高置信度
 
 无论是$\Psi_h^k$，还是$\Psi_g^k$，都是需要被Q（是不是文字前景，而且不会太多，只会是以文字中心为均值的正态分布）的阈值给筛选掉很多。所以，如果剩下的就没几个点了，你的预测估计也不太靠谱了。
 
@@ -421,7 +421,7 @@ $$
 \Phi_h = \frac{\sum_{k=1}^{\|T\|} n_h^k}{\|T\|}   
 $$
 
-#### 最后，终于可以计算$L_m$了<a name="L_m"></a>
+## 最后，终于可以计算$L_m$了<a name="L_m"></a>
 
 
 算一下G的损失：
@@ -440,12 +440,12 @@ $L_m=L_h + \lambda * L_g$
 
 $\lambda=0.2$
 
-### 参考
+## 参考
 - [TextScanner阅读笔记](https://zhuanlan.zhihu.com/p/102493641)
 - [旷视研究院提出TextScanner：确保字符阅读顺序，实现文字识别新突破](https://zhuanlan.zhihu.com/p/100683420)
 
 
-## 附录：优秀的OCR分享
+# 附录：优秀的OCR分享
 
 跟文章主题无关，不过，顺道揉到此贴中吧，都是网上优秀的OCR的分享。
 

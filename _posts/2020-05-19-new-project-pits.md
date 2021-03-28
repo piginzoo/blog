@@ -4,13 +4,13 @@ title: 新项目趟坑之旅 ~ TF2.0
 category: machine-learning
 ---
 
-## 开始挖坑 
+# 开始挖坑 
 
 开始复现[TextScanner](/machine-learning/2020/04/14/ocr-fa-textscanner)论文了，我创建了我的[Github项目](https://github.com/piginzoo/textscanner)，兴冲冲的开始编码。开始之初，就暗暗下定决心，这次一定要用[TF2.0](https://www.tensorflow.org/api_docs/python/)，都已经2.2了，该稳定了！
 
-## 各种填坑之旅
+# 各种填坑之旅
 
-### 趟坑准备
+## 趟坑准备
 
 就我以往的经验，上手一个新库，痛苦的经历是不可避免的，最好的方式，是需要提前对你要面对的坑有所了解，也就是要提前学习一下。虽然大部分内容，学过之后很快都会忘记，但是，至少你会对新坑有所感知，可以明显避免一些深的、众所都知的坑。
 
@@ -27,7 +27,7 @@ category: machine-learning
 
 恩，还有很多细节，但是核心就是这些。
 
-### 我这个这个项目
+## 我这个这个项目
 
 Textscanner是一个比较新的OCR模型，可以参阅我的[另外一篇博客](/machine-learning/2020/04/14/ocr-fa-textscanner)，详细了解。为了实现这个模型，我需要做以下的工作：
 - 实现一个FCN层，使用Resnet50作为FCN的编码的Backbone
@@ -36,7 +36,7 @@ Textscanner是一个比较新的OCR模型，可以参阅我的[另外一篇博�
 - 使用Callback作为可视化，来调试训练过程
 - 使用Sequence作为加载数据的方式（没有使用新的tf.data）
 
-### 自定义层plus自定义模型，构建我的新模型
+## 自定义层plus自定义模型，构建我的新模型
 
 在这个项目中，我们需要定义一个**自定义**模型，模型中包含**自定义**的层，自定义层内部还要加载Resnet50的预训练模型，这一连串的“**自定义**”，以及包含预训练模型，该如何实现呢？
 
@@ -48,7 +48,7 @@ Textscanner是一个比较新的OCR模型，可以参阅我的[另外一篇博�
 
 实现过程中，自定义层中，FCN遇到了最多的问题。
 
-### 如何将预训练的Resnet50焊接到我的FCN层中
+## 如何将预训练的Resnet50焊接到我的FCN层中
 
 在TextScanner中，第一个层，就是一个FCN（可参考我的另一篇博文[语义分割网络:FCN,UNet](/machine-learning/2020/04/23/fcn-unet)），我们都知道，FCN一般需要一个backbone作为编码器（我选择了Resnet50：使用了Keras自带的[ResNet50](https://keras.io/api/applications/resnet/#resnet50-function)），然后使用其中的pool3,pool4和pool5。也就说，我需要在这个FCN的自定义层中，使用Resnet50，然后再加上上采样部分，共同组成这个自定义层。这样一个需求如何实现呢？
 
@@ -113,7 +113,7 @@ class FCNLayer(Layer):
 完整代码，可以参考我的[Github的FCN实现](https://github.com/piginzoo/textscanner/blob/master/network/layers/fcn_layer.py)。总结一下，我的最终做法，自定义层中包含一个模型，而这个模型又使用了pretrain的Resnet50模型，很诡异哈，是的！但是，它work，而且，我没有找到更好的方法。如果你能想出更好的办法，请告诉我吧。
 
 
-### 多个loss的实现，还得带权重
+## 多个loss的实现，还得带权重
 
 Textscanner模型，是多个损失函数组合而成的，而且每个loss还有自己的对应的权重，这样一个loss，如何实现呢？
 
@@ -130,7 +130,7 @@ model.compile(Adam(),loss=losses,loss_weights=loss_weights,metrics=['accuracy'],
 
 我还是选择了最简单`model.compile`传入的方式，简洁！
 
-### 对Sequence的怀疑，以及Eger模式的开启
+## 对Sequence的怀疑，以及Eger模式的开启
 
 在运行训练代码的过程中（也就是我调用model.fit的时候），遇到一个异常：
 
@@ -204,7 +204,7 @@ model.compile(Adam(),loss=losses,loss_weights=loss_weights,metrics=['accuracy'],
 
 呵呵，我不想在折腾了😭（换成tf.data）了，求放过吧
 
-### 训练中的可视化
+## 训练中的可视化
 
 在训练的过程中，可视化很重要，过去我们使用tensorflow的时候，需要在训练的间隙，定期输出一些中间结果用于调试。现在，在keras中，我们要实现这一点，该如何做呢？（这个方法不是tensorflow2.0/tf.keras才有的，是keras本身就支持的）答案是使用Keras的[Callback机制](https://keras.io/api/callbacks/)。
 
