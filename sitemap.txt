@@ -1,5 +1,5 @@
 ---
 title : 站点地图
 ---
-{% for post in site.posts %}
-{{site.production_url}}{{ post.url }}{% endfor %}
+{% for post in site.posts %}{{site.production_url}}{{ post.url }}
+{% endfor %}
