@@ -254,14 +254,16 @@ D(\theta), \frac{\pi}{m}≤\theta≤ \pi\\
 
 ## arcface
 
-说说arcface吧，这个是我最主要化精力研究和使用的，[这个](https://github.com/piginzoo/arcface-pytorch)是我实现的一个版本，
-是fork自一个[网友的github](https://github.com/ronghuaiyang/arcface-pytorch)，在代码理解过程中，对细节有了比较深入的理解。
+说说arcface吧，这个是我最主要化精力研究和使用的，arcface应该说是吸收了前面这个几个x-softmax的基础之上，做的最好的一个了。
 
-### softmax
+[这个](https://github.com/piginzoo/arcface-pytorch)是我实现的一个版本，
+是fork自一个[网友的github](https://github.com/ronghuaiyang/arcface-pytorch)，在开发过工程中，随着对代码的理解，我对arcface也有了更深入和细致的理解。有必要花最大篇幅来说说它。
 
-先从softmax开始说起吧，
+### 再论softmax
 
-softmax是什么? [这篇](https://blog.csdn.net/bitcarmanlee/article/details/82320853)里，认知更清晰，没有参数，就是个放大器。看[这张图](https://img-blog.csdn.net/20180902220822202?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JpdGNhcm1hbmxlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)，理解更深入。
+前面已经提到过softmax和其问题了，这里再唠叨几句，为何呢？因为让自己头脑更清晰，更容易一步步的深入arcface的细节：
+
+softmax是什么? [这篇](https://blog.csdn.net/bitcarmanlee/article/details/82320853)里，认知更清晰，softmax不涉及到任何参数，它就是个**放大器**。看[这张图](https://img-blog.csdn.net/20180902220822202?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JpdGNhcm1hbmxlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)，理解更深入。
 
 这个是： $\frac{e^{x_i}}{\sum_{j=1}^{n} e^{x_i}}$，$x_i$是一个维度，如$[x_1,x_2,x_3]$，
 
@@ -269,7 +271,7 @@ softmax是什么? [这篇](https://blog.csdn.net/bitcarmanlee/article/details/82
 
 但是，往往前面都会再接一个网络：$Y = X\*W + b$
 
-比如X维度是128维，W维度是[128,10]，现在的$x_i$实际上是$y_i$，然后再softmax，所以softmax只是在最后一个阶段帮着”放大“一下而已。
+比如X维度是128维，W维度是[128,10]，现在的$x_i$实际上是$y_i$，然后再softmax，所以softmax只是在最后一个阶段帮着**”放大“**一下而已。
 
 本质上，还是要靠前面的参数W，毕竟我们是为了要train这些Weight的，softmax只是在为了最后推波助澜而已：
 
@@ -283,11 +285,11 @@ softmax的虽然可以做分类，但是类别多了，就容易出现在高维�
 
 那问题是，如何才能达到这个目标呢？
 
-在softmax中，我们观察softmax上的分子上面的项，$W_{y_{i}} x + b_{y_{i}}$，这里需要详细说一下，$x$是512维（假设的，是从backbone抽取之后的）。
+在softmax中，我们观察softmax上的**分子**上面的项，$W_{y_{i}} x + b_{y_{i}}$，这里需要详细说一下，$x$是512维（假设的，是从backbone抽取之后的）。
 这里的$W_{y_{i}}$是一个512维度的向量（这个是$W$矩阵\[512,10000\]中的一列）。这俩相乘，得到的是一个数（标量），这个标量，
 是在得到的10000分类概率向量中的$y_i$分类上的概率（当然还得除以分母）。
 你用$x \* W_{y_0}$得到0分类的值，然后用$x \* W_{y_1}$得到1分类的值，。。。，一共有10000个$W_{y_i}$，
-得到了这个$x$对应的每个分类上的概率值，他们拼起来，是一个10000维度的概率向量。
+得到了这个$x$对应的每个分类上的概率值，他们拼起来，是一个**10000维度的概率向量**。
 
 接着说，
 
@@ -306,11 +308,11 @@ $L_{3}=-\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{s\left(\cos \left(\theta_{y_{i}
 
 这还是个softmax，虽然给做了各种的变形、约束和简化，丫还是个softmax，本质上。他还是要让属于$y_i$那类的那个概率值，算出来，是最大的。
 这样去逼着$W$们，不断地梯度下降，去达到这个目标。
-但是，这个所以为“值”，也就是要被softmax放大的值，也就是要努力做到最大的值，变成了一个$cos$值，注意不是$\theta$，它也要最大。
+但是，这个所以为“值”，也就是要被softmax放大的值，也就是要努力做到最大的值，变成了一个**$cos$**值，注意不是$\theta$，它也要最大。
 $cos(\theta)$函数是一个递减函数，所以，它最大，就要求$\theta$最小。
 $\theta$是啥来着？
 $\theta$是$x$（backbone萃取出的feature，512维）和这个类别对应的$W_{y_i}$（W矩阵\[512,10000\]中的一类，即512维的向量），这两个向量的夹角。
-现在，我们就是要我们的同一个人的萃取出来的$x$，都尽量向这个人的对应的$W_{我}$，尽量的靠近、靠近、靠近！这就是这个loss的本质！
+现在，我们就是要我们的同一个人的萃取出来的$x$，都尽量向这个人的对应的$W_{我}$，尽量的靠近、靠近、靠近（也就是夹角$\theta$尽量小）！这就是这个**loss的本质**！
 
 ![](/images/20210923/1632370739200.jpg){:class="myimg100"}
 
@@ -322,13 +324,13 @@ $\theta$是$x$（backbone萃取出的feature，512维）和这个类别对应的
 
 原理懂了，实现上，相对也比较容易了。但是还是需要一些细节需要解释。
 
-要实现$cos(\theta_{y_i}+m)$，需要把这个式子“积化和差”，所以要求出sin啥的，这个细节如果没搞清楚，会晕。
+要实现$cos(\theta_{y_i}+m)$，需要把这个式子**“积化和差”**，所以要求出sin啥的，这个细节如果没搞清楚，会晕。
 另外，这个所谓的metrics，要计算的不是loss，而是给loss准备的softmax的分子，也就是e的指数的值，也就是$s\*cos(\theta_{y_i}+m)$。
-这个得到的是一个cos值，但是确切的说不是一个cos值，而是10000个，所以有必要认真分析一下它的输入和输出：
+这个得到的是一个cos值，但是确切的说不是一个cos值，而是**10000个**，所以有必要认真分析一下它的输入和输出：
 
-输入：input，是一个512维度的向量；
+**输入**：input，是一个512维度的向量；
 
-输出：是一个s缩放后的$\overrightarrow{cos}$值，是一个10000维度的，也就是有个10000个cos值，为何？
+**输出**：是一个s缩放后的$\overrightarrow{cos}$值，是一个10000维度的，也就是有个10000个cos值，为何？
 
 是因为，你这个input，即$x$，经过这个arcface的子网络后，得到一个$\overrightarrow{cos}$向量（10000维），
 只有$y_i$那个维度对应的cos值（这个时候是标量），应该最大，而其他的9999个维度上的cos值（标量）应该相对比较小，
