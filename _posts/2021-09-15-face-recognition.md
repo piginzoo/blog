@@ -252,9 +252,166 @@ D(\theta), \frac{\pi}{m}≤\theta≤ \pi\\
 
 上面是对Mengcius小哥的理解，下面我说说我的理解：
 
+## arcface
 
+说说arcface吧，这个是我最主要化精力研究和使用的，[这个](https://github.com/piginzoo/arcface-pytorch)是我实现的一个版本，
+是fork自一个[网友的github](https://github.com/ronghuaiyang/arcface-pytorch)，在代码理解过程中，对细节有了比较深入的理解。
 
+### softmax
 
+先从softmax开始说起吧，
+
+softmax是什么? [这篇](https://blog.csdn.net/bitcarmanlee/article/details/82320853)里，认知更清晰，没有参数，就是个放大器。看[这张图](https://img-blog.csdn.net/20180902220822202?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L2JpdGNhcm1hbmxlZQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)，理解更深入。
+
+这个是： $\frac{e^{x_i}}{\sum_{j=1}^{n} e^{x_i}}$，$x_i$是一个维度，如$[x_1,x_2,x_3]$，
+
+比如一个向量，argmax，[3,1,-3]，经过softmax，是[0.88,0.12,0]，差距被放大了。
+
+但是，往往前面都会再接一个网络：$Y = X\*W + b$
+
+比如X维度是128维，W维度是[128,10]，现在的$x_i$实际上是$y_i$，然后再softmax，所以softmax只是在最后一个阶段帮着”放大“一下而已。
+
+本质上，还是要靠前面的参数W，毕竟我们是为了要train这些Weight的，softmax只是在为了最后推波助澜而已：
+
+ $\frac{e^{W_{y_{i}}^{T} x_{i}+b_{y_{i}}}}{\sum_{j=1}^{n} e^{W_{j}^{T} x_{i}+b_{j}}}$。
+
+### arcface loss
+
+softmax的虽然可以做分类，但是类别多了，就容易出现在高维空间中的边界区分不开的情况，一片一片的感觉，
+我们形象地想，能不能让不同分类的表示向量，都能聚簇到一起，这样彼此间就可以分的很开了。
+这个就是前面l-softmax、a-softmax等，包括arcface，通俗易懂的想法。
+
+那问题是，如何才能达到这个目标呢？
+
+在softmax中，我们观察softmax上的分子上面的项，$W_{y_{i}} x + b_{y_{i}}$，这里需要详细说一下，$x$是512维（假设的，是从backbone抽取之后的）。
+这里的$W_{y_{i}}$是一个512维度的向量（这个是$W$矩阵\[512,10000\]中的一列）。这俩相乘，得到的是一个数（标量），这个标量，
+是在得到的10000分类概率向量中的$y_i$分类上的概率（当然还得除以分母）。
+你用$x \* W_{y_0}$得到0分类的值，然后用$x \* W_{y_1}$得到1分类的值，。。。，一共有10000个$W_{y_i}$，
+得到了这个$x$对应的每个分类上的概率值，他们拼起来，是一个10000维度的概率向量。
+
+接着说，
+
+现在$W_{y_{i}} x + b_{y_{i}}$，这个你就可以理解成要变成概率的人，我们把这个玩意，做几个变形：
+- 先让$b_{y_{i}}=0$，b不要啦
+- 再让$W_{y_{i}} \cdot x$ => $\|W_{y_{i}}\| \* \|x\| \* cos(\theta)$
+- 然后再让$\|W_{y_{i}}\| = 1, \|x\|= 1 $
+- 再做个半径缩放，本来半径现在都是1了，是不是感觉太挤？然后给了一个s，变成 $s \* cos(\theta)$
+- 最后，再加一个惩罚项$m$，加到$\theta$上，惩罚啥？我理解，就是你想着离$W_{y_i}$更近，但我偏不让你更近，给你加个$m$，逼着你更努力！
+
+最后，这个softmax就被改造成了这个样子：
+
+$L_{3}=-\frac{1}{N} \sum_{i=1}^{N} \log \frac{e^{s\left(\cos \left(\theta_{y_{i}}+m\right)\right)}}{e^{s\left(\cos \left(\theta_{y_{i}}+m\right)\right)}+\sum_{j=1, j \neq y_{i}}^{n} e^{s \cos \theta_{j}}}$
+
+这里，啰嗦几句再：
+
+这还是个softmax，虽然给做了各种的变形、约束和简化，丫还是个softmax，本质上。他还是要让属于$y_i$那类的那个概率值，算出来，是最大的。
+这样去逼着$W$们，不断地梯度下降，去达到这个目标。
+但是，这个所以为“值”，也就是要被softmax放大的值，也就是要努力做到最大的值，变成了一个$cos$值，注意不是$\theta$，它也要最大。
+$cos(\theta)$函数是一个递减函数，所以，它最大，就要求$\theta$最小。
+$\theta$是啥来着？
+$\theta$是$x$（backbone萃取出的feature，512维）和这个类别对应的$W_{y_i}$（W矩阵\[512,10000\]中的一类，即512维的向量），这两个向量的夹角。
+现在，我们就是要我们的同一个人的萃取出来的$x$，都尽量向这个人的对应的$W_{我}$，尽量的靠近、靠近、靠近！这就是这个loss的本质！
+
+![](/images/20210923/1632370739200.jpg){:class="myimg100"}
+
+不得不说，这图画的很好，很形象！
+
+再说说代码
+
+### 实现代码
+
+原理懂了，实现上，相对也比较容易了。但是还是需要一些细节需要解释。
+
+要实现$cos(\theta_{y_i}+m)$，需要把这个式子“积化和差”，所以要求出sin啥的，这个细节如果没搞清楚，会晕。
+另外，这个所谓的metrics，要计算的不是loss，而是给loss准备的softmax的分子，也就是e的指数的值，也就是$s\*cos(\theta_{y_i}+m)$。
+这个得到的是一个cos值，但是确切的说不是一个cos值，而是10000个，所以有必要认真分析一下它的输入和输出：
+
+输入：input，是一个512维度的向量；
+
+输出：是一个s缩放后的$\overrightarrow{cos}$值，是一个10000维度的，也就是有个10000个cos值，为何？
+
+是因为，你这个input，即$x$，经过这个arcface的子网络后，得到一个$\overrightarrow{cos}$向量（10000维），
+只有$y_i$那个维度对应的cos值（这个时候是标量），应该最大，而其他的9999个维度上的cos值（标量）应该相对比较小，
+这样，经过softmax这个放大器后就更明显了，然后，再交叉熵，刺激损失函数梯度下降去吧。
+
+[代码](https://github.com/piginzoo/arcface-pytorch/blob/master/models/metrics.py)：
+
+```
+ def forward(self, input, label):
+
+        """
+        @param input: 512维向量
+        @param label:
+        其实就是在实现 softmax中的子项 exp( s * cos(θ + m) )，
+        但是因为cos里面是个和：θ + m
+        所以要和差化积，就得分解成：
+        - exp( s * cos(θ + m) )
+        - cos(θ + m) = cos(θ) * cos(m) - sin(θ) * sin(m) # 和差化积
+        - sin(θ) = sqrt( 1 - cos(θ)^2 )
+        - cos(θ) = X*W/|X|*|W|
+        s和m是超参： s - 分类的半径；m - 惩罚因子
+
+        这个module得到了啥？得到了一个可以做softmax的时候，归一化的余弦最大化的向量
+        """
+
+        logger.debug("[网络输出]arcface的loss的输入x：%r", input.shape)
+        # --------------------------- cos(θ) & phi(θ) ---------------------------
+        """
+        >>> F.normalize(torch.Tensor([[1,1],
+                                      [2,2]]))
+            tensor([[0.7071, 0.7071],
+                    [0.7071, 0.7071]])
+        这里有点晕，需要解释一下，cosθ = x.W/|x|*|W|, 
+        注意，x.W表示点乘，而|x|*|W|是一个标量间的相乘，所以cosθ是一个数（标量）
+        可是，你如果看下面这个式子`cosine = F.linear(F.normalize(input), F.normalize(self.weight))`，
+        你会发现，其结果是10000（人脸类别数），为何呢？cosθ不应该是个标量？为何现在成了10000的矢量了呢？
+        思考后，我终于理解了，注意，这里的x是小写，而W是大写的，这个细节很重要，
+        x是[Batch,512]，而W是[512,10000]，
+        而其实，我们真正要算的是一个512维度的x和一个10000维度的W_i，他们cosθ = x.W_i/|x|*|W_i|，这个确实是一个标量。
+        但是，我们有10000个这样的W_i，所以，我们确实得到了10000个这样的cosθ，明白了把！
+        所以，这个代码就是实现了这个逻辑。没问题。
+        
+        再多说一句，arcface，就是要算出10000个θ，这1万个θ，接下来
+        """
+        cosine = F.linear(F.normalize(input), F.normalize(self.weight))  # |x| * |w|
+	    logger.debug("[网络输出]cos：%r", cosine.shape)
+
+        # clamp，min~max间，都夹到范围内 : https://blog.csdn.net/weixin_40522801/article/details/107904282
+        sine = torch.sqrt((1.0 - torch.pow(cosine, 2)).clamp(0,1))
+        logger.debug("[网络输出]sin：%r", sine.shape)
+        phi = cosine * self.cos_m - sine * self.sin_m
+        logger.debug("[网络输出]phi：%r", phi.shape)
+        if self.easy_margin:
+            phi = torch.where(cosine > 0, phi, cosine)
+        else:
+            phi = torch.where(cosine > self.th, phi, cosine - self.mm)
+        # --------------------------- convert label to one-hot ---------------------------
+        # one_hot = torch.zeros(cosine.size(), requires_grad=True, device='cuda')
+        one_hot = torch.zeros(cosine.size(), device=self.device)
+        logger.debug("[网络输出]one_hot：%r", one_hot.shape)
+        one_hot.scatter_(1, label.view(-1, 1).long(), 1)
+        # -------------torch.where(out_i = {x_i if condition_i else y_i) -------------
+        # you can use torch.where if your torch.__version__ is 0.4
+        output = (one_hot * phi) + ((1.0 - one_hot) * cosine)
+        logger.debug("[网络输出]output：%r", output.shape)
+        output *= self.s
+
+        logger.debug("[网络输出]arcface的loss最终结果：%r", output.shape)
+        # 输出是啥？？？ => torch.Size([10, 10178]
+        # 自问自答：输出是
+        return output
+
+输出：
+		DEBUG: [网络输出]arcface的loss的输入x：torch.Size([10, 2])
+		DEBUG: [网络输出]cos：torch.Size([10, 10178])
+		DEBUG: [网络输出]sin：torch.Size([10, 10178])
+		DEBUG: [网络输出]phi：torch.Size([10, 10178])
+		DEBUG: [网络输出]one_hot：torch.Size([10, 10178])
+		DEBUG: [网络输出]output：torch.Size([10, 10178])
+		DEBUG: [网络输出]arcface的loss最终结果：torch.Size([10, 10178])        
+```
+
+看到了吧，就是10178个cos值（这里我用的数据集是10178个分类，我文章中简单化为了10000种），前面的是10是batch，可以忽略。
 
 # 实现
 
