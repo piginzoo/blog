@@ -339,16 +339,16 @@ $\theta$是$x$（backbone萃取出的feature，512维）和这个类别对应的
 [代码](https://github.com/piginzoo/arcface-pytorch/blob/master/models/metrics.py)：
 
 ```
- def forward(self, input, label):
-
+def forward(self, input, label):
         """
         @param input: 512维向量
         @param label:
+
         其实就是在实现 softmax中的子项 exp( s * cos(θ + m) )，
         但是因为cos里面是个和：θ + m
         所以要和差化积，就得分解成：
         - exp( s * cos(θ + m) )
-        - cos(θ + m) = cos(θ) * cos(m) - sin(θ) * sin(m) # 和差化积
+        - cos(θ + m) = cos(θ) * cos(m) - sin(θ) * sin(m) = cos_θ_m(程序中的中间变量) # 和差化积
         - sin(θ) = sqrt( 1 - cos(θ)^2 )
         - cos(θ) = X*W/|X|*|W|
         s和m是超参： s - 分类的半径；m - 惩罚因子
@@ -376,38 +376,51 @@ $\theta$是$x$（backbone萃取出的feature，512维）和这个类别对应的
         再多说一句，arcface，就是要算出10000个θ，这1万个θ，接下来
         """
         cosine = F.linear(F.normalize(input), F.normalize(self.weight))  # |x| * |w|
-	    logger.debug("[网络输出]cos：%r", cosine.shape)
+        logger.debug("[网络输出]cos：%r", cosine.shape)
 
         # clamp，min~max间，都夹到范围内 : https://blog.csdn.net/weixin_40522801/article/details/107904282
         sine = torch.sqrt((1.0 - torch.pow(cosine, 2)).clamp(0,1))
         logger.debug("[网络输出]sin：%r", sine.shape)
-        phi = cosine * self.cos_m - sine * self.sin_m
-        logger.debug("[网络输出]phi：%r", phi.shape)
+
+        # 和差化积，cos(θ + m) = cos(θ) * cos(m) - sin(θ) * sin(m)
+        cos_θ_m = cosine * self.cos_m - sine * self.sin_m
+
+        logger.debug("[网络输出]cos_θ_m：%r", cos_θ_m.shape)
         if self.easy_margin:
-            phi = torch.where(cosine > 0, phi, cosine)
+            cos_θ_m = torch.where(cosine > 0, cos_θ_m, cosine)
         else:
-            phi = torch.where(cosine > self.th, phi, cosine - self.mm)
+            # th = cos(π - m) ，mm = sin(π - m) * m
+            cos_θ_m = torch.where(cosine > self.th, cos_θ_m, cosine - self.mm)
+
         # --------------------------- convert label to one-hot ---------------------------
-        # one_hot = torch.zeros(cosine.size(), requires_grad=True, device='cuda')
         one_hot = torch.zeros(cosine.size(), device=self.device)
         logger.debug("[网络输出]one_hot：%r", one_hot.shape)
-        one_hot.scatter_(1, label.view(-1, 1).long(), 1)
+
+        # input.scatter_(dim, index, src)：从【src源数据】中获取的数据，按照【dim指定的维度】和【index指定的位置】，替换input中的数据。
+        one_hot.scatter_(dim=1, index=label.view(-1, 1).long(), src=1)
+
         # -------------torch.where(out_i = {x_i if condition_i else y_i) -------------
-        # you can use torch.where if your torch.__version__ is 0.4
-        output = (one_hot * phi) + ((1.0 - one_hot) * cosine)
+        # 这步是在干嘛？是在算arcloss损失函数（论文2.1节的L3）的分母，
+        # 标签对的那个分类y_i项是s*cos(θ_yi + m)，而其他分类则为s*cos(θ_yj), 其中j!=i，
+        # 所以这个'骚操作'是为了干这件事：
+        output = (one_hot * cos_θ_m) + ((1.0 - one_hot) * cosine)
+
         logger.debug("[网络输出]output：%r", output.shape)
         output *= self.s
 
         logger.debug("[网络输出]arcface的loss最终结果：%r", output.shape)
         # 输出是啥？？？ => torch.Size([10, 10178]
-        # 自问自答：输出是
+        # 自问自答：输出是softmax之前的那个向量，注意，softmax只是个放大器，
+        # 我们就是在准备这个放大器的输入的那个向量，是10178维度的，[cosθ_0,cosθ_1,...,cos(θ_{i-1}),cos(θ_i+m),cos(θ_{i+1}),...]
+        #                                           只有这项是特殊的,θ_i多加了m，其他都没有---> ~~~~~~~~~~
+        # 不是概率，概率是softmax之后才是概率
         return output
 
 输出：
 		DEBUG: [网络输出]arcface的loss的输入x：torch.Size([10, 2])
 		DEBUG: [网络输出]cos：torch.Size([10, 10178])
 		DEBUG: [网络输出]sin：torch.Size([10, 10178])
-		DEBUG: [网络输出]phi：torch.Size([10, 10178])
+		DEBUG: [网络输出]cos_θ_m：torch.Size([10, 10178])
 		DEBUG: [网络输出]one_hot：torch.Size([10, 10178])
 		DEBUG: [网络输出]output：torch.Size([10, 10178])
 		DEBUG: [网络输出]arcface的loss最终结果：torch.Size([10, 10178])        
