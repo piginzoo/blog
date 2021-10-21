@@ -62,7 +62,137 @@ category: machine-learning
 
 # 人脸检测
 
-TODO
+
+人脸检测，其实可以采用任何的目标检测网络，比如mask-rcnn、yolo等，这里，我们把目光投向人脸这个领域，
+比较有名的有[MTCNN](https://arxiv.org/abs/1604.02878),[RetinaFace](https://arxiv.org/abs/1905.00641)等。
+
+大家公认的不错的是[RetinaFace](https://arxiv.org/abs/1905.00641)，它是2019.5时候提出的。
+我们其实也没有去考察太多的其他的检测模型，只是深入研究后，使用它作为我们人脸检测的主力模型。
+
+
+## RetinaFace
+
+这几篇参考不错：[1](https://zhuanlan.zhihu.com/p/379730820),[2](https://www.jianshu.com/p/d4534ac94a65),[论文翻译](https://zhuanlan.zhihu.com/p/103005911)
+
+先整体说一下：
+- 用了FPN来抽取特征
+- 同时用5点landmark对齐人脸
+
+### 损失函数
+
+![](/images/20211019/1634624390539.jpg){:class="myimg100"}
+
+$$
+\begin{aligned}
+L &=L_{c l s}\left(p_{i}, p_{i}^{*}\right)+\lambda_{1} p_{i}^{*} L_{b o x}\left(t_{i}, t_{i}^{*}\right) \\
+&+\lambda_{2} p_{i}^{*} L_{p t s}\left(l_{i}, l_{i}^{*}\right)+\lambda_{3} p_{i}^{*} L_{p i x e l}
+\end{aligned}
+$$
+
+最后一项是点云的，我们用不到，也没做深入研究，只说说前3项：
+
+- $L_{cls}$:是否是人脸的分类损失函数，2分类，交叉熵
+- $L_{box}$:${t_x,t_y,t_w,t_h}人脸框的坐标的均方误差$
+- $L_{pts}$:5个对齐用的lardmark点的均方误差
+
+另外，$\lambda_1，\lambda_2，\lambda_3$的值，论文建议的是0.25，0.1，0.01，因为我们不太关心点云的预测，所以我们把$\lambda_3$设成0。
+
+### 模型细节
+
+![](/images/20211019/1634628255277.jpg){:class="myimg100"}
+
+1、实现一个FPN
+
+用backbone抽出5层来，通道channel都是256，但是尺寸不同，分别是：
+
+输入是\[640,640\]，5层分别是：
+- \[10,10,256\]，1/64
+- \[20,20,256\]，1/32
+- \[40,40,256\]，1/16
+- \[80,80,256\]，1/8
+- \[160,160,256\]，1/4
+
+不过，我看到[代码](https://github.com/piginzoo/Pytorch_Retinaface/blob/master/models/retinaface.py)中，往往不用那么多层，只用3层就够了，
+- \[20,20,256\]，1/32
+- \[40,40,256\]，1/16
+- \[80,80,256\]，1/8
+
+代码：
+
+```
+        fpn = self.fpn(out)
+        feature1 = self.ssh1(fpn[0]) # M:[H/8,W/8,64],  R[H/8,W/8,256]
+        feature2 = self.ssh2(fpn[1]) # M:[H/16,W/16,64],R[H/16,W/16,256]
+        feature3 = self.ssh3(fpn[2]) # M:[H/32,W/32,64],R[H/32,W/32,256]
+```
+
+2、Context Module
+
+![](/images/20211019/1634635271612.jpg){:class="myimg100"}
+
+从FPN过来的5个张量（[代码](https://github.com/piginzoo/Pytorch_Retinaface/blob/master/models/retinaface.py)中实现的是3个张量），
+经过这个
+
+>we also replace all 3 × 3 convolution layers within the lateral connections and context modules by the deformable convolution network (DCN) [9, 74], which fur- ther strengthens the non-rigid context modelling capacity.
+
+貌似，我fork的代码，也没有是实现[变形卷积deformable convolution](https://zhuanlan.zhihu.com/p/52476083)。
+
+这里多说一下变形卷积，其实是学一个2个核，举个例子吧，我有个3x3的卷积核，除了学习这个3x3的卷积核外，还要学习一个3x3x2的偏移量的参数，最后的2含义是学习偏移offset的x和y值。学习出来后，用这个x、y，先算出3x3里每个点应该偏移的位置（如果出现小数，就用双线性差值来算原图上的像素的值），现在你的卷积核（9个）有，变形到原图上的位置的像素值（9个）有（小数位置已经差值了），然后就对应位置做卷积即可。
+
+
+## FDDB
+
+FDDB（缩写Face Detection Data Set and Benchmark），是一个比较有名的针对人脸识别算法的评测方法与标准。
+一共包含了2845张图片，包含彩色以及灰度图，其中的人脸总数达到5171个。包含遮挡、大角度、低分辨率、模糊，使用**椭圆**标注人脸，灰度和彩色都有。
+
+参考：[1](https://yinguobing.com/fddb/)、[2](https://vic-w.github.io/2018/10/20/FDDB/)两篇写的很好，可供参考！
+
+**椭圆标注：**
+
+![](/images/20211021/1634784205219.jpg){:class="myimg100"}
+
+人脸就可以用5个变量来表征：
+- ra：椭圆长轴半径
+- rb：椭圆短轴半径
+- theta：椭圆长轴偏转角度
+- cx：椭圆圆心x坐标
+- cy：椭圆圆心y坐标
+
+**交并比：**
+
+FDDB使用**交并比**来表示标注框和检测框的匹配程度：交并比 = 两个框的重叠面积 / 两个框的联合面积
+
+检测框和标注框对应问题，等效于一个二分图（bipartite graph）的最大匹配（maximum matching），使用匈牙利算法（Hungarian algorithm）求解。
+就是找到检测框和标注框的最优匹配。
+
+![](/images/20211021/1634784242673.jpg){:class="myimg"}
+
+## 常见的人脸检测算法
+
+- Ultra-Light-Fast-Generic-Face-Detector-1MB，参量数：1.04~1.1MB，[代码](https://github.com/Linzaer/Ultra-Light-Fast-Generic-Face-Detector-1MB)
+- LFFD：A Light and Fast Face Detector for Edge Devices,参数量：6.1 M,一筐款通吃大小目标、支持各种设备的人脸检测器，[论文](https://arxiv.org/abs/1904.10633)，[代码](https://github.com/YonghaoHe/A-Light-and-Fast-Face-Detector-for-Edge-Devices)。
+- libfacedetection，参数量：3.34M，一个用于在图像中进行人脸检测的开源库。人脸检测速度可以达到1000FPS。[代码](https://github.com/ShiqiYu/libfacedetection)
+- CenterFace，参数量：7.3MB，改进版仅为2.3M，CenterFace是一种用于边缘设备的实用的无锚人脸检测和对齐算法。[代码](https://github.com/Star-Clouds/CenterFace)
+- DBFace，参数量：7.03MB，DBFace是一个Anchor Free的网络结构。[代码](https://github.com/dlunion/DBFace)
+- BlazeFace，一款专为移动GPU推理量身定制的轻量级且性能卓越的人脸检测器。[论文](https://arxiv.org/pdf/1907.05047v1.pdf),[代码](https://github.com/google/mediapipe)
+- RetinaFace,参数量：1.68M,[代码](https://github.com/deepinsight/insightface/)
+- MTCNN,[论文](https://arxiv.org/abs/1604.02878),[代码](https://github.com/kpzhang93/MTCNN_face_detection_alignment)
+- SSDFace，[论文](https://arxiv.org/abs/1902.04042)
+- facebox，[论文](https://arxiv.org/abs/1708.05234)
+- yoloface，讲yolo检测应用于人脸，[代码](https://github.com/sthanhng/yoloface)
+
+## 参考
+[1](http://tljsjyy.xml-journal.net/article/id/643e9195-508b-4ff7-8225-33dd48bbd01f?viewType=HTML),
+[2](https://zhuanlan.zhihu.com/p/379730820),
+[3](https://www.jianshu.com/p/d4534ac94a65),
+[4](https://blog.csdn.net/nihate/article/details/108798831),
+[5](https://github.com/hpc203/10kinds-light-face-detector-align-recognition)
+
+
+
+
+
+
 
 # 人脸特征抽取
 
@@ -428,6 +558,33 @@ def forward(self, input, label):
 
 看到了吧，就是10178个cos值（这里我用的数据集是10178个分类，我文章中简单化为了10000种），前面的是10是batch，可以忽略。
 
+# 数据集
+
+人脸训练用的数据，可以参考[这个列表](https://gas.graviti.cn/open-datasets?_ga=2.239614922.811074192.1634540597-1821934516.1634540597&usedScene=Face)，比较全！
+
+
+## 人脸识别数据集
+    
+```
+    WebFace     10k+人，约500K张图片  非限制场景，图像250x250
+    FaceScrub   530人，约100k张图片   非限制场景
+    YouTubeFace 1,595个人 3,425段视频    非限制场景、视频
+    LFW         5k+人脸，超过10K张图片  标准的人脸识别数据集，图像250x250
+    MultiPIE    337个人的不同姿态、表情、光照的人脸图像，共750k+人脸图像    限制场景人脸识别    
+    MegaFace    690k不同的人的1000k人脸图像  新的人脸识别评测集合
+    IJB-A       人脸识别，人脸检测
+    CAS-PEAL    1040个人的30k+张人脸图像，主要包含姿态、表情、光照变化 限制场景下人脸识别
+    Pubfig      200个人的58k+人脸图像  非限制场景下的人脸识别
+    CeleBrayA   200k张人脸图像40多种人脸属性，图像178x218
+```
+
+## 人脸检测数据集
+
+```
+    FDDB                2845张图片中的5171张脸 标准人脸检测评测集   链接
+    IJB-A               人脸识别，人脸检测   链接
+    Caltech10k WebFaces 10k+人脸，提供双眼和嘴巴的坐标位置 人脸点检测   链接
+```
 
 # 参考
 
