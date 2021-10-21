@@ -16,7 +16,7 @@ order: 1
 
 	<ul class="posts">
 		<li>
-			<a href="https://book.piginzoo.com" target="_blank">我的投资学的电子书</a>
+			<a href="https://book.piginzoo.com" target="_blank">《我的投资学的电子书》</a>
 		</li>
 
 
