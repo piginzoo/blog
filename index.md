@@ -15,6 +15,10 @@ order: 1
 	<p>【置顶】</p>
 
 	<ul class="posts">
+		<li>
+			<a href="https://book.piginzoo.com" target="_blank">我的投资学的电子书</a>
+		</li>
+
 
 	  {% for post in site.posts %}
 	  	{% if post.type=="top" %}
