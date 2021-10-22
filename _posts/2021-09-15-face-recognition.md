@@ -72,7 +72,7 @@ category: machine-learning
 
 ## RetinaFace
 
-这几篇参考不错：[1](https://zhuanlan.zhihu.com/p/379730820),[2](https://www.jianshu.com/p/d4534ac94a65),[论文翻译](https://zhuanlan.zhihu.com/p/103005911)
+这几篇参考不错：[1](https://zhuanlan.zhihu.com/p/379730820),[2](https://www.jianshu.com/p/d4534ac94a65),[论文翻译](https://zhuanlan.zhihu.com/p/103005911),[代码解析](https://www.cxyzjd.com/article/mcyJacky/109012671)
 
 先整体说一下：
 - 用了FPN来抽取特征
