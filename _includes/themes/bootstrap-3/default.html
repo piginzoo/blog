@@ -37,7 +37,7 @@
 
   <body class="">
 
-    <img src="http://www.piginzoo.com/images/site_big.jpg" width="0px" height="0px" style="display: none;"/>
+    <img src="https://www.piginzoo.com/images/site_big.jpg" width="0px" height="0px" style="display: none;"/>
     <div id="wrap">
       <nav class="navbar navbar-default" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -116,8 +116,7 @@
     <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2154280"></script>
     -- UY END -->
 
-    <!-- 评论系统 -->
-    <!-- script src='https://unpkg.com/valine/dist/Valine.min.js'></script-->
+    <!-- 评论系统 
     <script type="text/javascript" src="{{ ASSET_PATH }}/js/Valine.min.js"></script>
     
     <script>
@@ -131,6 +130,18 @@
             visitor: true, // 阅读量统计
             placeholder: '壮士! 请留言...' 
         });
+    </script>
+    -->
+
+    <!-- 评论系统 -->
+    <!--leancloud.cn需要备案，切换到国际版，参考：https://waline.js.org/guide/get-started.html-->
+    <script src="https://cdn.jsdelivr.net/npm/@waline/client"></script>
+    
+    <script>
+      Waline({
+        el: '#waline',
+        serverURL: 'https://waline-4c142vwcj-piginzoo.vercel.app/',
+      });
     </script>
 
     <!-- 留言：来必力City版安装代码,已废弃 -->
