@@ -2,4 +2,7 @@
 title : 站点地图
 ---
 User-agent: *
-Sitemap: {{ site.production_url }}/sitemap.txt
+
+Disallow: 
+
+Sitemap: https://www.piginzoo.com/sitemap.txt
