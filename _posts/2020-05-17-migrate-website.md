@@ -236,3 +236,19 @@ EOF
 
 写博客，变成了一件简单、开心的事情，从此喜欢上了摆弄文字。
 
+## 2022.11.1更新
+
+换了m1的mpb，继续按照上述的文档折腾，各种问题，把趟雷后的结果记录一下：
+
+rvm各种问题，懒得贴了，最后绝望的换成了rb
+
+```
+brew install rbenv ruby-build
+rbenv install 3.1.2
+rbenv global 3.1.2
+gem install bundler jekyll
+```
+
+参考：[Install Ruby On Rails on macOS 12 Monterey](https://gorails.com/setup/macos/12-monterey)
+
+
