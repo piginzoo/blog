@@ -18,6 +18,9 @@ order: 1
 		<li>
 			<a href="http://book.piginzoo.com" target="_blank">《我的投资学的电子书》</a>
 		</li>
+		<li>
+			<a href="#" onclick="window.open('/life/2020/03/02/fun.html');">有趣的每天</a>
+		</li>
 
 
 	  {% for post in site.posts %}
