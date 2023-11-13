@@ -22,3 +22,21 @@ category: life
 这一个多月，我自己的立场，不断的变化，从支持以色列，到同情巴勒斯坦，到重新支持以色列，到反对以色列目前的方式，我承认，我对历史的无知，对真实世界的了解的确实，这一个月来，我各种信息的拼拼凑凑，让我不断地理清了很多我的盲区，让我脑海中逐渐还原出相对真实和完整的世界。认识事物、认识一件事，真的是一个复杂过程，绝不是，一蹴而就、非黑即白的简单，是需要反复拉扯、反复否定、反复怀疑，甚至我现在也是非常确认，我认知了这件事的大体完整的真实视角。想想看，你需要了解历史，你需要了解历史中关键决策人的，比如阿拉法特他的成长、立场和关键时刻的决定的原因和动机，了解现在决策者的立场和目的，了解整个历史的进程，了解现实的利益的瓜葛，理解周边阿拉伯国家的立场和态度，他们前几天开会时候表现的种种不同。了解西方国家不同的反应和态度，拜登和马克龙的差异。了解世界各个地方巴勒斯坦人、以色列人、普通人，还有那些意见领导者的看法和见解，最终你还要回到加沙，了解当地真正的情况，那些已经牺牲了7位后，还在加沙报道的勇敢的记者们的真实声音、影像和画面。
 
 真真正正的认识这个世界，不是一个简单的事情，保持谦逊、保持良知、保持警惕、保持对这个世界无限的热爱，好好的活着，收住作为普通人的底线和良知，同时努力的擦亮眼睛。
+
+**参考**：
+- [一口气了解巴勒斯坦经济](https://www.bilibili.com/video/BV14N4y1U7tx)
+- [一口气了解以色列经济](https://www.youtube.com/watch?v=YY2Q4XDmZDE)
+- [为什么巴勒斯坦没有建国？原因的始与末](https://www.bilibili.com/read/cv27263117)
+- [以色列人和阿拉伯人的50年戰爭](https://www.bilibili.com/video/BV1rZ4y1N7vH/)
+- [基督，犹太，伊斯兰教的关系](https://www.youtube.com/watch?v=ncXCHdTFBEs)
+- [一口气了解石油和中东的百年战争](https://www.youtube.com/watch?v=ssssR1hxiTw)
+- [【巴以衝突(上)】 從兩個視角 慢講巴勒斯坦、以色列 | 宗教歷史和千年演變](https://www.youtube.com/watch?v=jn9l3PodaXY)
+- [【巴以衝突(下)】近代歷史：以色列、巴勒斯坦、加沙百年恩怨的發展](https://www.youtube.com/watch?v=WOYycmsSacY)
+- [以色列，领土面积越来越大！](https://www.youtube.com/watch?v=BpahQVEqEYY)
+- [文茜关于以色列vs哈马斯的系列报道](https://www.youtube.com/watch?v=7N7lRuK2u_w&list=PLyvXVH_86VfZ1Zo_HjKr0wQ2CrKHS8mot&ab_channel=TVBS%E6%96%87%E8%8C%9C%E7%9A%84%E4%B8%96%E7%95%8C%E5%91%A8%E5%A0%B1TVBSSisy%27sWorldNews)
+- [“呼吁停火的人根本不懂哈马斯！”希拉里的解释](https://gs.ifeng.com/c/8Ua2qRl74WG)
+- [法国前总理多米尼克-德维尔潘关于加沙问题的访谈](https://twitter.com/chenjunnyc/status/1722103066424451447法国前总理多米尼克-德维尔潘关于加沙问题的一次精彩访谈)
+- [为什么犹太人被排挤？](https://www.youtube.com/watch?v=8sATkfiAabk)
+- [巴勒斯坦的死敵，揭開猶太人的歷史真相！](https://www.youtube.com/watch?v=8HfCt5NLyzg)
+- [齐泽克：以色列-巴勒斯坦的真正分界线](https://www.dapenti.com/blog/more.asp?name=xilei&id=174462)
+- [哈马斯地道和以色列空军](https://video.h5.weibo.cn/1034:4960407157407833/4960409207703993?display=0&retcode=6102)
