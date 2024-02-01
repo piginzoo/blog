@@ -18,6 +18,11 @@ order: 2
 {% raw %}
 <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=721314&auto=1&height=66">
 </iframe>
+
+QQ音乐：[ZOO - ECHOES](https://i.y.qq.com/v8/playsong.html?songid=3594271)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/utxRrg1dwyc?si=vqE9CMHezjf4o4TK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+
 {% endraw %}
 
 
